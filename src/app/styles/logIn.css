@@ -1,0 +1,6 @@
+/*登录输入框样式star*/
+.login-box{width:548px;height:358px; position:absolute; top:50%;left:50%;margin-left:-274px;margin-top:-179px;border:1px solid #e4e4e4;background:url(images/logo.jpg) center 50px no-repeat;}
+.form-user{width:305px; margin:124px auto 0 auto;}
+.form-user input{display:block;width:277px;height:43px;padding:0 14px;line-height:43px;font-size:14px; border:1px solid #e4e4e4; margin-bottom:20px;color:#666666;}
+.form-user input.btn{width:307px;border:1px solid #e4e4e4; background:#fff; text-align:center; color:#666666;}
+/*登录输入框样式end*/
