@@ -1,0 +1,6 @@
+buildtool=grunt
+configpath=src/app/js
+port=80
+memorylimit=100m
+language=nodejs
+nginx=1.4
