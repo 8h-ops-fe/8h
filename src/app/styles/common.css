@@ -1,0 +1,1272 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* reset  */
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-none {
+    float: none;
+}
+
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px solid;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent
+}
+
+.dropdown {
+    position: relative
+}
+
+.dropdown-toggle:focus {
+    outline: 0
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    background-clip: padding-box
+}
+
+.dropdown-menu.pull-right {
+    right: 0;
+    left: auto
+}
+
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    text-decoration: none;
+    color: #262626;
+    background-color: #f5f5f5
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #428bca
+}
+
+.dropdown-menu > .disabled > a, .dropdown-menu > .disabled > a:hover, .dropdown-menu > .disabled > a:focus {
+    color: #999
+}
+
+.dropdown-menu > .disabled > a:hover, .dropdown-menu > .disabled > a:focus {
+    text-decoration: none;
+    background-color: transparent;
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    cursor: not-allowed
+}
+
+.open > .dropdown-menu {
+    display: block
+}
+
+.open > a {
+    outline: 0
+}
+
+.dropdown-menu-right {
+    left: auto;
+    right: 0
+}
+
+.dropdown-menu-left {
+    left: 0;
+    right: auto
+}
+
+.dropdown-header {
+    display: block;
+    padding: 3px 20px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #999
+}
+
+.dropdown-backdrop {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 990
+}
+
+.pull-right > .dropdown-menu {
+    right: 0;
+    left: auto
+}
+
+.dropup .caret, .navbar-fixed-bottom .dropdown .caret {
+    border-top: 0;
+    border-bottom: 4px solid;
+    content: ""
+}
+
+.dropup .dropdown-menu, .navbar-fixed-bottom .dropdown .dropdown-menu {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 1px
+}
+
+/* ======================================== 头部及导航条 ======================================= */
+html,
+body {
+    height: 100%;
+}
+
+.body-wrap {
+    min-width: 1200px;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+}
+
+.layout-header {
+    width: 100%;
+    height: 125px;
+}
+
+.layout-header-top {
+    height: 35px;
+    width: 1200px;
+    margin: 0 auto;
+    line-height: 30px;
+}
+
+.layout-header-top .top-left {
+    float: left;
+    line-height: 35px;
+    font-size: 14px;
+}
+
+.layout-header-top .top-left .serve-phone {
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+}
+
+.layout-header-top .top-right {
+    float: right;
+    position: relative;
+}
+.layout-header-top .top-right .app-png-show{
+    display: none;
+    position: absolute;
+    right: 50px;
+    top: 25px;
+    z-index: 99999;
+}
+.layout-header-top .top-right .white-trangle{
+    margin-left: 45px;
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 12px solid #ffffff;
+    z-index: 9999;
+}
+
+.layout-header-top .top-right .app-border {
+   /* padding: 4px;*/
+    width: 110px;
+    height: 108px;
+    background-color: #ffffff;
+    z-index: 999;
+    border: 1px solid #dddde1;
+}
+
+.layout-header-top .top-right .download-app {
+    font-size: 14px;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+.layout-header-top .top-right .app-png {
+    margin-top: 5px;
+    margin-left: 5px;
+    display: block;
+    width: 100px;
+    height: 100px;
+    background: url("../images/photo/erweima.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.layout-header-top .top-right a:hover {
+    color: #1d95d4;
+}
+
+.layout-header-top .top-right span {
+    margin: 0 0 0 16px;
+}
+
+.layout-header-top .top-right a {
+    color: #666;
+    font-size: 14px;
+}
+
+.layout-header-top .top-right a.new-reg {
+    /*color: #fe4e25;*/
+    background: url("../images/reg_02.png") no-repeat left;
+    background-size: 30px 30px;
+    padding: 5px 0 5px 30px;
+}
+
+.layout-header-nav {
+    min-width: 1200px;
+    height: 90px;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.container-relative {
+    position: relative;
+}
+
+.layout-header-logo {
+    display: block;
+    float: left;
+    background: url(../images/logo_07.png) no-repeat;
+    width: 195px;
+    height: 82px;
+    margin-top: 8px;
+}
+
+.header-nav {
+    float: right;
+    font-size: 16px;
+}
+
+.header-item {
+    float: left;
+    height: 90px;
+}
+
+.header-item a.active {
+    line-height: 90px;
+    vertical-align: middle;
+    padding: 10px 20px;
+}
+
+.header-item a.active:hover {
+    color: #428bca;
+}
+
+.header-item a.mycase {
+    color: #ff8474;
+    margin-left: 30px;
+    padding: 10px 0px 10px 50px;
+    background: url(../images/photo/mycase.png) no-repeat left;
+    background-size: 40px 40px;
+}
+
+/* ======================================== 底部 ======================================= */
+/*页面底部*/
+.clear-fixed {
+    clear: both;
+}
+
+.layout-footer {
+    min-width: 1200px;
+    width: 100%;
+    background: #333;
+    height: 180px;
+}
+
+.footer-link-list {
+    width: 485px;
+    float: left;
+    margin-top: 20px;
+}
+
+.footer-link-list li {
+    height: 30px;
+}
+
+.link-list {
+    float: left;
+    margin-right: 20px;
+    line-height: 1.5;
+    color: #ccc;
+}
+
+.link-list a {
+    color: #ccc;
+    line-height: 20px;
+}
+
+.link-img {
+    float: left;
+    margin-left: 10px;
+}
+
+.link-img a {
+}
+
+/*联系电话*/
+
+.contact {
+    width: 350px;
+    float: right;
+    margin-top: 15px;
+}
+
+.contact-num {
+    padding: 5px 0 5px 60px;
+    background: url(../images/photo/tel.png) no-repeat left;
+    background-size: 36px 36px;
+    float: right;
+    color: #ff4e25;
+    font-size: 18px;
+}
+
+.contact-time {
+    float: right;
+    color: #BBB;
+}
+
+.layout-footer .i-line {
+    clear: both;
+    border: 1px solid #bbb;
+}
+
+.frient-list {
+    width: 100%;
+}
+
+.footer-copyright {
+    clear: both;
+    text-align: center;
+}
+
+.footer-copyright span {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+    color: #BBB;
+}
+
+/*=============提示================*/
+.right-tip {
+    right: 0;
+    position: fixed;
+    z-index: 999;
+}
+
+.right-tip-top {
+    position: fixed;
+    right: 0px;
+    bottom: 20%;
+    z-index: 999;
+}
+
+.right-tip-top dl dd {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border-bottom: 1px solid #000;
+    text-align: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.right-tip-top dl dd.online {
+    background: url(../images/photo/talk-qq.png) no-repeat;
+    background-position: 15px 10px;
+    background-color: #1d95d4;
+}
+
+.right-tip-top dl dd.online .talk-online {
+    position: absolute;
+    left: -120px;
+    top: 0px;
+    width: 112px;
+    height: 44px;
+    background-color: #1d95d4;
+    display: none;
+    font-size: 14px;
+    line-height: 44px;
+    color: #fff;
+    border: 4px solid #ffffff;
+}
+
+.right-tip-top dl dd.telephone, .right-tip-top dl dd.qrcord {
+    background-color: #666;
+}
+
+.right-tip-top dl dd.telephone .ser-telephone {
+    position: absolute;
+    left: -120px;
+    top: 0px;
+    width: 120px;
+    height: 45px;
+    background-color: #666666;
+    display: none;
+    font-size: 14px;
+    color: #fff;
+    padding-top: 5px;
+}
+
+.right-tip-top dl dd.telephone {
+    background: url(../images/photo/talk-tel.png) no-repeat;
+    background-position: 16px 10px;
+    background-color: #666;
+}
+
+.right-tip-top dl dd.invest-cal {
+    background: url(../images/photo/jisuanqi.png) no-repeat 10px 10px;
+    background-color: #666666;
+    background-size: 70% 60%;
+}
+
+.right-tip-top dl dd.invest-cal .calculator {
+    position: absolute;
+    left: -120px;
+    top: 0px;
+    width: 112px;
+    height: 44px;
+    background-color: #1d95d4;
+    display: none;
+    font-size: 14px;
+    line-height: 44px;
+    color: #fff;
+    border: 4px solid #ffffff;
+}
+
+.right-tip-top dd.qrcord span {
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+.right-tip-top dl dd.qrcord .att-qrcord {
+    position: absolute;
+    left: -104px;
+    top: 0px;
+    width: 90px;
+    height: 84px;
+    background: url(../images/photo/talk-wechat.png) no-repeat;
+    display: none;
+    font-size: 14px;
+    color: #fff;
+    padding-top: 5px;
+    border: 7px;
+
+    border-color: #ffffff;
+    border-style: solid;
+}
+
+.floating_left a {
+    color: #fff;
+    line-height: 80px;
+}
+
+.right-tip-top dl dd.return {
+    border: 0;
+}
+
+.right-tip-top dl dd.return .top {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+
+.right-tip-top dl dd.return .triangle {
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 15px solid #555555;
+    position: absolute;
+    top: 16px;
+    right: 14px;
+}
+
+.ips-withdraw {
+    width: 110px;
+    height: 34px;
+    cursor: pointer;
+    position: fixed;
+    right: 0;
+    bottom: 20%;
+    border: 1px solid #dedede;
+    background: #ffffff;
+    display: none;
+    z-index: 999;
+}
+
+.ips-withdraw:hover {
+    border: 1px solid #1d95d4;
+    color: #1d95d4;
+}
+
+.icon-ips-span {
+    display: inline-block;
+    width: 70px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 16px;
+    float: left;
+}
+
+.icon-ips {
+    background: url(../images/icon/icon-ips.png) no-repeat;
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+    float: left;
+}
+
+/* ======================================== 左侧导航条样式 ======================================= */
+
+/*左侧导航条样式*/
+.container-w-setup {
+    width: 1200px;
+}
+
+.ui-side-nav {
+    width: 198px;
+    border: 1px solid #dbdbdb;
+    float: left;
+    background-color: #ffffff;
+}
+
+.leftnav-margin {
+    margin: 18px 0;
+}
+
+/*左侧导航条样式之用户信息部分*/
+.user-info {
+    width: 198px;
+    position: relative;
+    padding-top: 24px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.user-info .myImage {
+    cursor: pointer;
+}
+
+.user-info .img-circle {
+    border-radius: 50%;
+}
+
+/* ui-side-nav */
+.ui-side-nav .user-info .account-head {
+    margin-top: 5px;
+    height: 18px;
+    line-height: 18px;
+}
+
+.ui-side-nav .user-info .acount-head-img {
+    margin-top: 15px;
+}
+
+.icon-mobile {
+    background: url(../images/icon-user-detail/icon-mobile-1.png) no-repeat;
+}
+
+.icon-identity {
+    background: url(../images/icon-user-detail/icon-identity-1.png) no-repeat;
+}
+
+.icon-bank-card {
+    background: url(../images/icon-user-detail/icon-bank-card-1.png) no-repeat;
+}
+
+.acount-head-img .icon-size {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+/*左侧导航条样式之菜单栏部分*/
+.ui-side-nav .ui-side-menu {
+    background-color: #ffffff;
+    border-top: 1px solid #dbdbdb;
+}
+
+.ui-side-nav .ui-side-menu li {
+
+}
+
+.ui-side-nav .ui-side-menu li .hit {
+    display: block;
+    height: 60px;
+    line-height: 60px;
+    position: relative;
+}
+
+.ui-side-nav .ui-side-menu li .hit .text {
+    font-size: 16px;
+}
+
+.ui-side-nav .ui-side-menu li .hit .icon-arrow {
+    background: url(../images/icon-arrow.png) no-repeat;
+    height: 12px;
+    width: 12px;
+    display: inline-block;
+    position: absolute;
+    top: 27px;
+    right: 30px;
+}
+
+.ui-side-nav .ui-side-menu li .hit:hover {
+    background-color: #a8e1ff;
+    color: #FFFFFF;
+}
+
+.ui-side-nav .ui-side-menu li.ui-side-menuhover .hit {
+    background-color: #a8e1ff;
+    color: #fff;
+}
+
+.ui-side-nav .ui-side-menu li.ui-side-menuactived .hit {
+    background-color: #1d95d4;
+    color: #fff;
+}
+
+.ui-side-nav .ui-side-menu li.ui-side-menuactived .icon-arrow {
+    background-image: url(../images/mine_leftnav_sele.png);
+}
+
+.ui-side-nav .ui-side-menu .ui-side-submenu {
+    display: none;
+}
+
+.ui-side-nav .ui-side-menu .ui-side-submenu li {
+
+}
+
+.ui-side-nav .ui-side-menu .ui-side-submenu li .hit {
+    padding-left: 20px;
+    background-color: #fff;
+    color: #222222;
+}
+
+.ui-side-nav .ui-side-menu .ui-side-submenu li .hit:hover {
+    background-color: #dedede;
+}
+
+.ui-side-nav .ui-side-menu .ui-side-submenu li.ui-side-menuactived .hit {
+    background-color: #147db4;
+    color: #fff;
+}
+
+/*左侧导航条样式之安全级别部分*/
+.ui-side-nav .safelevel {
+    background: #ffffff;
+    padding: 30px;
+    margin-top: 27px;
+    border-top: 1px solid #dedede;
+}
+
+.ui-side-nav .safelevel .main-content {
+    height: 18px;
+    margin-bottom: 17px;
+}
+
+.ui-side-nav .safelevel .main-progressbar {
+    width: 135px;
+    height: 8px;
+    border: 1px solid #999999;
+    background: #999999;
+    border-radius: 10px;
+    position: relative;
+}
+
+.ui-side-nav .safelevel .main-progressbar .bar {
+    display: block;
+    height: 8px;
+    background: #f36e36;
+    width: 0%;
+}
+
+/* ======================================== buttons ======================================= */
+
+.btn {
+    display: inline-block;
+    *display: inline;
+    padding: 5px 10px;
+    font-size: 12px;
+    color: #333333;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    border: 0px;
+    *zoom: 1;
+    overflow: visible;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.btn:hover, .btn:focus, .btn:active, .btn-active, .btn-disabled, .btn[disabled] {
+    color: #333333;
+    background-color: #e6e6e6;
+}
+
+.btn:active, .btn-active {
+    background-color: #cccccc;
+}
+
+.btn:hover, .btn:focus {
+    color: #333333;
+    text-decoration: none;
+}
+
+.btn.active, .btn:active {
+    background-image: none;
+    outline: 0;
+}
+
+.btn-mini {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 16px;
+    *line-height: 15px;
+}
+
+a.btn-mini {
+    line-height: 18px;
+}
+
+.btn-small {
+    padding: 2px 10px;
+    font-size: 12px;
+    line-height: 16px;
+    *line-height: 15px;
+}
+
+a.btn-small {
+    line-height: 18px;
+}
+
+.btn-medium {
+    padding: 6px 20px;
+    font-size: 14px;
+    line-height: 18px;
+    *line-height: 16px;
+}
+
+a.btn-medium {
+    line-height: 18px;
+}
+
+.btn-large {
+    padding: 7px 18px;
+    font-size: 16px;
+    line-height: 20px;
+    *line-height: 17px;
+    font-weight: bold;
+}
+
+a.btn-large {
+    line-height: 22px;
+}
+
+.btn-xlarge {
+    padding: 8px 20px;
+    font-size: 18px;
+    line-height: 22px;
+    *line-height: 19px;
+}
+
+a.btn-xlarge {
+    line-height: 24px;
+}
+
+.btn-xxlarge {
+    padding: 10px 20px;
+    font-size: 18px;
+    line-height: 24px;
+    *line-height: 19px;
+}
+
+a.btn-xxlarge {
+    line-height: 26px;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #1d95d4;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
+    background: #3073a4;
+    color: #fff;
+}
+
+.btn-primary:active, .btn-primary.active {
+    background-color: #006a9a;
+}
+
+.btn-warning {
+    color: #ffffff;
+    background-color: #e7c251;
+}
+
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .btn-warning.disabled, .btn-warning[disabled] {
+    color: #ffffff;
+    background-color: #eb8a00;
+}
+
+.btn-warning:active, .btn-warning.active {
+    background-color: #eb8a00;
+}
+
+.btn-danger {
+    color: #ffffff;
+    background-color: #da4f49;
+}
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .btn-danger.disabled, .btn-danger[disabled] {
+    color: #ffffff;
+    background-color: #bd362f;
+}
+
+.btn-danger:active, .btn-danger.active {
+    background-color: #942a25;
+}
+
+.btn-light {
+    color: #457ba8;
+    background-color: #fafcff;
+}
+
+.btn-light:hover, .btn-light:focus, .btn-light:active, .btn-light.active, .btn-light.disabled, .btn-light[disabled] {
+    background: #edf4fe;
+    color: #457ba8;
+}
+
+.btn-danger:active, .btn-danger.active {
+    background-color: #942a25;
+}
+
+.btn-success {
+    color: #ffffff;
+    background-color: #027eb6;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .btn-success.disabled, .btn-success[disabled] {
+    color: #ffffff;
+    background-color: #006a9a;
+}
+
+.btn-success:active, .btn-success.active {
+    background-color: #006a9a;
+}
+
+.btn-info {
+    color: #3a87ad;
+    background-color: #e3f2fa;
+}
+
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .btn-info.disabled, .btn-info[disabled] {
+    color: #3a87ad;
+    background-color: #ddedf5;
+}
+
+.btn-info:active, .btn-info.active {
+    background-color: #24748c;
+}
+
+.btn-inverse {
+    color: #ffffff;
+    background-color: #999;
+}
+
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .btn-inverse.disabled, .btn-inverse[disabled] {
+    color: #ffffff;
+    background-color: #9eacb4;
+}
+
+.btn-inverse:active, .btn-inverse.active {
+    background-color: #9eacb4;
+}
+
+.btn-link, .btn-link:active, .btn-link[disabled] {
+    background-color: transparent;
+}
+
+.btn-link {
+    color: #0088cc;
+    cursor: pointer;
+    background: none;
+}
+
+.btn-link:hover, .btn-link:focus {
+    color: #005580;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.btn-link[disabled]:hover, .btn-link[disabled]:focus {
+    color: #333333;
+    text-decoration: none;
+}
+
+.btn-group {
+    display: inline-block;
+    *display: inline;
+    border-radius: 3px;
+    font-size: 0;
+    line-height: 0;
+    padding-left: 1px;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.btn-group {
+    *display: inline;
+}
+
+.btn-group .btn {
+    margin-left: -1px;
+    border-radius: 0;
+}
+
+.btn-group .btn:first-of-type {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.btn-group .btn:last-of-type {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.btn-group .btn-mini, .btn-group .btn-small {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* ========================================input======================================= */
+.input-append, .input-prepend {
+    display: inline-block;
+    font-size: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.input-append input, .input-prepend input, .input-append select, .input-prepend select, .input-prepend input.disabled {
+    font-size: 14px;
+}
+
+.input-append input, .input-append select, .input-append input.disabled {
+    vertical-align: middle;
+    margin-right: -1px;
+    *margin-right: -2px;
+    -webkit-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+}
+
+.input-prepend input, .input-prepend select, .input-prepend input.disabled {
+    vertical-align: middle;
+    margin-left: -1px;
+    *margin-left: -2px;
+    -webkit-border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.input-append .add-on, .input-prepend .add-on {
+    display: inline-block;
+    width: auto;
+    height: 20px;
+    min-width: 16px;
+    padding: 4px 5px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+    text-align: center;
+    text-shadow: 0 1px 0 #ffffff;
+    background-color: #eeeeee;
+    border: 1px solid #ccc;
+}
+
+.input-append .add-on, .input-prepend .add-on, .input-append .btn, .input-prepend .btn {
+    vertical-align: middle;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.input-prepend .add-on, .input-prepend .btn {
+    -webkit-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+}
+
+.input-append .add-on, .input-append .btn {
+    -webkit-border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.btn-disabled, .btn[disabled], .btn-disabled:hover, .btn[disabled]:hover, .btn-disabled:focus, .btn[disabled]:focus, .btn-disabled:active, .btn[disabled]:active {
+    cursor: default;
+    background-color: #efefef;
+    background-image: none;
+    color: #7a7a7a;
+    opacity: 0.65;
+    text-shadow: 0 1px 0 #ffffff;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+/* 文件上传 */
+.filebtn {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    height: 31px;
+    cursor: pointer;
+    width: 73px;
+    vertical-align: middle;
+    cursor: pointer;
+    zoom: 1;
+}
+
+.filebtn .filebox {
+    position: absolute;
+    right: 0;
+    top: 0;
+    _font-size: 100px; /* overwrite*/
+    _font-size: 12px;
+    _zoom: 10; /* overwrite */
+    height: 100%;
+    _height: auto;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "alpha(opacity=0)";
+    cursor: pointer;
+}
+
+.ffilelist .ffilename {
+    float: left;
+    width: 300px;
+}
+
+.ffilelist .fdelbtn {
+    float: right;
+}
+
+/* =============================================== table =============================================== */
+.table tbody tr.success td {
+    background-color: #dff0d8;
+}
+
+.table tbody tr.error td {
+    background-color: #f2dede;
+}
+
+.table tbody tr.warning td {
+    background-color: #fcf8e3;
+}
+
+.table tbody tr.info td {
+    background-color: #e1f5e1;
+}
+
+.table-hover tbody tr.success:hover td {
+    background-color: #d0e9c6;
+}
+
+.table-hover tbody tr.error:hover td {
+    background-color: #ebcccc;
+}
+
+.table-hover tbody tr.warning:hover td {
+    background-color: #faf2cc;
+}
+
+.table-hover tbody tr.info:hover td {
+    background-color: #d7f4d7;
+}
+
+/* =============================================== face & logo =============================================== */
+img.minixFace, img.miniFace, img.tinyFace, img.normalFace, img.middleFace, img.bigFace, img.tinyELogo, img.normalELogo, img.bigELogo {
+    vertical-align: middle;
+}
+
+img.minixFace {
+    width: 20px;
+    height: 20px;
+}
+
+img.miniFace {
+    width: 30px;
+    height: 30px;
+}
+
+img.tinyFace {
+    width: 50px;
+    height: 50px;
+}
+
+img.normalFace {
+    width: 80px;
+    height: 80px
+}
+
+img.middleFace {
+    width: 100px;
+    height: 100px
+}
+
+img.bigFace {
+    width: 200px;
+    height: 200px
+}
+
+img.tinyELogo {
+    width: 100px;
+    height: 50px
+}
+
+img.normalELogo {
+    width: 160px;
+    height: 80px
+}
+
+img.bigELogo {
+    width: 220px;
+    height: 110px
+}
+
+/*===============================================================表单================================================*/
+
+.ui-form .ui-form-item {
+    margin: 10px auto;
+}
+
+.ui-form .ui-label .ui-form-required {
+    color: red;
+    font-family: SimSun;
+    font-size: 14px;
+}
+
+.ui-form .ui-form-item .ui-label {
+    width: 170px;
+    float: left;
+    margin: 0 10px 0 0;
+    text-align: right;
+    font-size: 14px;
+    line-height: 35px;
+    vertical-align: middle;
+}
+
+.ui-form .ui-form-item .ui-input {
+    height: 13px;
+    border: 1px solid #bbb;
+    padding: 10px 20px 10px 5px;
+    width: 210px;
+    background-color: #fff;
+}
+
+.ui-form .ui-form-item .code {
+    width: 95px;
+    padding-right: 5px;
+}
+
+.ui-form .ui-form-item .code-box {
+    position: absolute;
+    width: 110px;
+    height: 35px;
+    text-align: center;
+    line-height: 32px;
+    box-sizing: border-box;
+    margin: 0 0 0 20px;
+}
+
+.ui-form .ui-form-item .ui-form-btn {
+    width: 200px;
+    height: 40px;
+    display: inline-block;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+}
+
+.dn {
+    display: none;
+
+}
+
+/*登录和注册页背景图*/
+.body-bg {
+    position: relative;
+    background-size: 100% 100%;
+    background-image: url('../images/bg-img/bg.png');
+}

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store,must-revalidate"/>
+    <meta HTTP-EQUIV="Expires" CONTENT="0"/>
+    <title>恩商贷</title>
+    <style>
+        /*reset*/
+        * {
+            font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;
+        }
+        body,
+        div,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        pre,
+        code,
+        form,
+        fieldset,
+        legend,
+        input,
+        button,
+        textarea,
+        p,
+        blockquote,
+        th,
+        td {
+            margin: 0;
+            padding: 0;
+        }
+        ol,
+        ul,
+        li {
+            list-style: none;
+            list-style-image: none;
+            list-style-type: none;
+        }
+        /*common样式*/
+        /* ======================================== 头部及导航条 ======================================= */
+        html,
+        body {
+            height: 100%;
+        }
+
+        .body-wrap {
+            min-width: 1200px;
+            margin: 0 auto;
+            background-color: #f4f4f4;
+        }
+
+        .layout-header {
+            width: 100%;
+            height: 125px;
+        }
+
+        .layout-header-top {
+            height: 35px;
+            width: 1200px;
+            margin: 0 auto;
+            line-height: 30px;
+        }
+
+        .layout-header-top .top-left {
+            float: left;
+            font-size: 14px;
+        }
+
+        .layout-header-top .top-right {
+            float: right;
+        }
+
+        .layout-header-top .top-right span {
+            margin: 0 0 0 16px;
+        }
+
+        .layout-header-top .top-right a {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .layout-header-top .top-right a.new-reg {
+            color: #fe4e25;
+            background: url("../images/reg_02.png") no-repeat left;
+            background-size: 30px 30px;
+            padding: 5px 0 5px 30px;
+        }
+
+        .layout-header-nav {
+            min-width: 1200px;
+            height: 90px;
+            width: 100%;
+            background-color: #ffffff;
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .layout-header-logo {
+            float: left;
+            background: url(../images/logo_07.png) no-repeat;
+            width: 195px;
+            height: 82px;
+            margin-top: 8px;
+        }
+
+        .header-nav {
+            float: right;
+            font-size: 16px;
+        }
+
+        .header-item {
+            float: left;
+            height: 90px;
+        }
+
+        .header-item a.active {
+            line-height: 90px;
+            vertical-align: middle;
+            padding: 10px 20px;
+        }
+
+        .header-item a.active:hover {
+            color: #428bca;
+        }
+
+        .header-item a.mycase {
+            color: #ff8474;
+            margin-left: 30px;
+            padding: 10px 0px 10px 50px;
+            background: url(../images/photo/mycase.png) no-repeat left;
+            background-size: 40px 40px;
+        }
+
+        /* ======================================== 底部 ======================================= */
+
+        .clear-fixed {
+            clear: both;
+        }
+
+        .layout-footer {
+            min-width: 1200px;
+            width: 100%;
+            background: #333;
+            height: 180px;
+        }
+
+        .footer-link-list {
+            width: 485px;
+            float: left;
+            margin-top: 20px;
+        }
+
+        .footer-link-list li {
+            height: 30px;
+        }
+
+        .link-list {
+            float: left;
+            margin-right: 20px;
+            line-height: 1.5;
+            color: #ccc;
+        }
+
+        .link-list a {
+            color: #ccc;
+            line-height: 20px;
+        }
+
+        .link-img {
+            float: left;
+            margin-left: 10px;
+        }
+
+        .link-img a {
+        }
+
+        /*联系电话*/
+
+        .contact {
+            width: 350px;
+            float: right;
+            margin-top: 15px;
+        }
+
+        .contact-num {
+            padding: 5px 0 5px 60px;
+            background: url(../images/photo/tel.png) no-repeat left;
+            background-size: 36px 36px;
+            float: right;
+            color: #ff4e25;
+            font-size: 18px;
+        }
+        .contact-time {
+            float: right;
+            color: #BBB;
+        }
+        .layout-footer .i-line {
+            clear: both;
+            border: 1px solid #bbb;
+        }
+        .frient-list {
+            width: 100%;
+        }
+        .footer-copyright {
+            clear: both;
+            text-align: center;
+        }
+        .footer-copyright span {
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+            vertical-align: middle;
+            color: #BBB;
+        }
+
+
+        /*页面样式*/
+        .layout-main{
+            height: 654px;
+        }
+        #layout_footer{
+            font-size: 12px;
+        }
+        .content-wrap{
+            width: 1200px;
+            background: #fff;
+            margin: 20px auto;
+            border: 1px solid #dedede;
+        }
+        .main-wrap{
+            width: 1200px;
+            margin: 0 auto;
+            border: 1px solid #dedede;
+            background: #ffffff;
+            margin-top: 100px;
+        }
+        .img-404{
+            width: 370px;
+            height: 461px;
+            margin: 86px auto;
+        }
+        .rerurn-index-btn{
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            background:#1d95d4 ;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            text-align: center;
+            color: #ffffff;
+            margin: 0 auto;
+        }
+        .serve-phone{
+            width: 190px;
+            height: 22px;
+            margin: 10px auto;
+        }
+        a{
+            color: #333333;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="body-wrap">
+    <!--头部-->
+    <div class="layout-header" id="layout_header">
+        <div class="layout-header-top">
+            <div class="top-left">
+                客服电话:400-1613-118
+            </div>
+            <div class="top-right">
+                <span><a href="p_guidelines.html">新手指引</a></span>
+            </div>
+        </div>
+        <div class="layout-header-nav">
+            <div class="container">
+                <div class="layout-header-logo"></div>
+                <ul class="header-nav">
+                    <li class="header-item"><a href="p_index.html" class="active">首页</a></li>
+                    <li class="header-item"><a href="p_invest.html" class="active">我要投资</a></li>
+                    <li class="header-item"><a href="p_loan_cash.html" class="active">我要借款</a></li>
+                    <li id="j_my_account" class="header-item"><a id = "header_my_account" href="p_login.html" class="active mycase">我的账户</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!--页面主体内容部分-->
+    <div class="layout-main">
+        <div class="content-wrap">
+        <div class="img-404"><img src="../images/404.png" alt=""/></div>
+        </div>
+    </div>
+    <!--底部footer部分-->
+    <div id="layout_footer">
+        <div class="layout-footer clear-fixed">
+            <div class="container">
+                <ul class="footer-link-list">
+                    <li class="link-list"><a href="p_about.html">关于恩商贷</a></li>
+                    <li class="link-list"><a href="p_parters.html">合作伙伴</a></li>
+                    <li class="link-list"><a href="p_guidelines.html">新手指引</a></li>
+                    <li class="link-list"><a href="Mailto:service@hongtulc.com">意见反馈</a></li>
+                    <li class="link-list"><a href="p_contact.html">联系我们</a></li>
+                    <li class="link-list"><a href="p_cost_detail.html">收费明细</a></li>
+                    <li class="link-list"><a href="javascript:void(0)">关注我们</a></li>
+                    <li class="link-img">
+                        <a href="javascript:void(0)"><img src="../images/weibo.png" alt="微博"></a>
+                    </li>
+                    <li class="link-img">
+                        <a href="javascript:void(0)"><img src="../images/qq.png" alt="QQ"></a>
+                    </li>
+                    <li class="link-img">
+                        <a href="javascript:void(0)"><img src="../images/weixin.png" alt="微信"></a>
+                    </li>
+                </ul>
+                <div class="contact">
+                    <p class="contact-num">400-1613-118</p>
+
+                    <p class="contact-time">(客服工作时间：&nbsp;早9:00~晚18:00)</p>
+                </div>
+                <div class="i-line"></div>
+                <ul class="footer-link-list frient-list">
+                    <li class="link-list">友情链接:</li>
+                    <li class="link-list"><a target="_blank" href="http://www.zswsh.com/">中山商会</a></li>
+                    <li class="link-list"><a target="_blank" href="http://t.knet.cn/">可信网站</a></li>
+                    <li class="link-list"><a target="_blank" href="http://www.cnispunion.org/">中国互联网联盟</a></li>
+                    <li class="link-list"><a target="_blank" href="http://www.wangdaizhijia.com/">网贷之家</a></li>
+                    <li class="link-list"><a target="_blank" href="http://www.cnispunion.org/">P2P信息网</a></li>
+                    <li class="link-list"><a target="_blank" href="http://www.p2peye.com/">网贷天眼</a></li>
+                </ul>
+                <div class="footer-copyright">
+                    <span><img src="../images/copyright-1.png" alt=""></span>
+                    <span><img src="../images/copyright-2.png" alt=""></span>
+                    <span><img src="../images/copyright-3.png" alt=""></span>
+                    <span>版权所有：恩商贷Coryright ©2015&nbsp;粤ICP备14084197号-1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
