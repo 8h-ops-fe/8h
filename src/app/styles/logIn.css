@@ -1,6 +1,10 @@
+html,body{height: 100%;}
+body{background: url(../images/login_bg.jpg);background-size:cover;}
 /*登录输入框样式star*/
-.login-box{width:548px;height:358px; position:absolute; top:50%;left:50%;margin-left:-274px;margin-top:-179px;border:1px solid #e4e4e4;background:url(../images/logo.jpg) center 50px no-repeat;}
-.form-user{width:305px; margin:124px auto 0 auto;}
-.form-user input{display:block;width:277px;height:43px;padding:0 14px;line-height:43px;font-size:14px; border:1px solid #e4e4e4; margin-bottom:20px;color:#666666;}
-.form-user input.btn{width:307px;border:1px solid #e4e4e4; background:#fff; text-align:center; color:#666666;}
+.login-title{width: 100%;text-align:center;color:#c1c2c4;height:80px;line-height:80px;font-size:20px;border-bottom: 1px solid #424756;box-shadow: 0 1px #393d47, 0 2px #373b45,0 3px #373b47,0 4px #373b45;}
+.login-error{width: 100%;color: #fff;background: #e4624f;opacity: 0.4;text-align: center;line-height: 34px;height: 34px;font-size: 16px;  position: absolute;top:64px;z-index:10;}
+.login-box{width:537px;height:335px; position:absolute; top:50%;left:50%;margin-left:-274px;margin-top:-179px;border:1px solid #23252b;}
+.form-user{width:305px; margin:34px auto 0 auto;}
+.form-user input{display:block;width:280px;height:50px;padding-left:20px;line-height:50px;font-size:14px; border:1px solid #23252b; margin-bottom:20px;color:#696a6d;background: #2f323b;}
+.form-user input.btn{cursor:pointer;width: 300px; background:#e4624f; text-align:center; color:#fff;}
 /*登录输入框样式end*/
