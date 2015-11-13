@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>8H-管理后台首页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="keywords" content="8H床垫">
+    <meta name="description" content="8H床垫">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"/>
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store,must-revalidate"/>
+    <meta HTTP-EQUIV="Expires" CONTENT="0"/>
+    <!--引入默认基本样式-->
+    <link rel="stylesheet" type="text/css" href="../styles/reset.css">
+    <!--引入自己写的样式-->
+    <link rel="stylesheet" type="text/css" href="../styles/index.css">
+</head>
+
+<body>
+    <!--订单管理star-->
+    <div class="order-box">
+        <div class="nav">
+            <ul>
+                <li class="logo"><a href="javascript:;"></a></li>
+                <li class="active"><a href="javascript:;" class="icon1">订单管理</a></li>
+                <li><a href="javascript:;" class="icon2">售后管理</a></li>
+                <li><a href="javascript:;" class="icon3">商品管理</a></li>
+                <li><a href="javascript:;" class="icon4">用户管理</a></li>
+                <li><a href="javascript:;" class="icon5">系统管理</a></li>
+            </ul>
+        </div>
+        <div class="wrap">
+            <h1 class="user">Hello,奔跑的猕猴桃</h1>
+            <!--条件-->
+            <div class="condition">
+                <ul class="normol normol-t">
+                    <li>
+                        <span>商品编号：</span>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <span>商品名称：</span>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <span>价格：</span>
+                        <input type="text" class="money" />
+                        <span>-</span>
+                        <input type="text" class="money" />
+                    </li>
+                </ul>
+                <ul class="ditail ditial-th">
+                    <li>
+                        <span>库存：</span>
+                        <input type="text" />
+                        <span>-</span>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <ul class="radio">
+                            <li>商品状态：</li>
+                            <li><span class="r"></span><span class="w">全部</span></li>
+                            <li><span class="r"></span><span class="w">已上架</span></li>
+                            <li><span class="r"></span><span class="w">已下架</span></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="search-box"><a href="javascript:;" class="search">查询</a></div>
+            </div>
+            <!--条件END-->
+            <!--右侧列表内容-->
+            <div class="list">
+                <a href="javascript:;" class="btn">导出订单</a>
+                <dl class="cus-service">
+                    <dt>
+                        <ul class="line">
+                            <li class="w124">售后订单</li>
+                            <li class="w156">订单号</li>
+                            <li class="w60">售后类型</li>
+                            <li class="w60">联系人</li>
+                            <li class="w110">联系电话</li>
+                            <li class="w116">实际收货时间</li>
+                            <li class="w94">申请时间</li>
+                            <li class="w77">退货原因</li>
+                            <li class="w68">处理状态</li>
+                            <li class="w94 no-boder">审核结果</li>
+                        </ul>
+                    </dt>
+                    <dd>
+                        <ul class="line">
+                            <li class="w124 blue">H201510001</li>
+                            <li class="w156 blue">2015101413492316</li>
+                            <li class="w60">换货</li>
+                            <li class="w60">张依依</li>
+                            <li class="w110">13102923243</li>
+                            <li class="w116">2015-10-31</li>
+                            <li class="w94">2015-10-31</li>
+                            <li class="w77">买重了</li>
+                            <li class="w68">已处理</li>
+                            <li class="w94 no-boder">通过</li>
+                        </ul>
+                    </dd>
+                    <dd>
+                        <ul class="line">
+                            <li class="w124 blue">H201510001</li>
+                            <li class="w156 blue">2015101413492316</li>
+                            <li class="w60">换货</li>
+                            <li class="w60">张依依</li>
+                            <li class="w110">13102923243</li>
+                            <li class="w116">2015-10-31</li>
+                            <li class="w94">2015-10-31</li>
+                            <li class="w77">买重了</li>
+                            <li class="w68 red">待处理</li>
+                            <li class="w94 no-boder"><a href="javascript:;">通过</a> <a href="javascript:;">不通过</a></li>
+                        </ul>
+                    </dd>
+                    <dd>
+                        <ul class="line">
+                            <li class="w124 blue">H201510001</li>
+                            <li class="w156 blue">2015101413492316</li>
+                            <li class="w60">换货</li>
+                            <li class="w60">张依依</li>
+                            <li class="w110">13102923243</li>
+                            <li class="w116">2015-10-31</li>
+                            <li class="w94">2015-10-31</li>
+                            <li class="w77">买重了</li>
+                            <li class="w68">已处理</li>
+                            <li class="w94 no-boder">不通过</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <!--右侧列表内容EDN-->
+        </div>
+    </div>
+    <!--订单管理END-->
+
+
+
+    <!-- 脚本引入 -->
+    <script src="../requirejs/require.js" data-main="../js/config.js"></script>
+    <script src="../js/index.js"></script>
+</body>
+</html>

@@ -17,7 +17,7 @@ html,body{height:100%;}
 .order-box .nav li a.icon3{background:url(../images/icon.png) 21px -154px no-repeat;}
 .order-box .nav li a.icon4{background:url(../images/icon.png) 22px -214px no-repeat;}
 .order-box .nav li a.icon5{background:url(../images/icon.png) 21px -274px no-repeat;}
-.wrap{width:1000px;  float:left;}
+.wrap{width:1000px;  float:left; overflow:hidden;}
 .wrap .user{height:60px; line-height:60px;color:#cccccc;font-size:18px;background:#343843;padding:0 20px; text-align:right;}
 /*左侧菜单END*/
 /*订单管理 条件star*/
@@ -25,15 +25,23 @@ html,body{height:100%;}
 .condition .normol,.condition .ditail,.condition .state{margin-bottom:20px;overflow: hidden;}
 .condition .normol li{float:left;  margin-right: 21px;}
 .condition .normol span{font-size:16px;color:#ccc;}
-.condition .normol input{width:228px;}
+.condition .normol input{width:228px;border:1px solid #ccc; }
 .condition .ditail li{float:left; margin-right:18px;}
 .condition .ditail span{font-size:16px;color:#ccc;}
-.condition .ditail input{width:178px;}
+.condition .ditail input{width:178px;border:1px solid #ccc; }
 .condition .state li{ float:left;font-size:16px;color:#ccc; margin-right: 54px;}
 .condition .state span.r{display:inline-block; width:16px; height:18px; background:url(../images/icon.png) 0px -352px no-repeat;  margin-right: 5px; float:left;}
 .condition .state span.w{display:inline-block;float:left;font-size:16px;color:#ccc;}
 .search-box{width:970px;border-bottom:1px solid #cccccc; padding-bottom:30px;}
 .condition .search{display:block;width:120px;height:30px; background:#e4624f; text-align:center;line-height:30px; color:#fff; margin:0 auto;}
+/*第二页*/
+.condition .margin-t li{float:left;  margin-right: 16px;}
+.condition .ditial-t li{margin-right: 107px;}
+.condition .state-t li{margin-right: 129px;}
+.condition .ditail .radio li,.condition .state-t .radio li{float:left;font-size:16px;color:#ccc; margin-right:45px;}
+.condition .ditail .radio span.r,.condition .state-t .radio span.r{display:inline-block; width:16px; height:18px; background:url(../images/icon.png) 0px -352px no-repeat;  margin-right: 5px; float:left;}
+.condition .ditail .radio span.w,.condition .state-t .radio span.w{display:inline-block;float:left;font-size:16px;color:#ccc;}
+
 /*订单管理 条件end*/
 /*订单管理 列表star*/
 .list{width:970px;margin-left:30px; padding-top:30px;}
@@ -62,8 +70,35 @@ html,body{height:100%;}
 .detial-commodity dd.forth-btn .two{margin:30px 0;}
 .detial-commodity dd.forth-btn .two li{font-size:14px;color:#333; width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:10px auto;}
 /*订单管理 列表end*/
+/*售后*/
+.cus-service{width:968px; border:1px solid #ccc;border-bottom:0;}
+.cus-service dt{height:48px;background:#f5f5f5;border-bottom:1px solid #ccc;}
+.cus-service dt li{height:48px;line-height:48px; text-align:center; float:left; border-right:1px solid #ccc; font-size:14px;color:#333;}
+.cus-service dt li.no-boder{border:0;}
+.cus-service dd{height:50px;border-bottom:1px solid #ccc;}
+.cus-service dd li{height:50px;line-height:50px; text-align:center; float:left; border-right:1px solid #ccc;font-size:14px;color:#333;}
+.cus-service dd li.no-boder{border:0;}
+.cus-service dd li.blue{ color:#4f8ee4;}
+.cus-service dd li.red{color:#e4624f;}
+.cus-service dd li a{font-size:14px; color:#4f8ee4;}
+.w124{width:124px;}
+.w156{width:156px;}
+.w60{width:60px;}
+.w110{width:110px;}
+.w116{width:116px;}
+.w94{width:94px;}
+.w77{width:77px;}
+.w68{width:68px;}
 
+/*售后END*/
+/*商品管理*/
+.condition .normol-t li{margin-right:27px}
+.condition .normol-t li input{width:178px;}
+.condition .normol-t li input.money{width:148px;}
+.condition .ditial-th li{margin-right:125px}
+/*商品管理END*/
 
+.no-boder{border:0;}
 
 
 
