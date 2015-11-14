@@ -1,6 +1,6 @@
 /**
  * Created by hantengfei on 15/11/12.
  */
-define(function (require) {
+require(["jquery-1.11.3.min"], function($){
 
 });

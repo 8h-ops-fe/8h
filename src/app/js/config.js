@@ -6,3 +6,7 @@ require.config({
         jquery: 'jquery-1.11.3.min'
     }
 });
+
+define(['lib/jquery'], function ($) {
+
+});
