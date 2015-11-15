@@ -32,10 +32,59 @@
         <div class="wrap">
             <h1 class="user">Hello,奔跑的猕猴桃</h1>
             <!--条件-->
-            <div class="condition-box"></div>
+            <div class="condition">
+                <ul class="normol normol-t">
+                    <li>
+                        <span>商品编号：</span>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <span>商品名称：</span>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <span>价格：</span>
+                        <input type="text" class="money" />
+                        <span>-</span>
+                        <input type="text" class="money" />
+                    </li>
+                </ul>
+                <ul class="ditail ditial-th">
+                    <li>
+                        <span>库存：</span>
+                        <input type="text" />
+                        <span>-</span>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <ul class="radio">
+                            <li>商品状态：</li>
+                            <li><span class="r"></span><span class="w">全部</span></li>
+                            <li><span class="r"></span><span class="w">已上架</span></li>
+                            <li><span class="r"></span><span class="w">已下架</span></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="search-box"><a href="javascript:;" class="search">查询</a></div>
+            </div>
             <!--条件END-->
             <!--右侧列表内容-->
-            <div class="condition-list"></div>
+            <div class="list">
+                <a href="javascript:;" class="btn">添加商品</a>
+                <dl class="cus-service">
+                    <dt>
+                        <ul class="line">
+                            <li class="w124">商品编号</li>
+                            <li class="w156">商品名称</li>
+                            <li class="w190">颜色/规格</li>
+                            <li class="w110">价格</li>
+                            <li class="w118">库存</li>
+                            <li class="w110">商品状态</li>
+                            <li class="w154 no-boder">操作</li>
+                        </ul>
+                    </dt>
+                </dl>
+            </div>
             <!--右侧列表内容EDN-->
         </div>
     </div>

@@ -17,7 +17,6 @@
 </head>
 
 <body>
-<div class="mask-bg"></div>
 <!--订单管理star-->
 <div class="order-box">
     <div class="nav">
@@ -33,17 +32,77 @@
     <div class="wrap">
         <h1 class="user">Hello,奔跑的猕猴桃</h1>
         <!--条件-->
-        <div class="condition-box"></div>
-    </div>
-    <div class="user-pop">
+        <div class="condition">
+            <ul class="normol normol-t ditail ditial-th">
+                <li  class="margin-r-20">
+                    <span>手机号：</span>
+                    <input type="text" class="w160" />
+                </li>
+                <li  class="margin-r-80">
+                    <span>申请时间：</span>
+                    <input type="text" class="time w118" />
+                    <span class="margin-10">-</span>
+                    <input type="text" class="time w118" />
+                </li>
+                <li class="margin-r-80 after-type">
+                    <ul class="radio">
+                        <li>售后类型</li>
+                        <li><span class="r"></span><span class="w">全部</span></li>
+                        <li><span class="r"></span><span class="w">退货</span></li>
+                        <li><span class="r"></span><span class="w">换货</span></li>
+                    </ul>
+                </li>
+            </ul>
 
+            <div class="search-box"><a href="javascript:;" class="search">查询</a></div>
+        </div>
+        <!--条件END-->
+        <!--右侧列表内容-->
+        <div class="list">
+            <dl class="cus-service">
+                <dt>
+                <ul class="line">
+                    <li class="w240">手机号</li>
+                    <li class="w242">注册时间</li>
+                    <li class="w242">用户状态</li>
+                    <li class="w240 no-border">操作</li>
+                </ul>
+                </dt>
+                <dd>
+                    <ul class="line">
+                        <li class="w240 blue">13245345673</li>
+                        <li class="w242">2015101413492316</li>
+                        <li class="w242">已启用</li>
+                        <li class="w240 blue">禁用</li>
+                    </ul>
+                </dd>
+                <dd>
+                    <ul class="line">
+                        <li class="w240 blue">13245345673</li>
+                        <li class="w242">2015101413492316</li>
+                        <li class="w242">已启用</li>
+                        <li class="w240 blue">禁用</li>
+                    </ul>
+                </dd>
+                <dd>
+                    <ul class="line">
+                        <li class="w240 blue">13245345673</li>
+                        <li class="w242">2015101413492316</li>
+                        <li class="w242">已启用</li>
+                        <li class="w240 blue">禁用</li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+        <!--右侧列表内容EDN-->
     </div>
 </div>
 <!--订单管理END-->
 
+
+
 <!-- 脚本引入 -->
 <script src="../requirejs/require.js" data-main="../js/config.js"></script>
-<script src="../js/jquery.js"></script>
-<script src="../tpl/userManage.js"></script>
+<script src="../js/index.js"></script>
 </body>
 </html>

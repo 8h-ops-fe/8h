@@ -21,14 +21,16 @@
     });
     $(".icon3").on("click", function(){
         $(".condition-box").load("common/commodity/com_condition.html");
-        $(".user-pop").load("common/commodity/com_list.html");
+        $(".condition-list").load("common/commodity/com_list.html");
     });
     $(".icon4").on("click", function(){
         $(".condition-box").load("common/user/user_condition.html");
+        $(".condition-list").load("common/user/user_list.html");
         $(".user-pop").load("common/user/user_pop.html");
     });
     $(".icon5").on("click", function(){
         $(".condition-box").load("common/admin/admin_condition.html");
+        $(".condition-list").load("common/admin/admin_list.html");
         $(".user-pop").load("common/admin/admin_pop.html");
     });
 })();
