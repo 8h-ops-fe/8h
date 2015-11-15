@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>8H-管理后台首页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="keywords" content="8H床垫">
+    <meta name="description" content="8H床垫">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"/>
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store,must-revalidate"/>
+    <meta HTTP-EQUIV="Expires" CONTENT="0"/>
+    <!--引入默认基本样式-->
+    <link rel="stylesheet" type="text/css" href="../styles/reset.css">
+    <!--引入自己写的样式-->
+    <link rel="stylesheet" type="text/css" href="../styles/index.css">
+</head>
+
+<body>
+<div class="mask-bg"></div>
+<!--订单管理star-->
+<div class="order-box">
+    <div class="nav">
+        <ul>
+            <li class="logo"><a href="javascript:;"></a></li>
+            <li class="active"><a href="javascript:;" class="icon1">订单管理</a></li>
+            <li><a href="javascript:;" class="icon2">售后管理</a></li>
+            <li><a href="javascript:;" class="icon3">商品管理</a></li>
+            <li><a href="javascript:;" class="icon4">用户管理</a></li>
+            <li><a href="javascript:;" class="icon5">系统管理</a></li>
+        </ul>
+    </div>
+    <div class="wrap">
+        <h1 class="user">Hello,奔跑的猕猴桃</h1>
+        <!-- 条件-->
+        <div class="condition-box"></div>
+        <!--右侧列表内容-->
+        <div class="condition-list"></div>
+        <!--右侧列表内容EDN-->
+    </div>
+
+    <!-- 后台人员详情-->
+    <div class="admin-user">
+        <div class="pop-title">
+            <span>后台人员详情</span>
+            <i class="close"></i>
+        </div>
+        <div class="admin-top">
+            <p class="basic-inf">基本信息</p>
+            <div class="admin-top-left float-l">
+                <p>
+                    <span class="color-999">用户名：</span>
+                    <span>张依依</span>
+                </p>
+                <p>
+                    <span class="color-999">添加时间：</span>
+                <span>
+                    <em>2015-10-30</em>
+                    <em>10：30</em>
+                </span>
+                </p>
+                <p>
+                    <span class="color-999">用户状态：</span>
+                    <select name="" id="admin-state">
+                        <option value="已启用">已启用</option>
+                        <option value="已禁用">已禁用</option>
+                    </select>
+                </p>
+            </div>
+            <div class="admin-top-right float-l">
+                <p>
+                    <span class="color-999">密码：</span>
+                    <span>********</span>
+                </p>
+                <p>
+                    <span class="color-999">最近登录时间：</span>
+                <span>
+                    <em>2015-10-30</em>
+                    <em>10：30</em>
+                </span>
+                </p>
+            </div>
+        </div>
+        <div class="admin-bottom">
+            <p class="margin-t-23">权限设置</p>
+            <p>订单管理</p>
+            <p class="margin-l-25">
+                <span class="color-999">订单导出：</span>
+                <i class="selected"></i>
+                <span>开启</span>
+                <i class="not-selected"></i>
+                <span>关闭</span>
+            </p>
+            <p>系统管理-后台人员管理</p>
+            <p class="margin-l-25">
+                <span class="color-999">添加后台用户：</span>
+                <i class="selected"></i>
+                <span>开启</span>
+                <i class="not-selected"></i>
+                <span>关闭</span>
+            </p>
+            <div class="admin-user-btn">
+                <input type="button" value="保存" class="keep"/>
+                <input type="button" value="取消" class="cancel"/>
+            </div>
+        </div>
+    </div>
+    <!-- 后台人员详情END-->
+
+    <!-- 添加后台人员-->
+    <div class="add-admin">
+        <div class="pop-title">
+            <span>添加后台人员</span>
+            <i class="close"></i>
+        </div>
+        <div class="add-admin-top">
+            <p class="basic-inf">基本信息</p>
+            <div class="admin-top-left float-l">
+                <span class="color-999">用户名：</span>
+                <input type="text"/>
+            </div>
+            <div class="admin-top-right float-l">
+                <span class="color-999">密码：</span>
+                <input type="password"/>
+            </div>
+        </div>
+        <div class="admin-bottom">
+            <p class="margin-t-23">权限设置</p>
+            <p>订单管理</p>
+            <p class="margin-l-25">
+                <span class="color-999">订单导出：</span>
+                <i class="selected"></i>
+                <span>开启</span>
+                <i class="not-selected"></i>
+                <span>关闭</span>
+            </p>
+            <p>系统管理-后台人员管理</p>
+            <p class="margin-l-25">
+                <span class="color-999">添加后台用户：</span>
+                <i class="selected"></i>
+                <span>开启</span>
+                <i class="not-selected"></i>
+                <span>关闭</span>
+            </p>
+            <div class="admin-user-btn">
+                <input type="button" value="保存" class="keep"/>
+                <input type="button" value="取消" class="cancel"/>
+            </div>
+        </div>
+    </div>
+    <!-- 添加后台人员END-->
+
+    <!-- 禁用用户-->
+    <div class="small-pop">
+        <p class="small-pop-text">确定禁用该用户么？</p>
+        <div class="small-pop-btn">
+            <input type="button" value="确定" class="deter"/>
+            <input type="button" value="取消" class="cancel"/>
+        </div>
+    </div>
+    <!-- 禁用用户END-->
+</div>
+<!--订单管理END-->
+
+
+
+<!-- 脚本引入 -->
+<script src="../requirejs/require.js" data-main="../js/config.js"></script>
+<script src="../js/index.js"></script>
+</body>
+</html>
