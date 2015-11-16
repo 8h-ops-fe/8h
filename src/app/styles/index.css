@@ -75,7 +75,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .detial-commodity dd.forth-btn .two li{font-size:14px;color:#333; width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:10px auto;}
 /*订单管理 列表end*/
 /*订单编辑*/
-.order-edit{position: absolute;z-index: 10;top:10px;left:20px;display:none;}
+.order-edit{position: absolute;z-index: 10;top:10px;left:20px;display:block;}
 .edit-order{padding:30px;background:#fff;width:870px}
 .edit-order .title{width:870px; text-align: center; border-bottom: 1px solid #ccc;margin-bottom:20px;padding-bottom:30px;font-size:18px;color:#333; }
 .edit-order .order-mes{font-size:18px;color:#333; margin: 10px 0;}
@@ -160,6 +160,9 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .order-state-succ .order-state-ico{background:url("../images/order_icon.png") no-repeat -178px -46px;}
 
 /*订单编辑结束*/
+/*订单详情*/
+.order-det{position: absolute;z-index: 10;top:10px;left:20px;display:block;}
+/*订单详情end*/
 /*售后*/
 .cus-service{width:968px; border:1px solid #ccc;border-bottom:0;}
 .cus-service dt{height:48px;background:#f5f5f5;border-bottom:1px solid #ccc;}
@@ -186,6 +189,22 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .condition .normol-t li input{width:178px;height:22px;}
 .condition .normol-t li input.money{width:148px;}
 .condition .ditial-th li{margin-right:125px}
+.cus-adm{width:968px; border:1px solid #ccc;border-bottom:0;}
+.cus-adm dt{height:48px;background:#f5f5f5;border-bottom:1px solid #ccc;}
+.cus-adm dt li{height:48px;line-height:48px; text-align:center; float:left; border-right:1px solid #ccc; font-size:14px;color:#333;}
+.cus-adm dt li.no-boder{border:0;}
+.cus-adm dd{overflow:hidden;border-bottom:1px solid #ccc;}
+.cus-adm dd ul{overflow:hidden; height:auto;}
+.cus-adm dd li{height:100%;text-align:center; float:left; border-right:1px solid #ccc;font-size:14px;color:#333; position:relative;}
+.cus-adm dd li p{height:49px;border-bottom:1px solid #ccc;line-height:49px;text-align:center;}
+.cus-adm dd li.no-boder,.cus-adm dd li .no-boder{border:0;}
+.cus-adm dd li.blue{ color:#4f8ee4;}
+.cus-adm dd li.red{color:#e4624f;}
+.cus-adm dd li a{font-size:14px; color:#4f8ee4;}
+.cus-adm dd li.w124 p,
+.cus-adm dd li.w156 p,
+.cus-adm dd li.w110 p,
+.cus-adm dd li.w154 p{ position:absolute; top:50%;margin-top:-25px; border:none; text-align:center; width:100%;}
 .w124{width: 124px;}
 .w156{width: 156px;}
 .w190{width: 190px;}
@@ -233,7 +252,8 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .admin-user-btn{width:752px;text-align: center;position: absolute;bottom:30px;}
 .admin-user-btn .keep,.admin-user-btn .cancel{width:98px;height:28px;border:1px solid #e4624f;border-radius: 1px;background: #fff;color:#e4624f;cursor: pointer;}
 .admin-user-btn input.keep{background: #e4624f;color:#fff;margin-right:20px;}
-
+.cus-service dd li .blue{ color:#4f8ee4;}
+.cus-service dd li .red{color:#e4624f;}
 .add-admin{width: 850px;height:500px;position:absolute;top:260px;left:180px;z-index: 100;background: #fff;display: none;}
 .add-admin-top{width:752px;height:100px;border-bottom: 1px solid #ccc;margin-left:30px;padding-left: 30px;}
 .add-admin-top input{width:178px;height:24px;border:1px solid #ccc;}
@@ -253,7 +273,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .small-pop select{width: 158px;height:28px;border:1px solid #ccc;margin-left:15px;}
 #refuse{width: 276px;height:78px;border:1px solid #ccc;margin:29px 0 20px 21px;padding:10px;font-size:14px;color:#999;resize:none;}
 /*库存编辑*/
-.stock-edit{width:686px;background:#fff;position: absolute;top:50%;left:50%;margin-left:-343px;margin-top:-200px;text-align:center;z-index:100;-display: none;padding-bottom:60px;}
+.stock-edit{width:686px;background:#fff;position: absolute;top:50%;left:50%;margin-left:-343px;margin-top:-200px;text-align:center;z-index:100;-display: none;padding-bottom:60px; display:none;}
 .stock-edit .stock-edit-title{font-size:18px;color:#333;height:76px;line-height:76px;border-bottom:1px solid #ccc;margin:0 20px;position: relative;}
 .stock-edit .stock-edit-title span{font-size:18px;color:#333;}
 .stock-edit p input{width:178px;height:24px;border:1px solid #ccc;margin-left:70px;}
