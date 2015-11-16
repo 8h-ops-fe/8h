@@ -210,6 +210,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .user-details{width:800px;height:400px;background:#fff;position:absolute;left:206px;top:360px;z-index:100;display: none;}
 .pop-content{width:100%;height:324px;margin:0 30px;overflow: hidden;}
 .pop-content-left,.pop-content-right{width:369px;float:left;margin-top:33px;}
+.pop-title{width:92%;height:78px;line-height: 78px;color:#333;text-align: center;position: relative;font-size:18px;border-bottom:1px solid #ccc;margin:0 30px;}
 .pop-input-type{width:95px;text-align: right;display: inline-block;color:#999;}
 .pop-content-left div,.pop-content-right div{height:38px;line-height:38px;}
 .pop-content input,.pop-content select{width:198px;height:24px;border:1px solid #ccc;}
