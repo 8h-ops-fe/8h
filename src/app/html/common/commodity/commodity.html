@@ -1,0 +1,302 @@
+<!--商品查询条件-->
+<div class="condition">
+    <ul class="normol normol-t">
+        <li>
+            <span>商品编号：</span>
+            <input type="text" />
+        </li>
+        <li>
+            <span>商品名称：</span>
+            <input type="text" />
+        </li>
+        <li>
+            <span>价格：</span>
+            <input type="text" class="money" />
+            <span>-</span>
+            <input type="text" class="money" />
+        </li>
+    </ul>
+    <ul class="ditail ditial-th">
+        <li>
+            <span>库存：</span>
+            <input type="text" />
+            <span>-</span>
+            <input type="text" />
+        </li>
+        <li>
+            <ul class="radio">
+                <li>商品状态：</li>
+                <li><span class="r"></span><span class="w">全部</span></li>
+                <li><span class="r"></span><span class="w">已上架</span></li>
+                <li><span class="r"></span><span class="w">已下架</span></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="search-box"><a href="javascript:;" class="search">查询</a></div>
+</div>
+<!--商品查询条件END-->
+
+<!--商品列表-->
+<div class="list">
+    <a href="javascript:;" class="btn">添加商品</a>
+    <dl class="cus-adm">
+        <dt>
+        <ul class="line">
+            <li class="w124">商品编号</li>
+            <li class="w156">商品名称</li>
+            <li class="w190">颜色/规格</li>
+            <li class="w110">价格</li>
+            <li class="w118">库存</li>
+            <li class="w110">商品状态</li>
+            <li class="w154 no-boder">操作</li>
+        </ul>
+        </dt>
+        <dd>
+            <ul class="line-term">
+                <li class="w124"><p><a href="javascript:;">CD001</a></p></li>
+                <li class="w156"><p>Q1床垫</p></li>
+                <li class="w190">
+                    <p>咖啡金 / 1.5m × 2.0m</p>
+                    <p>素蓝灰 / 1.5m × 2.0m</p>
+                    <p>咖啡金 / 1.5m × 2.0m</p>
+                    <p class="no-boder">素蓝灰 / 1.5m × 2.0m</p>
+                </li>
+                <li class="w110">
+                    <p>2799</p>
+                    <p>2799</p>
+                    <p>2799</p>
+                    <p class="no-boder">2799</p>
+                </li>
+                <li class="w118">
+                    <p>2799</p>
+                    <p class="red">1</p>
+                    <p>编辑库存</p>
+                    <p class="no-boder">编辑库存</p>
+                </li>
+                <li class="w110"><p>已上架</p></li>
+                <li class="w154 no-boder">
+                    <p>
+                        <a href="javascript:;">编辑</a>
+                        <a href="javascript:;">下架</a>
+                    </p>
+                </li>
+            </ul>
+        </dd>
+        <dd>
+            <ul class="line-term">
+                <li class="w124"><p><a href="javascript:;">CD001</a></p></li>
+                <li class="w156"><p>Q1床垫</p></li>
+                <li class="w190">
+                    <p>咖啡金 / 1.5m × 2.0m</p>
+                    <p class="no-boder">素蓝灰 / 1.5m × 2.0m</p>
+                </li>
+                <li class="w110">
+                    <p>2799</p>
+                    <p class="no-boder">2799</p>
+                </li>
+                <li class="w118">
+                    <p>2799</p>
+                    <p class="no-boder">编辑库存</p>
+                </li>
+                <li class="w110"><p>已上架</p></li>
+                <li class="w154 no-boder">
+                    <p>
+                        <a href="javascript:;">编辑</a>
+                        <a href="javascript:;">下架</a>
+                    </p>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+</div>
+<script>
+    for(var i = 0;i<$('.cus-adm .line-term').length;i++){
+        var p = $($('.cus-adm .line-term')[i]).find('.w190 p');
+        var adm_li_h = p.length * p.height();
+        $($('.cus-adm .line-term')[i]).find('li').css('height',adm_li_h+'px');
+    }
+</script>
+<!--商品列表END-->
+
+<!--商品详情-->
+<div class="edit-order">
+    <h1 class="title">商品详情</h1>
+    <ul class="goods-detial">
+        <li>
+            <p class="left line1"><span class="c9">商品编号：</span><span class="c3" >CD0001</span></p>
+            <p class="right line1"><span class="c9">商品名称：</span><span class="c3">8H床垫</span></p>
+        </li>
+        <li>
+            <p class="left">商品颜色：</p>
+            <div class="right">
+                <ul class="goods-color">
+                    <li>咖啡金</li>
+                    <li>AB988A</li>
+                    <li class="color"></li>
+                    <li><img width="24" height="24" /></li>
+                </ul>
+                <ul class="goods-color">
+                    <li>咖啡金</li>
+                    <li>AB988A</li>
+                    <li class="color"></li>
+                    <li><img width="24" height="24" /></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <p class="left">规格/价格:</p>
+            <p class="right">
+            <ul class="goods-size">
+                <li>规格</li>
+                <li>1.5x2.0m</li>
+                <li>1.5x2.0m</li>
+            </ul>
+            <ul class="goods-size">
+                <li>价格</li>
+                <li>2799</li>
+                <li>2799</li>
+            </ul>
+            </p>
+        </li>
+        <li>
+            <p class="left">商品介绍：</p>
+            <p class="right">商品介绍商品介绍商品介绍商品介绍商品介，绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品，介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商，品介绍商品介绍商品介绍商品介绍商品介绍商品介绍，商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品。介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍，商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商，品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍。</p>
+        </li>
+        <li>
+            <p class="left"><span class="r">*</span>商品介绍：</p>
+            <p class="right">
+                <select>
+                    <option>上架</option>
+                    <option>上架</option>
+                    <option>上架</option>
+                    <option>上架</option>
+                </select>
+            </p>
+        </li>
+    </ul>
+
+    <p class="btn-e">
+        <a href="javascript:;" class="save">保存</a>
+        <a href="javascript:;" class="canle">取消</a>
+    </p>
+</div>
+<!--商品详情END-->
+
+<!--商品编辑-->
+<div class="edit-order">
+    <h1 class="title">商品编号</h1>
+    <ul class="goods-detial">
+        <li>
+            <p class="left line1"><span class="c9"><span class="r">*</span>商品编号：</span><input type="text" /></p>
+            <p class="right line1"><span class="c9"><span class="r">*</span>商品名称：</span><input type="text" /></p>
+        </li>
+        <li>
+            <p class="left"><span class="r">*</span>商品颜色：</p>
+            <div class="right">
+                <ul class="goods-color">
+                    <li><input type="text" /></li>
+                    <li class="col"><input type="text" /><i></i></li>
+                    <li><img width="24" height="24" /></li>
+                    <li><a href="javascript:;">替换图片</a></li>
+                    <li class="add"></li>
+                </ul>
+
+                <ul class="goods-color">
+                    <li><input type="text" /></li>
+                    <li class="col"><input type="text" /><i></i></li>
+                    <li><img width="24" height="24" /></li>
+                    <li><a href="javascript:;">替换图片</a></li>
+                    <li class="add"></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <p class="left"><span class="r">*</span>规格/价格:</p>
+            <div class="right">
+                <ul class="goods-size-c">
+                    <li>规格</li>
+                    <li>价格</li>
+                </ul>
+                <ul class="goods-size-c">
+                    <li><input type="text" value="1.5*2.0" /></li>
+                    <li><input type="text" value="2799" /></li>
+                    <li class="add"></li>
+                </ul>
+                <ul class="goods-size-c">
+                    <li><input type="text" value="1.5*2.0" /></li>
+                    <li><input type="text" value="2799" /></li>
+                    <li class="add"></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <p class="left"><span class="r">*</span>商品介绍：</p>
+            <p class="right"><textarea></textarea></p>
+        </li>
+        <li>
+            <p class="left"><span class="r">*</span>商品介绍：</p>
+            <p class="right">
+                <select>
+                    <option>上架</option>
+                    <option>上架</option>
+                    <option>上架</option>
+                    <option>上架</option>
+                </select>
+            </p>
+        </li>
+    </ul>
+
+    <p class="btn-e">
+        <a href="javascript:;" class="save">保存</a>
+        <a href="javascript:;" class="canle">取消</a>
+    </p>
+</div>
+<!--商品编辑END-->
+
+<!-- 下架商品-->
+<div class="small-pop">
+    <p class="small-pop-text">确定下架商品么？</p>
+    <div class="small-pop-btn">
+        <input type="button" value="确定" class="deter"/>
+        <input type="button" value="取消" class="cancel"/>
+    </div>
+</div>
+<!-- 下架商品END-->
+
+<!-- 库存编辑-->
+<div class="stock-edit" style="display: block">
+    <p class="stock-edit-title">
+        <span>库存编辑</span>
+        <i class="close"></i>
+    </p>
+    <p class="margin-t-60">
+        <span>颜色/规格:</span>
+        <span class="margin-l-145">
+            <em class="red">*</em>
+            <span>库存数量</span>
+        </span>
+    </p>
+
+    <p class="margin-t-20">
+        <span>咖啡金/1.5m*2.0m</span>
+        <input type="text"/>
+    </p>
+    <p class="margin-t-20">
+        <span>咖啡金/1.8m*2.0m</span>
+        <input type="text"/>
+    </p>
+    <p class="margin-t-20">
+        <span>咖啡金/1.5m*2.0m</span>
+        <input type="text"/>
+    </p>
+    <p class="margin-t-20 margin-b-40">
+        <span>咖啡金/1.8m*2.0m</span>
+        <input type="text"/>
+    </p>
+
+    <div class="small-pop-btn">
+        <input type="button" value="保存" class="deter"/>
+        <input type="button" value="取消" class="cancel"/>
+    </div>
+</div>
+<!-- 库存编辑END-->

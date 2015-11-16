@@ -10,31 +10,23 @@ define(function(require, exports, module){
                 $(".nav li").removeClass("active");
                 $(this).addClass("active");
             });
-            $(".condition-box").load("common/order/order_condition.html");
-            $(".condition-list").load("common/order/order_list.html");
-            $(".order-edit").load("common/order/order_edit.html");
+
+            $(".wrap").load("common/order/order.html");
+
             $(".icon1").on("click", function(){
-                $(".condition-box").load("common/order/order_condition.html");
-                $(".condition-list").load("common/order/order_list.html");
-                $(".order-edit").load("common/order/order_edit.html");
+                $(".wrap").load("common/order/order.html");
             });
             $(".icon2").on("click", function(){
-                $(".condition-box").load("common/customer/cus_condition.html");
-                $(".condition-list").load("common/customer/cus_list.html");
+                $(".wrap").load("common/customer/customer.html");
             });
             $(".icon3").on("click", function(){
-                $(".condition-box").load("common/commodity/com_condition.html");
-                $(".condition-list").load("common/commodity/com_list.html");
+                $(".wrap").load("common/commodity/commodity.html");
             });
             $(".icon4").on("click", function(){
-                $(".condition-box").load("common/user/user_condition.html");
-                $(".condition-list").load("common/user/user_list.html");
-                $(".user-pop").load("common/user/user_pop.html");
+                $(".wrap").load("common/user/user.html");
             });
             $(".icon5").on("click", function(){
-                $(".condition-box").load("common/admin/admin_condition.html");
-                $(".condition-list").load("common/admin/admin_list.html");
-                $(".user-pop").load("common/admin/admin_pop.html");
+                $(".wrap").load("common/admin/admin.html");
             });
         })();
     });

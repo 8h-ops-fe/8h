@@ -1,6 +1,10 @@
 html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .clearfix:after{ clear:both; display:block;	content:'';}
 .clearfix{ zoom:"1";}
+/*头部*/
+header{height:60px;width:1200px;margin:0 auto;}
+.logo{width:200px; height:60px;background: url(../images/icon.png) center 14px no-repeat #e4624f;display:inline-block;float:left;}
+header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:18px;background:#343843;text-align:right;float:left;padding-right:20px;}
 /*遮罩层样式*/
 .mask-bg{width: 100%;height: 100%;background: #000;opacity:0.3;position:fixed;z-index:9;display:none;}
 /*登录输入框样式star*/
@@ -21,8 +25,8 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .order-box .nav li a.icon3{background:url(../images/icon.png) 21px -154px no-repeat;}
 .order-box .nav li a.icon4{background:url(../images/icon.png) 22px -214px no-repeat;}
 .order-box .nav li a.icon5{background:url(../images/icon.png) 21px -274px no-repeat;}
-.wrap{width:1000px;  float:left; overflow:hidden;}
-.wrap .user{height:60px; line-height:60px;color:#cccccc;font-size:18px;background:#343843;padding:0 20px; text-align:right;}
+.wrap{width:1000px;  float:left; position: relative;}
+
 /*左侧菜单END*/
 /*订单管理 条件star*/
 .condition{padding-top:30px; width:1300px;margin-left:30px; overflow:hidden;}
@@ -69,14 +73,13 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 
 
 
-.detial-commodity dd.forth-btn{width:150px;border-left:1px solid #ccc;  float: left;height: 140px;}
+.detial-commodity dd.forth-btn{width:150px;border-left:1px solid #ccc;border-right:1px solid #ccc;  float: left;height: 140px;}
 .detial-commodity dd.forth-btn .one li{font-size:14px;color:#333;width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:55px auto;}
 .detial-commodity dd.forth-btn .two{margin:30px 0;}
 .detial-commodity dd.forth-btn .two li{font-size:14px;color:#333; width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:10px auto;}
 /*订单管理 列表end*/
 /*订单编辑*/
-.order-edit{position: absolute;z-index: 10;top:10px;left:20px;display:none;}
-.edit-order{padding:30px;background:#fff;width:870px}
+.edit-order{display:none;position: absolute;z-index: 10;top:10px;left:20px;padding:30px;background:#fff;width:870px}
 .edit-order .title{width:870px; text-align: center; border-bottom: 1px solid #ccc;margin-bottom:20px;padding-bottom:30px;font-size:18px;color:#333; }
 .edit-order .order-mes{font-size:18px;color:#333; margin: 10px 0;}
 .edit-order .process{width:864px;margin:0 auto;overflow:hidden;}
@@ -180,6 +183,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .goods-detial li .right{width:765px;line-height:26px;color:#333;float:left; display:block;}
 .goods-detial .goods-color,.goods-detial .goods-size,.goods-size-c{overflow:hidden;}
 .goods-detial .goods-color li,.goods-detial .goods-size li{float:left;margin:0 5px;}
+.goods-detial .goods-size{height:20px;line-height:20px;color:#333;}
 .goods-detial .goods-size li{width:80px;}
 .goods-detial .goods-color li.color{width:42px;background:#AB988A;height:26px;}
 .goods-detial .goods-color li img{width:24px;height:24px;border:1px solid #ccc;}
@@ -260,7 +264,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .condition .normol .after-type .radio .no-margin{margin: 0;}
 .user-phone,.user-state{cursor: pointer;}
 /*用户详情*/
-.user-details{width:800px;height:400px;background:#fff;position:absolute;left:206px;top:360px;z-index:100;display: none;}
+.user-details{width:800px;height:400px;background:#fff;position:absolute;left:50%;top:50%;margin-left:-400px;margin-top:-100px;z-index:100;display: none;}
 .pop-content{width:100%;height:324px;margin:0 30px;overflow: hidden;}
 .pop-content-left,.pop-content-right{width:369px;float:left;margin-top:33px;}
 .pop-title{width:92%;height:78px;line-height: 78px;color:#333;text-align: center;position: relative;font-size:18px;border-bottom:1px solid #ccc;margin:0 30px;}
@@ -275,7 +279,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 /*用户管理END*/
 
 /*后台管理*/
-.admin-user{width: 850px;height:600px;position:absolute;top:260px;left:180px;z-index: 100;background: #fff;display: none;}
+.admin-user{width: 850px;height:600px;position:absolute;top:20px;left:10px;z-index: 100;background: #fff;display: none;}
 .admin-top{width:752px;height:188px;border-bottom: 1px solid #ccc;margin-left:30px;padding-left: 30px;}
 .admin-top-left,.admin-top-right{width:50%;}
 .admin-top-left p,.admin-top-right p{height:34px;line-height: 34px;}
@@ -288,7 +292,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .admin-user-btn input.keep{background: #e4624f;color:#fff;margin-right:20px;}
 .cus-service dd li .blue{ color:#4f8ee4;}
 .cus-service dd li .red{color:#e4624f;}
-.add-admin{width: 850px;height:500px;position:absolute;top:260px;left:180px;z-index: 100;background: #fff;display: none;}
+.add-admin{width: 850px;height:500px;position:absolute;top:20px;left:10px;z-index: 100;background: #fff;display: none;}
 .add-admin-top{width:752px;height:100px;border-bottom: 1px solid #ccc;margin-left:30px;padding-left: 30px;}
 .add-admin-top input{width:178px;height:24px;border:1px solid #ccc;}
 /*后台管理END*/
@@ -298,7 +302,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 
 
 /*小弹窗*/
-.small-pop{width: 338px;height: 200px;background: #fff;position: absolute;top:50%;left:50%;margin-left:-169px;margin-top:-100px;z-index:100;-display: none;}
+.small-pop{width: 338px;height: 200px;background: #fff;position: absolute;top:10%;left:50%;margin-left:-169px;z-index:100;display: none;}
 .small-pop-text{height: 128px;line-height: 128px;text-align: center;color:#999;}
 .small-pop-btn{width:100%;text-align: center;}
 .small-pop-btn input{width:98px;height:28px;border:1px solid #e4624f;border-radius: 2px;background: #fff;color:#e4624f;cursor: pointer;}
