@@ -11,22 +11,22 @@ define(function(require, exports, module){
                 $(this).addClass("active");
             });
 
-            $(".wrap").load("common/order/order.html");
+            $(".wrap").load("common/order.html");
 
             $(".icon1").on("click", function(){
-                $(".wrap").load("common/order/order.html");
+                $(".wrap").load("common/order.html");
             });
             $(".icon2").on("click", function(){
-                $(".wrap").load("common/customer/customer.html");
+                $(".wrap").load("common/customer.html");
             });
             $(".icon3").on("click", function(){
-                $(".wrap").load("common/commodity/commodity.html");
+                $(".wrap").load("common/commodity.html");
             });
             $(".icon4").on("click", function(){
-                $(".wrap").load("common/user/user.html");
+                $(".wrap").load("common/user.html");
             });
             $(".icon5").on("click", function(){
-                $(".wrap").load("common/admin/admin.html");
+                $(".wrap").load("common/admin.html");
             });
         })();
     });
