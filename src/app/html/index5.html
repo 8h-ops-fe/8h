@@ -12,8 +12,21 @@
     <meta HTTP-EQUIV="Expires" CONTENT="0"/>
     <!--引入默认基本样式-->
     <link rel="stylesheet" type="text/css" href="../styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="../styles/jquery-ui.css">
     <!--引入自己写的样式-->
     <link rel="stylesheet" type="text/css" href="../styles/index.css">
+    <style>
+        a{color:#007bc4/*#424242*/; text-decoration:none;}
+        a:hover{text-decoration:underline}
+        ol,ul{list-style:none}
+        table{border-collapse:collapse;border-spacing:0}
+        body{height:100%; font:12px/18px Tahoma, Helvetica, Arial, Verdana, "\5b8b\4f53", sans-serif; color:#51555C;}
+        img{border:none}
+        .demo{width:500px; margin:20px auto}
+        .demo h4{height:32px; line-height:32px; font-size:14px}
+        .demo h4 span{font-weight:500; font-size:12px}
+        .demo p{line-height:28px;}
+    </style>
 </head>
 
 <body>
@@ -40,9 +53,9 @@
                 </li>
                 <li class="margin-r-50">
                     <span>注册时间：</span>
-                    <input type="text" class="time w118" />
+                    <input id="shot_time" name="shot_time" type="text" class="text w118 txt ui-datebox ui-datebox-a">
                     <span class="margin-10">-</span>
-                    <input type="text" class="time w118" />
+                    <input id="shot_time2" name="shot_time" type="text" class="text w118 txt ui-datebox2 ui-datebox-a">
                 </li>
                 <li class="margin-r-80 after-type">
                     <ul class="radio">
@@ -121,7 +134,6 @@
 
 
 <!-- 脚本引入 -->
-<script src="../requirejs/require.js" data-main="../js/config.js"></script>
-<script src="../js/index.js"></script>
+<script src="../requirejs/require.js" data-main="../js/datepicker.js"></script>
 </body>
 </html>

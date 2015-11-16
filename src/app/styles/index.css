@@ -2,7 +2,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .clearfix:after{ clear:both; display:block;	content:'';}
 .clearfix{ zoom:"1";}
 /*遮罩层样式*/
-.mask-bg{width: 100%;height: 100%;background: #000;opacity:0.3;position:fixed;z-index:9;-display:none;}
+.mask-bg{width: 100%;height: 100%;background: #000;opacity:0.3;position:fixed;z-index:9;display:none;}
 /*登录输入框样式star*/
 .login-box{width:548px;height:358px; position:absolute; top:50%;left:50%;margin-left:-274px;margin-top:-179px;border:1px solid #e4e4e4;background:url(../images/logo.jpg) center 50px no-repeat;}
 .form-user{width:305px; margin:124px auto 0 auto;}
@@ -75,7 +75,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .detial-commodity dd.forth-btn .two li{font-size:14px;color:#333; width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:10px auto;}
 /*订单管理 列表end*/
 /*订单编辑*/
-.order-edit{position: absolute;z-index: 10;top:10px;left:20px;display:block;}
+.order-edit{position: absolute;z-index: 10;top:10px;left:20px;display:none;}
 .edit-order{padding:30px;background:#fff;width:870px}
 .edit-order .title{width:870px; text-align: center; border-bottom: 1px solid #ccc;margin-bottom:20px;padding-bottom:30px;font-size:18px;color:#333; }
 .edit-order .order-mes{font-size:18px;color:#333; margin: 10px 0;}

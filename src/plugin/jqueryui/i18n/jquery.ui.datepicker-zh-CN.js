@@ -2,8 +2,8 @@
 /* Written by Cloudream (cloudream@gmail.com). */
 define(function (require, exports, module) {
 
-	var $ = require("jquery");
-	require("jquery-ui");
+	var $ = require("jquerymin");
+	require("jqueryui");
 	$.datepicker.regional['zh-CN'] = {
 		closeText: '关闭',
 		prevText: '&#x3c;上月',
