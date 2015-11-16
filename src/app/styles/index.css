@@ -100,7 +100,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .edit-order .process span.mes{color:#333; margin-top:10px;}
 .edit-order .process span.time{color:#999;}
 .edit-order .process li.active span.mes{color:#e4624f; }
-.editable{width:852px; border:1px solid #ccc;margin-top:60px;padding:0 5px;}
+.editable{width:852px; border:1px solid #ccc;margin-top:60px;padding:0 5px; margin-bottom:30px;}
 .editable .title-e{color:#333;font-size:18px; padding:15px; text-align:left;}
 .editable .list-e{overflow:hidden;}
 .editable .list-e li{ float:left;margin:10px;}
@@ -162,7 +162,41 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 /*订单编辑结束*/
 /*订单详情*/
 .order-det{position: absolute;z-index: 10;top:10px;left:20px;display:block;}
+.edit-detial{width:852px; border:1px solid #ccc;margin-top:60px;padding:0 5px; margin-bottom:30px;}
+.edit-detial .title-e{color:#333;font-size:18px; padding:15px; text-align:left;}
+.edit-detial .list-e{overflow:hidden;}
+.edit-detial .list-e li{ float:left;margin:10px;width:98px;height:98px;font-size:14px;color:#333;line-height:98px; text-align:center;}
+.edit-detial .list-e li.image{border:1px solid #ccc; }
+.edit-detial .list-e li.money{float:right;width:238px; text-align:right;}
+.edit-detial .list-e li.money span{color:#e4624f;display:inline-block;line-height:98px;}
+.user-de{margin-top:25px;}
+.user-de li{margin-bottom:10px;overflow:hidden;height:24px;font-size:14px; color:#999;}
+.border-de{border-bottom:1px solid #ccc; padding-bottom:10px;}
+.padding10{padding-top:10px;}
 /*订单详情end*/
+/*商品详情star*/
+.goods-detial li{ margin-bottom:30px;font-size:14px;overflow:hidden;}
+.goods-detial li .left{width:100px;height:26px;line-height:26px;color:#999;float:left;}
+.goods-detial li .right{width:765px;line-height:26px;color:#333;float:left; display:block;}
+.goods-detial .goods-color,.goods-detial .goods-size,.goods-size-c{overflow:hidden;}
+.goods-detial .goods-color li,.goods-detial .goods-size li{float:left;margin:0 5px;}
+.goods-detial .goods-size li{width:80px;}
+.goods-detial .goods-color li.color{width:42px;background:#AB988A;height:26px;}
+.goods-detial .goods-color li img{width:24px;height:24px;border:1px solid #ccc;}
+.goods-detial li select{width:180px;border:1px solid #ccc;}
+.goods-detial li .line1{width:300px;}
+.goods-detial li .line1 .c3{color:#333;}
+.goods-detial li .line1 .c9{color:#999;}
+.goods-detial li .r{color:#e4624f;}
+.goods-detial li input{height:24px;border:1px solid #ccc; width:160px; padding:0 10px;}
+.goods-detial .goods-color li.col{overflow:hidden;}
+.goods-detial .goods-color li.col input{float:left;}
+.goods-detial .goods-color li i{display:inline-table; height:26px; width:50px;float:left; background:#f00; margin-left:-50px;}
+.goods-detial li a{color:#4f8ee4;}
+.goods-size-c li{width:200px;float:left; text-align:center; margin-bottom:10px;}
+.goods-detial li textarea{width:763px;height:210px;border:1px solid #ccc; }
+.goods-detial li.add,.goods-size-c li.add{width:24px;height:24px;border:1px solid #fff;}
+/*商品详情end*/
 /*售后*/
 .cus-service{width:968px; border:1px solid #ccc;border-bottom:0;}
 .cus-service dt{height:48px;background:#f5f5f5;border-bottom:1px solid #ccc;}
