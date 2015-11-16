@@ -2,7 +2,7 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 .clearfix:after{ clear:both; display:block;	content:'';}
 .clearfix{ zoom:"1";}
 /*遮罩层样式*/
-.mask-bg{width: 100%;height: 100%;background: #000;opacity:0.3;position:fixed;z-index:9;display:none;}
+.mask-bg{width: 100%;height: 100%;background: #000;opacity:0.3;position:fixed;z-index:9;-display:none;}
 /*登录输入框样式star*/
 .login-box{width:548px;height:358px; position:absolute; top:50%;left:50%;margin-left:-274px;margin-top:-179px;border:1px solid #e4e4e4;background:url(../images/logo.jpg) center 50px no-repeat;}
 .form-user{width:305px; margin:124px auto 0 auto;}
@@ -243,24 +243,40 @@ html,body{height:100%;color: #000;font-family: "微软雅黑"; }
 
 
 /*小弹窗*/
-.small-pop{width: 338px;height: 200px;background: #fff;position: absolute;top:360px;left:435px;z-index:100;display: none;}
-.small-pop-text{height: 128px;line-height: 128px;text-align: center;}
+.small-pop{width: 338px;height: 200px;background: #fff;position: absolute;top:50%;left:50%;margin-left:-169px;margin-top:-100px;z-index:100;-display: none;}
+.small-pop-text{height: 128px;line-height: 128px;text-align: center;color:#999;}
 .small-pop-btn{width:100%;text-align: center;}
-.small-pop-btn input{width:98px;height:28px;border:1px solid #e4624f;border-radius: 1px;background: #fff;color:#e4624f;cursor: pointer;}
+.small-pop-btn input{width:98px;height:28px;border:1px solid #e4624f;border-radius: 2px;background: #fff;color:#e4624f;cursor: pointer;}
 .small-pop-btn input.deter{background: #e4624f;color:#fff;margin-right:20px;}
+.small-pop p.select-box{width: 254px;display: inline-block;text-align: right;margin-left:42px;}
+.small-pop select{width: 158px;height:28px;border:1px solid #ccc;margin-left:15px;}
+#refuse{width: 276px;height:78px;border:1px solid #ccc;margin:29px 0 20px 21px;padding:10px;font-size:14px;color:#999;resize:none;}
+/*库存编辑*/
+.stock-edit{width:686px;background:#fff;position: absolute;top:50%;left:50%;margin-left:-343px;margin-top:-200px;text-align:center;z-index:100;-display: none;padding-bottom:60px;}
+.stock-edit .stock-edit-title{font-size:18px;color:#333;height:76px;line-height:76px;border-bottom:1px solid #ccc;margin:0 20px;position: relative;}
+.stock-edit .stock-edit-title span{font-size:18px;color:#333;}
+.stock-edit p input{width:178px;height:24px;border:1px solid #ccc;margin-left:70px;}
+.stock-edit span{color:#666;font-size:14px;}
 /*自定义单选按钮*/
 .selected{width:16px;height:16px;display: inline-block;background: url(../images/icon.png) no-repeat 0 -352px;cursor: pointer;}
 .not-selected{width:16px;height:16px;display: inline-block;background: url(../images/icon.png) no-repeat 0 -334px;cursor: pointer;}
 
 /*公用*/
 .orange{color:#e4624f;}
+.red{color:red;}
 .margin-r-30{margin-right:30px;}
 .margin-r-10{margin-right:10px;}
+.margin-t-10{margin-top:10px;}
 .margin-t-20{margin-top:20px;}
 .margin-t-30{margin-top:30px;}
+.margin-t-40{margin-top:40px;}
+.margin-t-60{margin-top:60px;}
 .margin-t-23{margin-top:23px;}
-.margin-l-25{margin-left:25px;}
 .margin-l-8{margin-left:8px;}
+.margin-l-25{margin-left:25px;}
+.margin-l-145{margin-left:145px;}
+.margin-b-30{margin-bottom: 30px;}
+.margin-b-40{margin-bottom:40px;}
 .margin-10{margin: 10px;}
 .no-margin{margin: 0;}
 .no-boder{border:0;}
