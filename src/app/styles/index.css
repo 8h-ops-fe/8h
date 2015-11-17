@@ -61,22 +61,22 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .order-list .detial-state span.detial-w{font-size:14px;color:#333;}
 .order-list .detial-state li.detial-z{float:right;}
 .order-list .detial-state li.detial-z span{color:#e4624f;}
-.detial-commodity{width:970px;height:140px;border:1px solid #ccc;border-top:none; overflow:hidden;}
+.detial-commodity{width:968px;height:140px;border:1px solid #ccc;border-top:none; overflow:hidden;}
 .detial-commodity dt{display: inline-block;width:98px;height:98px;border:1px solid #ccc; margin:20px 20px; float:left;}
 .detial-commodity dd.second-w{width:526px;display: inline-block;float:left;margin:57px 0;}
 .detial-commodity dd.second-w dd{float:left;height:26px;line-height:26px;  margin-right: 30px; }
 .detial-commodity dd.third-w{width:150px;border-left:1px solid #ccc;  float: left;height: 140px;}
-.detial-commodity dd.third-w .one li{font-size:14px;color:#333;  line-height: 140px;text-align: center;}
+.detial-commodity dd.third-w .one li{cursor: pointer;font-size:14px;color:#333;  line-height: 140px;text-align: center;}
 .detial-commodity dd.third-w .two{margin:44px 0;}
 .detial-commodity dd.third-w .three{margin:31px 0;}
-.detial-commodity dd.third-w .two li,.detial-commodity dd.third-w .three li{font-size:14px;color:#333; height:26px;line-height:26px; text-align: center;}
+.detial-commodity dd.third-w .two li,.detial-commodity dd.third-w .three li{cursor: pointer;font-size:14px;color:#333; height:26px;line-height:26px; text-align: center;}
 
 
 
-.detial-commodity dd.forth-btn{width:150px;border-left:1px solid #ccc;border-right:1px solid #ccc;  float: left;height: 140px;}
-.detial-commodity dd.forth-btn .one li{font-size:14px;color:#333;width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:55px auto;}
+.detial-commodity dd.forth-btn{width:150px;border-left:1px solid #ccc;float: left;height: 140px;}
+.detial-commodity dd.forth-btn .one li{font-size:14px;color:#333;width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:55px auto;cursor: pointer;}
 .detial-commodity dd.forth-btn .two{margin:30px 0;}
-.detial-commodity dd.forth-btn .two li{font-size:14px;color:#333; width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:10px auto;}
+.detial-commodity dd.forth-btn .two li{font-size:14px;color:#333; width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:10px auto;cursor: pointer;}
 /*订单管理 列表end*/
 /*订单编辑*/
 .edit-order{display:none;position: absolute;z-index: 10;top:10px;left:20px;padding:30px;background:#fff;width:870px}
@@ -347,7 +347,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 
 
 
-
+/*更新时间插件样式*/
 
 
 
