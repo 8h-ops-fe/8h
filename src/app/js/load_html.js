@@ -3,6 +3,7 @@
  */
 define(function(require, exports, module){
     var $ = require("jquery");
+
     var loadHtml = $(function(){
         // 动态加载内容
         ;(function tpl(){

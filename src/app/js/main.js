@@ -4,5 +4,7 @@
 define(function(require, exports, module){
     // 加载html
     require("load_html");
+    //加载日历插件
+    require("datepicker");
 
 });
