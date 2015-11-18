@@ -1,3 +1,4 @@
+
 <!--商品查询条件-->
 <div class="condition">
     <ul class="normol normol-t">
@@ -6,13 +7,13 @@
             <input type="text" />
         </li>
         <li>
-            <span>商品名称：</span>
+            <span class="margin-l-15">商品名称：</span>
             <input type="text" />
         </li>
         <li>
-            <span>价格：</span>
+            <span class="margin-l-15">价格：</span>
             <input type="text" class="money" />
-            <span>-</span>
+            <span class="margin-10">-</span>
             <input type="text" class="money" />
         </li>
     </ul>
@@ -20,7 +21,7 @@
         <li>
             <span>库存：</span>
             <input type="text" />
-            <span>-</span>
+            <span class="margin-10">-</span>
             <input type="text" />
         </li>
         <li>
@@ -39,75 +40,77 @@
 <!--商品列表-->
 <div class="list">
     <a href="javascript:;" class="btn">添加商品</a>
-    <dl class="cus-adm">
-        <dt>
-        <ul class="line">
-            <li class="w124">商品编号</li>
-            <li class="w156">商品名称</li>
-            <li class="w190">颜色/规格</li>
-            <li class="w110">价格</li>
-            <li class="w118">库存</li>
-            <li class="w110">商品状态</li>
-            <li class="w154 no-boder">操作</li>
-        </ul>
-        </dt>
-        <dd>
-            <ul class="line-term">
-                <li class="w124"><p><a href="javascript:;">CD001</a></p></li>
-                <li class="w156"><p>Q1床垫</p></li>
-                <li class="w190">
-                    <p>咖啡金 / 1.5m × 2.0m</p>
-                    <p>素蓝灰 / 1.5m × 2.0m</p>
-                    <p>咖啡金 / 1.5m × 2.0m</p>
-                    <p class="no-boder">素蓝灰 / 1.5m × 2.0m</p>
-                </li>
-                <li class="w110">
-                    <p>2799</p>
-                    <p>2799</p>
-                    <p>2799</p>
-                    <p class="no-boder">2799</p>
-                </li>
-                <li class="w118">
-                    <p>2799</p>
-                    <p class="red">1</p>
-                    <p>编辑库存</p>
-                    <p class="no-boder">编辑库存</p>
-                </li>
-                <li class="w110"><p>已上架</p></li>
-                <li class="w154 no-boder">
-                    <p>
-                        <a href="javascript:;">编辑</a>
-                        <a href="javascript:;">下架</a>
-                    </p>
-                </li>
-            </ul>
-        </dd>
-        <dd>
-            <ul class="line-term">
-                <li class="w124"><p><a href="javascript:;">CD001</a></p></li>
-                <li class="w156"><p>Q1床垫</p></li>
-                <li class="w190">
-                    <p>咖啡金 / 1.5m × 2.0m</p>
-                    <p class="no-boder">素蓝灰 / 1.5m × 2.0m</p>
-                </li>
-                <li class="w110">
-                    <p>2799</p>
-                    <p class="no-boder">2799</p>
-                </li>
-                <li class="w118">
-                    <p>2799</p>
-                    <p class="no-boder">编辑库存</p>
-                </li>
-                <li class="w110"><p>已上架</p></li>
-                <li class="w154 no-boder">
-                    <p>
-                        <a href="javascript:;">编辑</a>
-                        <a href="javascript:;">下架</a>
-                    </p>
-                </li>
-            </ul>
-        </dd>
-    </dl>
+    <div class="goods-list">
+        <dl class="cus-adm">
+            <dt>
+                <ul class="line">
+                    <li class="w124">商品编号</li>
+                    <li class="w156">商品名称</li>
+                    <li class="w190">颜色/规格</li>
+                    <li class="w110">价格</li>
+                    <li class="w118">库存</li>
+                    <li class="w110">商品状态</li>
+                    <li class="w154 no-boder">操作</li>
+                </ul>
+            </dt>
+            <!--<dd class="goods-details">-->
+                <!--<ul class="line-term">-->
+                    <!--<li class="w124"><p><a href="javascript:;">CD001</a></p></li>-->
+                    <!--<li class="w156"><p>Q1床垫</p></li>-->
+                    <!--<li class="w190">-->
+                        <!--<p>咖啡金 / 1.5m × 2.0m</p>-->
+                        <!--<p>素蓝灰 / 1.5m × 2.0m</p>-->
+                        <!--<p>咖啡金 / 1.5m × 2.0m</p>-->
+                        <!--<p class="no-boder">素蓝灰 / 1.5m × 2.0m</p>-->
+                    <!--</li>-->
+                    <!--<li class="w110">-->
+                        <!--<p>2799</p>-->
+                        <!--<p>2799</p>-->
+                        <!--<p>2799</p>-->
+                        <!--<p class="no-boder">2799</p>-->
+                    <!--</li>-->
+                    <!--<li class="w118">-->
+                        <!--<p>2799</p>-->
+                        <!--<p class="red">1</p>-->
+                        <!--<p>编辑库存</p>-->
+                        <!--<p class="no-boder">编辑库存</p>-->
+                    <!--</li>-->
+                    <!--<li class="w110"><p>已上架</p></li>-->
+                    <!--<li class="w154 no-boder">-->
+                        <!--<p>-->
+                            <!--<a href="javascript:;">编辑</a>-->
+                            <!--<a href="javascript:;">下架</a>-->
+                        <!--</p>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</dd>-->
+            <!--<dd>-->
+                <!--<ul class="line-term">-->
+                    <!--<li class="w124"><p><a href="javascript:;">CD001</a></p></li>-->
+                    <!--<li class="w156"><p>Q1床垫</p></li>-->
+                    <!--<li class="w190">-->
+                        <!--<p>咖啡金 / 1.5m × 2.0m</p>-->
+                        <!--<p class="no-boder">素蓝灰 / 1.5m × 2.0m</p>-->
+                    <!--</li>-->
+                    <!--<li class="w110">-->
+                        <!--<p>2799</p>-->
+                        <!--<p class="no-boder">2799</p>-->
+                    <!--</li>-->
+                    <!--<li class="w118">-->
+                        <!--<p>2799</p>-->
+                        <!--<p class="no-boder">编辑库存</p>-->
+                    <!--</li>-->
+                    <!--<li class="w110"><p>已上架</p></li>-->
+                    <!--<li class="w154 no-boder">-->
+                        <!--<p>-->
+                            <!--<a href="javascript:;">编辑</a>-->
+                            <!--<a href="javascript:;">下架</a>-->
+                        <!--</p>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</dd>-->
+        </dl>
+    </div>
 </div>
 <script>
     for(var i = 0;i<$('.cus-adm .line-term').length;i++){
@@ -163,18 +166,15 @@
             <p class="right">商品介绍商品介绍商品介绍商品介绍商品介，绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品，介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商，品介绍商品介绍商品介绍商品介绍商品介绍商品介绍，商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品。介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍，商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商，品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍。</p>
         </li>
         <li>
-            <p class="left"><span class="r">*</span>商品介绍：</p>
+            <p class="left"><span class="r">*</span>商品状态：</p>
             <p class="right">
-                <select>
+                <select id="goods-status" value="status">
                     <option>上架</option>
-                    <option>上架</option>
-                    <option>上架</option>
-                    <option>上架</option>
+                    <option>下架</option>
                 </select>
             </p>
         </li>
     </ul>
-
     <p class="btn-e">
         <a href="javascript:;" class="save">保存</a>
         <a href="javascript:;" class="canle">取消</a>

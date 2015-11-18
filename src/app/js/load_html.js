@@ -20,8 +20,12 @@ define(function(require, exports, module){
             $(".icon2").on("click", function(){
                 $(".wrap").load("common/customer.html");
             });
-            $(".icon3").on("click", function(){
-                $(".wrap").load("common/commodity.html");
+            $(".goods").on("click", function(){
+                $(".wrap").load("common/goods.html",function(){
+                    var goods = require("../js/goods.js").goods;
+                    goods.init();
+
+                });
             });
             $(".icon4").on("click", function(){
                 $(".wrap").load("common/user.html");
