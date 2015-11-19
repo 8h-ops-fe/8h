@@ -1,6 +1,6 @@
 define(function(require, exports, module){
     $(function(){
-        require("../js/jquery");
+        require("jquery");
         require("../../plugin/jqueryui/jquery-ui-datepicker");
 
         //将datepicker绑定到开始时间和结束时间上

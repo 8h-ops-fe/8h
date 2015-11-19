@@ -6,7 +6,6 @@
 define(function (require, exports, module) {
     var $ = require("jquery");
     require("jCookie");
-
     /**
      * post请求方法
      * @param url
@@ -31,7 +30,7 @@ define(function (require, exports, module) {
     function client(method, url, data, success_callback, error_callback) {
         $.ajax({
             type: method,
-            url: seajs.host + url,
+            url: url,
             data: data,
             xhrFields: {
                 withCredentials: true

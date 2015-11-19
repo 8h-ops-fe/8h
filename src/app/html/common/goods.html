@@ -39,7 +39,7 @@
 
 <!--商品列表-->
 <div class="list">
-    <a href="javascript:;" class="btn">添加商品</a>
+    <a href="javascript:;" class="btn goods-add">添加商品</a>
     <div class="goods-list">
         <dl class="cus-adm">
             <dt>
@@ -123,7 +123,11 @@
 
 <!--商品详情-->
 <div class="edit-order">
-    <h1 class="title">商品详情</h1>
+    <div>
+        <h1 class="title">商品详情</h1>
+        <div class="close-x"></div>
+    </div>
+
     <ul class="goods-detial">
         <li>
             <p class="left line1"><span class="c9">商品编号：</span><span class="c3" >CD0001</span></p>
@@ -183,64 +187,70 @@
 <!--商品详情END-->
 
 <!--商品编辑-->
-<div class="edit-order">
-    <h1 class="title">商品编号</h1>
+<div class="edit-order goods-edit">
+    <div>
+        <h1 class="title">商品编辑</h1>
+        <div class="close-x"></div>
+    </div>
     <ul class="goods-detial">
         <li>
-            <p class="left line1"><span class="c9"><span class="r">*</span>商品编号：</span><input type="text" /></p>
-            <p class="right line1"><span class="c9"><span class="r">*</span>商品名称：</span><input type="text" /></p>
+            <p class="left line1"><span class="c9"><span class="r">*</span>商品编号：</span><input type="text" name="goods-sn" class="goods-sn"/></p>
+            <p class="right line1"><span class="c9"><span class="r">*</span>商品名称：</span><input type="text" name="goods-name" class="goods-name" /></p>
         </li>
-        <li>
-            <p class="left"><span class="r">*</span>商品颜色：</p>
-            <div class="right">
-                <ul class="goods-color">
-                    <li><input type="text" /></li>
-                    <li class="col"><input type="text" /><i></i></li>
-                    <li><img width="24" height="24" /></li>
-                    <li><a href="javascript:;">替换图片</a></li>
-                    <li class="add"></li>
-                </ul>
-
-                <ul class="goods-color">
-                    <li><input type="text" /></li>
-                    <li class="col"><input type="text" /><i></i></li>
-                    <li><img width="24" height="24" /></li>
-                    <li><a href="javascript:;">替换图片</a></li>
+        <li class="goods-color-add-box">
+            <div class="goods-color-add">
+                <p class="left"><span class="r">*</span>商品颜色：</p>
+                <ul class="goods-color right">
+                    <li><input type="text" class="goods-color-text"/></li>
+                    <li class="col"><input type="text" class="goods-color-input" /><i></i></li>
+                    <li><img width="24" height="24" src="" class="goods-color-img"/></li>
+                    <li class="relative">
+                        <a href="javascript:;">替换图片</a>
+                        <input type="file" class="goods-img"/>
+                    </li>
                     <li class="add"></li>
                 </ul>
             </div>
+            <!--<div>-->
+                <!--<p class="left"><span class="r">*</span>商品颜色：</p>-->
+                <!--<ul class="goods-color right">-->
+                    <!--<li><input type="text" /></li>-->
+                    <!--<li class="col"><input type="text" /><i></i></li>-->
+                    <!--<li><img width="24" height="24" /></li>-->
+                    <!--<li><a href="javascript:;">替换图片</a></li>-->
+                    <!--<li class="remove"></li>-->
+                <!--</ul>-->
+            <!--</div>-->
         </li>
         <li>
             <p class="left"><span class="r">*</span>规格/价格:</p>
-            <div class="right">
+            <div class="right goods-size-box">
                 <ul class="goods-size-c">
                     <li>规格</li>
                     <li>价格</li>
                 </ul>
-                <ul class="goods-size-c">
-                    <li><input type="text" value="1.5*2.0" /></li>
-                    <li><input type="text" value="2799" /></li>
+                <ul class="goods-size-c goods-size-num">
+                    <li><input type="text" value="" class="goods-size" /></li>
+                    <li><input type="text" value="" class="goods-price"/></li>
                     <li class="add"></li>
                 </ul>
-                <ul class="goods-size-c">
-                    <li><input type="text" value="1.5*2.0" /></li>
-                    <li><input type="text" value="2799" /></li>
-                    <li class="add"></li>
-                </ul>
+                <!--<ul class="goods-size-c">-->
+                    <!--<li><input type="text" value="1.5*2.0" /></li>-->
+                    <!--<li><input type="text" value="2799" /></li>-->
+                    <!--<li class="remove"></li>-->
+                <!--</ul>-->
             </div>
         </li>
         <li>
             <p class="left"><span class="r">*</span>商品介绍：</p>
-            <p class="right"><textarea></textarea></p>
+            <p class="right"><textarea class="goods-introdu"></textarea></p>
         </li>
         <li>
-            <p class="left"><span class="r">*</span>商品介绍：</p>
+            <p class="left"><span class="r">*</span>商品状态：</p>
             <p class="right">
-                <select>
-                    <option>上架</option>
-                    <option>上架</option>
-                    <option>上架</option>
-                    <option>上架</option>
+                <select id="goodsStatus">
+                    <option value="1">上架</option>
+                    <option value="2">下架</option>
                 </select>
             </p>
         </li>

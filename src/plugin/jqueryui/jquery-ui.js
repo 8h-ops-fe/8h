@@ -11,7 +11,7 @@ define(function (require, exports, module) {
     if (typeof define === "function" && define.amd) {
 
       // AMD. Register as an anonymous module.
-      define(["jquery"], factory);
+      define(["../../app/js/jquery"], factory);
     } else {
 
       // Browser globals

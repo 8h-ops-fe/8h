@@ -3,7 +3,7 @@
  */
 define(function(require, exports, module){
     require("jquery");
-
+    require("jCookie");
     var goods = {
         "content": [
 
@@ -115,8 +115,12 @@ define(function(require, exports, module){
     };
 
     var oGoods = {};
-    // 初始化商品
     oGoods.init = function(){
+        this.create();
+        this.add();
+    };
+    // 初始化商品
+    oGoods.create = function(){
         // 循环商品
         for(var i=0 ; i<goods.content.length ; i++){
             var that = goods.content[i];
@@ -171,8 +175,153 @@ define(function(require, exports, module){
     };
     // 添加商品
     oGoods.add = function(){
-        
-    };
+        $('.goods-add').live('click', function(){
+            // 清空所有文字
 
+            $('.goods-edit,.mask-bg').show();
+            // 商品颜色添加一列
+            $('.goods-color-add .add').live('click', function(){
+                $('.goods-color-add-box').append('\
+                            <div class="goods-color-add ">\
+                                <p class="left"><span class="r">*</span>商品颜色：</p>\
+                                <ul class="goods-color right">\
+                                    <li><input type="text" class="goods-color-text"/></li>\
+                                    <li class="col"><input type="text" class="goods-color-input"/><i></i></li>\
+                                    <li><img width="24" height="2" class="goods-color-img"/></li>\
+                                    <li class="relative">\
+                                        <a href="javascript:;">替换图片</a>\
+                                        <input type="file" class="goods-img"/>\
+                                    </li>\
+                                    <li class="remove"></li>\
+                                </ul>\
+                            </div>');
+            });
+            // 商品颜色删除一列
+            $('.goods-color-add .remove').live('click', function(){
+                console.log($(this).parents('.goods-color-add'))
+                $(this).parents('.goods-color-add').remove();
+            });
+            // 商品规格、价格添加一列
+            $('.goods-size-box .add').live('click', function(){
+                $('.goods-size-box').append('\
+                    <ul class="goods-size-c goods-size-num">\
+                        <li><input type="text" value="" class="goods-size" /></li>\
+                        <li><input type="text" value="" class="goods-price"/></li>\
+                        <li class="remove"></li>\
+                    </ul>');
+            });
+            // 商品规格、价格删除一列
+            $('.goods-size-box .remove').live('click', function(){
+                $(this).parents('.goods-size-c').remove();
+            });
+            // 输入显示对应颜色
+            $('.goods-color-input').live('keyup', function(){
+                $(this).next().css({background: "#"+$(this).val()});
+            });
+            // 关闭
+            $('.close-x,.canle').live('click', function(){
+               $(this).parents('.goods-edit').hide();
+               $('.mask-bg').hide();
+            });
+            // 图片预览
+            $('.goods-img').live('change',function(event) {
+                var that = $(this);
+                var file = $(this).get(0).files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function( evt ){
+                    if(file.type.indexOf('image') != -1 || 0){
+                        that.parents('.goods-color').find('.goods-color-img').attr({src: evt.target.result});
+                        return;
+                    }
+                }
+            });
+            // 添加商品
+            $('.goods-edit .save').live('click', function(){
+                var sSn = $('.goods-sn').val(),          //商品编号
+                    sName = $('.goods-name').val(),      //商品名字
+                    sColorText = $('.goods-color-text').val(), //商品颜色文字
+                    sColorEng = $('.goods-color-input').val(), //商品颜色
+                    sColorImg = $('.goods-color-img').attr('src');//商品图片
+                    sSize = $('.goods-size').val(),      //商品大小
+                    sPrice = $('.goods-price').val(),    //商品价钱
+                    sIntrodu = $('.goods-introdu').val();//商品介绍
+                    iSize = $('.goods-size-num').length; //商品大小个数
+                    iColor = $('.goods-color-add').length,//商品颜色个数
+                    sStatus = $('#goodsStatus').val();    //商品状态
+
+                // 判断不能为空
+                var bFlag = true;
+                $('.goods-edit input').each(function(){
+                    if( !$(this).val() ){
+                        $(this).css({border: '1px solid red'});
+                        bFlag = false;
+                    }
+                });
+                if( !sIntrodu ){
+                    $('.goods-introdu').css({border: '1px solid red'});
+                    bFlag = false;
+                }
+                // 如果添加的商品颜色和大小个数不符则提醒
+                if( iSize != iColor ){
+                    alert('请填写正确的商品颜色和规格');
+                    return false;
+                }
+
+                // 添加商品
+                if( bFlag ){
+                    var aGoodsDomensions = [];
+                    for(var i=0 ; i<$('.goods-color-add').length ; i++){
+                        aGoodsDomensions.push({
+                            color : $('.goods-color-add-box .goods-color-text').eq(i).val(),
+                            goodsId : null,
+                            id : null,
+                            images : [
+                                {
+                                    domensionId : null,
+                                    imageURL : 'string'
+                                }
+                            ],
+                            inventory : 0,
+                            price : $('.goods-size-box .goods-prize').eq(i).val(),
+                            size : $('.goods-size-box .goods-size').eq(i).val(),
+                        })
+                    }
+                    var oData = {
+                        "goodsDomensions": aGoodsDomensions,
+                        "id": null,
+                        "introduction": sIntrodu,
+                        "name": sName,
+                        "sn": sSn,
+                        "status": sStatus
+                    }
+
+                    $.ajax({
+                        url : devUrl+'/goods/create',
+                        type : 'post',
+                        contentType: "application/json; charset=utf-8",
+                        dataType : 'json',
+                        data : oData,
+                        beforeSend: function (xhr) {
+                            // json格式传输，后台应该用@RequestBody方式接受
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+                            var token = $.cookie("token");
+                            if (token) {
+                                xhr.setRequestHeader("X-Auth-Token", token);
+                            }
+                        },
+                        success : function(json){
+                            console.log(json);
+
+                        },
+                        error : function(json){
+                            console.log(json);
+                        }
+                    });
+                }
+            });
+        });
+    };
+    
     exports.goods = oGoods;
 });

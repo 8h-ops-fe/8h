@@ -22,15 +22,14 @@
         <div class="login-title">
             8H 运营管理系统
         </div>
-        <div class="login-error">
-            用户名或密码错误
-        </div>
+        <div class="login-error"></div>
         <div class="form-user">
-            <input type="text" placeholder="用户名" />
-            <input type="password" placeholder="密码" />
-            <input type="button" value="登录" class="btn" />
+            <input type="text" placeholder="用户名" class="login-username" />
+            <input type="password" placeholder="密码" class="login-password" />
+            <input type="button" value="登录" class="login-btn" />
         </div>
     </div>
     <!--登录输入框END-->
+    <script src="../requirejs/require.js" data-main="../js/login"></script>
 </body>
 </html>
