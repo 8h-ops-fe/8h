@@ -279,7 +279,14 @@ define(function(require, exports, module){
                 reader.readAsDataURL(file);
                 reader.onload = function( evt ){
                     if(file.type.indexOf('image') != -1 || 0){
-                        that.parents('.goods-color').find('.goods-image').attr({src: evt.target.result,width:'24',height:'24'});
+                        that.parents('.goods-color').find('.goods-image').attr({src: evt.target.result});
+						that.parents('.goods-color').find('.goods-image').css({
+							'width':'24px',
+							'height':'24px',
+							'borderWidth':'1px',
+							'borderStyle':'solid',
+							'borderColor':'#ccc'
+						});
                         return;
                     }
                 }
@@ -292,31 +299,27 @@ define(function(require, exports, module){
 										<li><input type="text" class="color-input" style="border-right-color:'+colorGthis+'" /><span class="color" style="background:'+colorGthis+'"></span></li>\
 										<li><img class="goods-image" /></li>\
 										<li><a href="javascript:;">替换图片</a><input type="file" class="file" /></li>\
-										<li><a href="javascript:;">删除</a></li>\
+										<li><a href="javascript:;" class="remove">删除</a></li>\
 									</ul>';	
 				
 				$(this).parents('.goods-color').after(goodsColor);
 			});
-            /*$('.goods-color-add .add').live('click', function(){
-                $('.goods-color-add-box').append('\
-                            <div class="goods-color-add ">\
-                                <p class="left"><span class="r">*</span>商品颜色：</p>\
-                                <ul class="goods-color right">\
-                                    <li><input type="text" class="goods-color-text"/></li>\
-                                    <li class="col"><input type="text" class="goods-color-input"/><i></i></li>\
-                                    <li><img width="24" height="2" class="goods-color-img"/></li>\
-                                    <li class="relative">\
-                                        <a href="javascript:;">替换图片</a>\
-                                        <input type="file" class="goods-img"/>\
-                                    </li>\
-                                    <li class="remove"></li>\
-                                </ul>\
-                            </div>');
-            });*/
             // 商品颜色删除一列
-            $('.goods-color-add .remove').live('click', function(){
-                console.log($(this).parents('.goods-color-add'))
-                $(this).parents('.goods-color-add').remove();
+			$('.goods-color .remove').die();
+            $('.goods-color .remove').live('click', function(){
+                $(this).parents('.goods-color').remove();
+            });
+			// 商品规格添加一列
+			$('#save-goods-size').die();
+            $('#save-goods-size').live('click', function(){
+                var sizeGthis = $(this).siblings('.goods-size');
+				var goodsSize = '<li><input type="text" /><a href="javascript:;" class="remove">删除</a></li>';	
+				$(this).parents('.goods-size li').eq(0).after(goodsSize);
+            });
+			// 商品规格删除一列
+			$('.detial-color .remove').die();
+            $('.detial-color .remove').live('click', function(){
+                $(this).parent('li').remove();
             });
             // 商品规格、价格添加一列
             $('.goods-size-box .add').live('click', function(){
