@@ -31,7 +31,7 @@ define(function(require, exports, module){
             });
 
 
-            $(".icon1").on("click", function(){
+            $(".order").on("click", function(){
                 $(".wrap").load("common/order.html", function(){
                     myRadio('status');
                     var oOrder = require('order').oOrder;
@@ -55,9 +55,11 @@ define(function(require, exports, module){
 
                 });
             });
-            $(".icon4").on("click", function(){
+            $(".user").on("click", function(){
                 $(".wrap").load("common/user.html",function(){
                     myRadio('state');
+                    var user = require('../js/user.js').user;
+                    user.init();
                 });
             });
             $(".icon5").on("click", function(){

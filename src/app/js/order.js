@@ -104,14 +104,14 @@ define(function(require, exports, module){
         var that = this;
         $('.order-search').live('click', function(){
 
-            var orderSn = $('.orderSn').val(),            //订单号
-                receiverName = $('.receiverName').val(),  //收件人
-                receiverPhone = $('.receiverPhone').val(),//联系电话
-                startTime = $('.start-time').val(),       //开始时间
-                endTime = $('.end-time').val(),           //结束时间
+            var orderSn = $('.orderSn').val(),             //订单号
+                receiverName = $('.receiverName').val(),   //收件人
+                receiverPhone = $('.receiverPhone').val(), //联系电话
+                startTime = $('.start-time').val(),        //开始时间
+                endTime = $('.end-time').val(),            //结束时间
                 minAmount = $('.min-price').val(),         //最小价钱
                 maxAmount = $('.max-price').val(),         //最大价钱
-                status = 0;                               //状态码
+                status = 0;                                //状态码
                 // 更新状态码
                 $('.order-radio').each(function(){
                     if( $(this).attr('checked') ){
@@ -162,12 +162,12 @@ define(function(require, exports, module){
                     console.log(json);
                     var orderSn = order.orderGoodsInfo.orderSn,  //订单号
                         statusDesc = order.orderGoodsInfo.statusDesc,       //订单状态
-                        orderPeople = order.orderInfo[0],                   //下单人
-                        orderTime= order.orderGoodsInfo.createTime,         //下单时间
-                        receivePeople = order.orderGoodsInfo.receiverName || '未填写',  //收货人姓名
-                        receiveAddress = order.orderGoodsInfo.receiverAddress || '未填写',//收货地址
-                        receiveMobile = order.orderGoodsInfo.receiverMobile || '未填写',//收货人电话
-                        receiverPhone = order.orderGoodsInfo.receiverPhone || '未填写'; //收货人座机
+                        orderTime= order.orderGoodsInfo.createTime;         //下单时间
+                    var orderGoodsInfo = '';
+                    for(var i=0 ; i<order.orderInfo.length ; i++){
+                        orderGoodsInfo+='<li>'+order.orderInfo[i]+'</li>';
+                    }
+                    console.log(orderGoodsInfo)
                     // 商品详情弹窗
                     $('#order-details').html('\
                         <div>\
@@ -230,12 +230,7 @@ define(function(require, exports, module){
                             </div>\
                             <p class="title-e">下单信息：</p>\
                             <ul class="user-de">\
-                                <li>'+orderPeople+'</li>\
-                                <li>下单时间：'+orderTime+'</li>\
-                                <li>收货人：'+receivePeople+'</li>\
-                                <li>手机号：'+receiveMobile+'</li>\
-                                <li>座机号：'+receiverPhone+'</li>\
-                                <li>收货人地址：'+receiveAddress+'</li>\
+                                '+orderGoodsInfo+'\
                             </ul>\
                         </div>');
                 }
@@ -266,7 +261,6 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    
                     console.log(json);
                 }
             });

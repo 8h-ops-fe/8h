@@ -10,7 +10,7 @@ define(function(require, exports, module){
     require("load_html");
     //加载日历插件
     require("datepicker");
-
+    //退出
     require('judge');
 
 });
