@@ -129,56 +129,98 @@
     </div>
 
     <ul class="goods-detial">
-        <li>
+        <li class="detial1">
             <p class="left line1"><span class="c9">商品编号：</span><span class="c3" >CD0001</span></p>
             <p class="right line1"><span class="c9">商品名称：</span><span class="c3">8H床垫</span></p>
-        </li>
-        <li>
-            <p class="left">商品颜色：</p>
-            <div class="right">
-                <ul class="goods-color">
-                    <li>咖啡金</li>
-                    <li>AB988A</li>
-                    <li class="color"></li>
-                    <li><img width="24" height="24" /></li>
-                </ul>
-                <ul class="goods-color">
-                    <li>咖啡金</li>
-                    <li>AB988A</li>
-                    <li class="color"></li>
-                    <li><img width="24" height="24" /></li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <p class="left">规格/价格:</p>
-            <p class="right">
-            <ul class="goods-size">
-                <li>规格</li>
-                <li>1.5x2.0m</li>
-                <li>1.5x2.0m</li>
-            </ul>
-            <ul class="goods-size">
-                <li>价格</li>
-                <li>2799</li>
-                <li>2799</li>
-            </ul>
-            </p>
+            <p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">
+                        <option>上架</option>
+                        <option>下架</option>
+                    </select></p>
         </li>
         <li>
             <p class="left">商品介绍：</p>
-            <p class="right">商品介绍商品介绍商品介绍商品介绍商品介，绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品，介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商，品介绍商品介绍商品介绍商品介绍商品介绍商品介绍，商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品。介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍，商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商，品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍。</p>
+            <p class="right"><textarea></textarea></p>
         </li>
-        <li>
-            <p class="left"><span class="r">*</span>商品状态：</p>
-            <p class="right">
-                <select id="goods-status" value="status">
-                    <option>上架</option>
-                    <option>下架</option>
-                </select>
-            </p>
+        <li class="margin-none">
+            <ul>
+            	<li class="detial-color edit-left">
+                	<p class="left">商品颜色：</p>
+                    <div class="right">
+                        <ul class="goods-color">
+                            <li><input type="text" /></li>
+                            <li><input type="text" /><span class="color"></span></li>
+                            <li><a href="javascript:;">上传图片</a></li>
+                            <li><a href="javascript:;">保存</a></li>
+                        </ul>
+                        <ul class="goods-color">
+                            <li><input type="text" /></li>
+                            <li><input type="text" /><span class="color"></span></li>
+                            <li><img width="24" height="24" /></li>
+                            <li><a href="javascript:;">替换图片</a></li>
+                            <li><a href="javascript:;">删除</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="detial-color edit-right">
+                	<p class="left">商品规格:</p>
+                    <div class="right">
+                        <ul class="goods-size">
+                            <li><input type="text" /><a href="javascript:;">保存</a></li>
+                            <li><input type="text" /><a href="javascript:;">删除</a></li>
+                            <li><input type="text" /><a href="javascript:;">删除</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </li>
     </ul>
+    <table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table">
+    	<tr class="title">
+        	<td width="217">商品颜色</td>
+        	<td width="200">商品规格</td>
+        	<td width="150">价格</td>
+        	<td width="148">库存</td>
+        	<td width="220">物料编号</td>
+        </tr>
+    	<tr>
+        	<td width="217" rowspan="3">咖啡金</td>
+        	<td width="200">1.2m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148">2779</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="200">1.5m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148" class="red">1</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="200"> 1.8m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148">2779</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="217" rowspan="3">咖啡金</td>
+        	<td width="200">1.2m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148">2779</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="200">1.5m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148" class="red">1</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="200"> 1.8m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148">2779</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    </table>
     <p class="btn-e">
         <a href="javascript:;" class="save">保存</a>
         <a href="javascript:;" class="canle">取消</a>
@@ -193,68 +235,97 @@
         <div class="close-x"></div>
     </div>
     <ul class="goods-detial">
-        <li>
-            <p class="left line1"><span class="c9"><span class="r">*</span>商品编号：</span><input type="text" name="goods-sn" class="goods-sn"/></p>
-            <p class="right line1"><span class="c9"><span class="r">*</span>商品名称：</span><input type="text" name="goods-name" class="goods-name" /></p>
-        </li>
-        <li class="goods-color-add-box">
-            <div class="goods-color-add">
-                <p class="left"><span class="r">*</span>商品颜色：</p>
-                <ul class="goods-color right">
-                    <li><input type="text" class="goods-color-text"/></li>
-                    <li class="col"><input type="text" class="goods-color-input" /><i></i></li>
-                    <li><img width="24" height="24" src="" class="goods-color-img"/></li>
-                    <li class="relative">
-                        <a href="javascript:;">替换图片</a>
-                        <input type="file" class="goods-img"/>
-                    </li>
-                    <li class="add"></li>
-                </ul>
-            </div>
-            <!--<div>-->
-                <!--<p class="left"><span class="r">*</span>商品颜色：</p>-->
-                <!--<ul class="goods-color right">-->
-                    <!--<li><input type="text" /></li>-->
-                    <!--<li class="col"><input type="text" /><i></i></li>-->
-                    <!--<li><img width="24" height="24" /></li>-->
-                    <!--<li><a href="javascript:;">替换图片</a></li>-->
-                    <!--<li class="remove"></li>-->
-                <!--</ul>-->
-            <!--</div>-->
+        <li class="detial1">
+            <p class="left line1"><span class="c9">商品编号：</span><span class="c3" >CD0001</span></p>
+            <p class="right line1"><span class="c9">商品名称：</span><span class="c3">8H床垫</span></p>
+            <p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">
+                        <option>上架</option>
+                        <option>下架</option>
+                    </select></p>
         </li>
         <li>
-            <p class="left"><span class="r">*</span>规格/价格:</p>
-            <div class="right goods-size-box">
-                <ul class="goods-size-c">
-                    <li>规格</li>
-                    <li>价格</li>
-                </ul>
-                <ul class="goods-size-c goods-size-num">
-                    <li><input type="text" value="" class="goods-size" /></li>
-                    <li><input type="text" value="" class="goods-price"/></li>
-                    <li class="add"></li>
-                </ul>
-                <!--<ul class="goods-size-c">-->
-                    <!--<li><input type="text" value="1.5*2.0" /></li>-->
-                    <!--<li><input type="text" value="2799" /></li>-->
-                    <!--<li class="remove"></li>-->
-                <!--</ul>-->
-            </div>
+            <p class="left">商品介绍：</p>
+            <p class="right">商品介绍商品介绍商品介绍商品介绍商品介，绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品，介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商，品介绍商品介绍商品介绍商品介绍商品介绍商品介绍，商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品。介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍，商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商，品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍商品介绍。</p>
         </li>
-        <li>
-            <p class="left"><span class="r">*</span>商品介绍：</p>
-            <p class="right"><textarea class="goods-introdu"></textarea></p>
-        </li>
-        <li>
-            <p class="left"><span class="r">*</span>商品状态：</p>
-            <p class="right">
-                <select id="goodsStatus">
-                    <option value="1">上架</option>
-                    <option value="2">下架</option>
-                </select>
-            </p>
+        <li class="margin-none">
+            <ul>
+            	<li class="detial-color">
+                	<p class="left">商品颜色：</p>
+                    <div class="right">
+                        <ul class="goods-color">
+                            <li>咖啡金</li>
+                            <li>AB988A</li>
+                            <li class="color"></li>
+                            <li><img width="24" height="24" /></li>
+                        </ul>
+                        <ul class="goods-color">
+                            <li>咖啡金</li>
+                            <li>AB988A</li>
+                            <li class="color"></li>
+                            <li><img width="24" height="24" /></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="detial-color">
+                	<p class="left">商品规格:</p>
+                    <div class="right">
+                        <ul class="goods-size">
+                            <li>1.5x2.0m</li>
+                            <li>1.5x2.0m</li>
+                            <li>1.5x2.0m</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </li>
     </ul>
+    <table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table">
+    	<tr class="title">
+        	<td width="217">商品颜色</td>
+        	<td width="200">商品规格</td>
+        	<td width="150">价格</td>
+        	<td width="148">库存</td>
+        	<td width="220">物料编号</td>
+        </tr>
+    	<tr>
+        	<td width="217" rowspan="3">咖啡金</td>
+        	<td width="200">1.2m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148">2779</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="200">1.5m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148" class="red">1</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="200"> 1.8m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148">2779</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="217" rowspan="3">咖啡金</td>
+        	<td width="200">1.2m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148">2779</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="200">1.5m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148" class="red">1</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    	<tr>
+        	<td width="200"> 1.8m × 2.0m</td>
+        	<td width="150">2779</td>
+        	<td width="148">2779</td>
+        	<td width="220">Q1GO150</td>
+        </tr>
+    </table>
 
     <p class="btn-e">
         <a href="javascript:;" class="save">保存</a>
