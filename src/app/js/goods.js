@@ -120,6 +120,7 @@ define(function(require, exports, module){
         this.add();       //添加商品
         this.detail();    //商品详情
         this.close();     //关闭弹窗
+		oGoods.edit();		//商品编辑
     };
     /**
      * 初始化商品
@@ -147,7 +148,7 @@ define(function(require, exports, module){
                                 <li class="w110"><p>'+that.status+'</p></li>\
                                 <li class="w154 no-boder">\
                                     <p>\
-                                    <a href="javascript:;">编辑</a>\
+                                    <a href="javascript:;" class="edit-ga">编辑</a>\
                                     <a href="javascript:;">下架</a>\
                                     </p>\
                                 </li>');
@@ -181,20 +182,122 @@ define(function(require, exports, module){
      * 添加商品
      */
     oGoods.add = function(){
+		/*{
+		  "goodsDomensions": [
+			{
+			  "color": "string",
+			  "colorCode": "string",
+			  "goodsId": 0,
+			  "id": 0,
+			  "images": [
+				{
+				  "domensionId": 0,
+				  "imageURL": "string"
+				}
+			  ],
+			  "inventory": 0,
+			  "materialCode": "string",
+			  "price": 0,
+			  "size": "string"
+			}
+		  ],
+		  "id": 0,
+		  "introduction": "string",
+		  "name": "string",
+		  "sn": "string",
+		  "status": 0
+		}*/
         $('.goods-add').live('click', function(){
             // 清空所有文字
-            $('.goods-sn').val('');         //商品编号
-            $('.goods-name').val('');       //商品名字
-            $('.goods-color-text').val(''); //商品颜色文字
-            $('.goods-color-input').val('');//商品颜色
-            $('.goods-size').val('');       //商品大小
-            $('.goods-price').val('');      //商品价钱
-            $('.goods-introdu').val('');    //商品介绍
-            $('#goodsStatus').val('');      //商品状态
+            //$('#goods-sn').val('');         //商品编号
+            //$('#goods-name').val('');       //商品名字
+            //$('.goods-color-text').val(''); //商品颜色文字
+            //$('.goods-color-input').val('');//商品颜色
+           // $('.goods-size').val('');       //商品大小
+            //$('.goods-price').val('');      //商品价钱
+            //$('.goods-introdu').val('');    //商品介绍
+            //$('#goodsStatus').val('');      //商品状态
+			
+			$('#add-goods').html('<div>\
+				<h1 class="title">商品详情</h1>\
+				<div class="close-x"></div>\
+			</div>\
+			<ul class="goods-detial">\
+				<li class="detial1">\
+					<p class="left line1"><span class="c9">商品编号：</span><span class="c3" ><input type="text" id="goods-sn" /></span></p>\
+					<p class="right line1"><span class="c9">商品名称：</span><span class="c3"><input type="text" id="goods-name" /></span></p>\
+					<p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">\
+								<option>上架</option>\
+								<option>下架</option>\
+							</select></p>\
+				</li>\
+				<li>\
+					<p class="left">商品介绍：</p>\
+					<p class="right"><textarea class="goods-introdu"></textarea></p>\
+				</li>\
+				<li class="margin-none">\
+					<ul>\
+						<li class="detial-color edit-left">\
+							<p class="left">商品颜色：</p>\
+							<div class="right">\
+								<ul class="goods-color">\
+									<li><input type="text" class="goods-color-text" /></li>\
+									<li><input type="text" class="color-input goods-color-input" /><span class="color"></span></li>\
+									<li><img width="0" height="0" class="goods-image" /></li>\
+									<li><a href="javascript:;">上传图片</a><input type="file" class="file" /></li>\
+									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
+								</ul>\
+							</div>\
+						</li>\
+						<li class="detial-color edit-right">\
+							<p class="left">商品规格:</p>\
+							<div class="right">\
+								<ul class="goods-size">\
+									<li><input type="text" class="goods-size" /><a href="javascript:;" id="save-goods-size">保存</a></li>\
+								</ul>\
+							</div>\
+						</li>\
+					</ul>\
+				</li>\
+			</ul>\
+			<p class="btn-e">\
+				<a href="javascript:;" class="save">保存</a>\
+				<a href="javascript:;" class="canle">取消</a>\
+			</p>');
 
-            $('.goods-edit,.mask-bg').show();
+            $('#add-goods,.mask-bg').show();
             // 商品颜色添加一列
-            $('.goods-color-add .add').live('click', function(){
+			$('.goods-color-input').live('keyup',function(){
+				var color = $(this).val();
+				$(this).css('borderRightColor','#'+color);
+				$(this).siblings('span.color').css('backgroundColor','#'+color);
+			});
+			$('.file').live('change',function(event) {
+                var that = $(this);
+                var file = $(this).get(0).files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function( evt ){
+                    if(file.type.indexOf('image') != -1 || 0){
+                        that.parents('.goods-color').find('.goods-image').attr({src: evt.target.result,width:'24',height:'24'});
+                        return;
+                    }
+                }
+            });
+			$('#save-goods-color').die();
+			$('#save-goods-color').live('click',function(){
+				var colorGthis = $(this).parents('.goods-color').find('.color-input').css('borderRightColor');
+				var goodsColor = '<ul class="goods-color">\
+										<li><input type="text" /></li>\
+										<li><input type="text" class="color-input" style="border-right-color:'+colorGthis+'" /><span class="color" style="background:'+colorGthis+'"></span></li>\
+										<li><img class="goods-image" /></li>\
+										<li><a href="javascript:;">替换图片</a><input type="file" class="file" /></li>\
+										<li><a href="javascript:;">删除</a></li>\
+									</ul>';	
+				
+				$(this).parents('.goods-color').after(goodsColor);
+			});
+            /*$('.goods-color-add .add').live('click', function(){
                 $('.goods-color-add-box').append('\
                             <div class="goods-color-add ">\
                                 <p class="left"><span class="r">*</span>商品颜色：</p>\
@@ -209,7 +312,7 @@ define(function(require, exports, module){
                                     <li class="remove"></li>\
                                 </ul>\
                             </div>');
-            });
+            });*/
             // 商品颜色删除一列
             $('.goods-color-add .remove').live('click', function(){
                 console.log($(this).parents('.goods-color-add'))
@@ -349,6 +452,16 @@ define(function(require, exports, module){
             });
         });
     };
+	/**
+     * 商品编辑
+     */
+	oGoods.edit = function(){
+		$('.edit-ga').live('click',function(){
+			alert(1);
+			$('#eidit-goods,.mask-bg').show();
+		});
+	};
+	
     /**
      * 关闭弹窗
      */

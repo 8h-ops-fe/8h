@@ -121,8 +121,8 @@
 </script>
 <!--商品列表END-->
 
-<!--商品详情-->
-<div class="edit-order goods-detial-pop goods-close">
+<!--添加商品-->
+<div class="edit-order goods-detial-pop goods-close" id="add-goods">
     <div>
         <h1 class="title">商品详情</h1>
         <div class="close-x"></div>
@@ -130,8 +130,8 @@
 
     <ul class="goods-detial">
         <li class="detial1">
-            <p class="left line1"><span class="c9">商品编号：</span><span class="c3" >CD0001</span></p>
-            <p class="right line1"><span class="c9">商品名称：</span><span class="c3">8H床垫</span></p>
+            <p class="left line1"><span class="c9">商品编号：</span><span class="c3" ><input type="text" id="goods-sn" /></span></p>
+            <p class="right line1"><span class="c9">商品名称：</span><span class="c3"><input type="text" id="goods-name" /></span></p>
             <p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">
                         <option>上架</option>
                         <option>下架</option>
@@ -139,7 +139,7 @@
         </li>
         <li>
             <p class="left">商品介绍：</p>
-            <p class="right"><textarea></textarea></p>
+            <p class="right"><textarea class="goods-introdu"></textarea></p>
         </li>
         <li class="margin-none">
             <ul>
@@ -147,88 +147,89 @@
                 	<p class="left">商品颜色：</p>
                     <div class="right">
                         <ul class="goods-color">
-                            <li><input type="text" /></li>
-                            <li><input type="text" /><span class="color"></span></li>
+                            <li><input type="text" class="goods-color-text" /></li>
+                            <li><input type="text" class="color-input goods-color-input" /><span class="color"></span></li>
+                            <li></li>
                             <li><a href="javascript:;">上传图片</a></li>
                             <li><a href="javascript:;">保存</a></li>
-                        </ul>
+                        </ul><!--
                         <ul class="goods-color">
                             <li><input type="text" /></li>
-                            <li><input type="text" /><span class="color"></span></li>
+                            <li><input type="text" class="color-input" /><span class="color"></span></li>
                             <li><img width="24" height="24" /></li>
                             <li><a href="javascript:;">替换图片</a></li>
                             <li><a href="javascript:;">删除</a></li>
-                        </ul>
+                        </ul>-->
                     </div>
                 </li>
                 <li class="detial-color edit-right">
                 	<p class="left">商品规格:</p>
                     <div class="right">
                         <ul class="goods-size">
-                            <li><input type="text" /><a href="javascript:;">保存</a></li>
-                            <li><input type="text" /><a href="javascript:;">删除</a></li>
-                            <li><input type="text" /><a href="javascript:;">删除</a></li>
+                            <li><input type="text" class="goods-size" /><a href="javascript:;">保存</a></li>
+                            <!--<li><input type="text" /><a href="javascript:;">删除</a></li>
+                            <li><input type="text" /><a href="javascript:;">删除</a></li>-->
                         </ul>
                     </div>
                 </li>
             </ul>
         </li>
     </ul>
-    <table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table">
+    <!--<table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table">
     	<tr class="title">
-        	<td width="217">商品颜色</td>
-        	<td width="200">商品规格</td>
-        	<td width="150">价格</td>
-        	<td width="148">库存</td>
-        	<td width="220">物料编号</td>
+        	<td width="150">商品颜色</td>
+        	<td width="190">商品规格</td>
+        	<td width="242">价格</td>
+        	<td width="242">库存</td>
+        	<td width="242">物料编号</td>
         </tr>
     	<tr>
-        	<td width="217" rowspan="3">咖啡金</td>
-        	<td width="200">1.2m × 2.0m</td>
-        	<td width="150">2779</td>
-        	<td width="148">2779</td>
-        	<td width="220">Q1GO150</td>
+        	<td rowspan="3" class="border">咖啡金</td>
+        	<td>1.2m × 2.0m</td>
+        	<td><input type="text" class="goods-price" /></td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
         </tr>
     	<tr>
-        	<td width="200">1.5m × 2.0m</td>
-        	<td width="150">2779</td>
-        	<td width="148" class="red">1</td>
-        	<td width="220">Q1GO150</td>
+        	<td>1.5m × 2.0m</td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
         </tr>
     	<tr>
-        	<td width="200"> 1.8m × 2.0m</td>
-        	<td width="150">2779</td>
-        	<td width="148">2779</td>
-        	<td width="220">Q1GO150</td>
+        	<td class="border"> 1.8m × 2.0m</td>
+        	<td class="border"><input type="text" /></td>
+        	<td class="border"><input type="text" /></td>
+        	<td class="border"><input type="text" /></td>
         </tr>
     	<tr>
-        	<td width="217" rowspan="3">咖啡金</td>
-        	<td width="200">1.2m × 2.0m</td>
-        	<td width="150">2779</td>
-        	<td width="148">2779</td>
-        	<td width="220">Q1GO150</td>
+        	<td rowspan="3" class="border">咖啡金</td>
+        	<td>1.2m × 2.0m</td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
         </tr>
     	<tr>
-        	<td width="200">1.5m × 2.0m</td>
-        	<td width="150">2779</td>
-        	<td width="148" class="red">1</td>
-        	<td width="220">Q1GO150</td>
+        	<td>1.5m × 2.0m</td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
         </tr>
     	<tr>
-        	<td width="200"> 1.8m × 2.0m</td>
-        	<td width="150">2779</td>
-        	<td width="148">2779</td>
-        	<td width="220">Q1GO150</td>
+        	<td> 1.8m × 2.0m</td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
+        	<td><input type="text" /></td>
         </tr>
-    </table>
+    </table>-->
     <p class="btn-e">
         <a href="javascript:;" class="save">保存</a>
         <a href="javascript:;" class="canle">取消</a>
     </p>
 </div>
-<!--商品详情END-->
+<!--添加商品END-->
 
-<!--商品编辑-->
+<!--商品详情-->
 <div class="edit-order goods-edit goods-close">
     <div>
         <h1 class="title">商品编辑</h1>
@@ -279,7 +280,7 @@
             </ul>
         </li>
     </ul>
-    <table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table">
+    <table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table b">
     	<tr class="title">
         	<td width="217">商品颜色</td>
         	<td width="200">商品规格</td>
@@ -332,7 +333,7 @@
         <a href="javascript:;" class="canle">取消</a>
     </p>
 </div>
-<!--商品编辑END-->
+<!--商品详情END-->
 
 <!-- 下架商品-->
 <div class="small-pop">
@@ -381,3 +382,62 @@
     </div>
 </div>
 <!-- 库存编辑END-->
+<!-- 商品编辑-->
+<div class="edit-order goods-detial-pop goods-close" id="eidit-goods">
+    <div>
+        <h1 class="title">商品详情</h1>
+        <div class="close-x"></div>
+    </div>
+
+    <ul class="goods-detial">
+        <li class="detial1">
+            <p class="left line1"><span class="c9"><span class="r">*</span>商品编号：</span><span class="c3" >CD0001</span></p>
+            <p class="right line1"><span class="c9"><span class="r">*</span>商品名称：</span><span class="c3">8H床垫</span></p>
+            <p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">
+                        <option>上架</option>
+                        <option>下架</option>
+                    </select></p>
+        </li>
+        <li>
+            <p class="left"><span class="r">*</span>商品介绍：</p>
+            <p class="right"><textarea></textarea></p>
+        </li>
+        <li class="margin-none">
+            <ul>
+            	<li class="detial-color edit-left">
+                	<p class="left"><span class="r">*</span>商品颜色：</p>
+                    <div class="right">
+                        <ul class="goods-color">
+                            <li><input type="text" /></li>
+                            <li><input type="text" /></li>
+                            <li><a href="javascript:;">上传图片</a></li>
+                            <li><a href="javascript:;">保存</a></li>
+                        </ul>
+                        <ul class="goods-color">
+                            <li><input type="text" /></li>
+                            <li><input type="text" class="color-input" /><span class="color"></span></li>
+                            <li><img width="24" height="24" /></li>
+                            <li><a href="javascript:;">替换图片</a></li>
+                            <li><a href="javascript:;">删除</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="detial-color edit-right">
+                	<p class="left">商品规格:</p>
+                    <div class="right">
+                        <ul class="goods-size">
+                            <li><input type="text" /><a href="javascript:;">保存</a></li>
+                            <li><input type="text" /><a href="javascript:;">删除</a></li>
+                            <li><input type="text" /><a href="javascript:;">删除</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <p class="btn-e">
+        <a href="javascript:;" class="save">保存</a>
+        <a href="javascript:;" class="canle">取消</a>
+    </p>
+</div>
+<!-- 商品编辑END--
