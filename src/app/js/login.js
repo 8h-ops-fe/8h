@@ -4,7 +4,7 @@
 
 
 define(function(require, exports, module){
-    var ajax = require('httpClient');
+    require('jCookie');
 
 
     $(function(){
@@ -14,7 +14,6 @@ define(function(require, exports, module){
             if( oEvent.keyCode == 13){
                 login();
             }
-
         });
         function login(){
             var username = $('.login-username').val(),
@@ -30,13 +29,24 @@ define(function(require, exports, module){
 
             $.ajax({
                 url : 'http://8h-ops-dev.obaymax.com/staff/login',
-                type : 'post',
+                type : 'POST',
                 contentType: "application/json; charset=utf-8",
                 dataType : 'json',
                 data : JSON.stringify({
                     password: password,
                     username: username
                 }),
+                xhrFields: {
+                    withCredentials: true
+                },
+                beforeSend : function(xhr) {
+                    // json格式传输，后台应该用@RequestBody方式接受
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                    var token = $.cookie("token");
+                    if (token) {
+                        xhr.setRequestHeader("X-Access-Token", token);
+                    }
+                },
                 success : function(json){
                     console.log(json);
                     if( json.accessToken ){
@@ -50,12 +60,6 @@ define(function(require, exports, module){
                 }
             });
 
-            //var url = 'http://8h-ops-dev.obaymax.com/staff/login';
-            //ajax.post(url, JSON.stringify({password: password, username: username}), function(res){
-            //    console.log(res)
-            //}, function(res){
-            //    console.log(res);
-            //});
         }
     });
 });

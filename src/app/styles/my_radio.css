@@ -1,0 +1,13 @@
+/*单选按钮*/
+.my_radio_off{
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background: url(../images/radio.png) no-repeat 0 0;
+}
+.my_radio_on{
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background: url(../images/radio.png) no-repeat 0 -18px;
+}

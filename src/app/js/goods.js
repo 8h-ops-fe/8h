@@ -116,10 +116,14 @@ define(function(require, exports, module){
 
     var oGoods = {};
     oGoods.init = function(){
-        this.create();
-        this.add();
+        this.create();    //初始化商品
+        this.add();       //添加商品
+        this.detail();    //商品详情
+        this.close();     //关闭弹窗
     };
-    // 初始化商品
+    /**
+     * 初始化商品
+     */
     oGoods.create = function(){
         // 循环商品
         for(var i=0 ; i<goods.content.length ; i++){
@@ -131,7 +135,7 @@ define(function(require, exports, module){
             $(oGoodsDetails).attr('data-id',that.id);
             oUl.className = 'line-term';
             // 商品内容
-            $(oUl).html('<li class="w124"><p><a href="javascript:;">'+that.sn+'</a></p></li>\
+            $(oUl).html('<li class="w124"><p><a href="javascript:;" class="goods-num">'+that.sn+'</a></p></li>\
                                 <li class="w156"><p>'+that.name+'</p></li>\
                                 <li class="w190 goods-color-size">\
                                 </li>\
@@ -173,10 +177,20 @@ define(function(require, exports, module){
             $($('.cus-adm .line-term')[i]).find('li').css('height',adm_li_h+'px');
         }
     };
-    // 添加商品
+    /**
+     * 添加商品
+     */
     oGoods.add = function(){
         $('.goods-add').live('click', function(){
             // 清空所有文字
+            $('.goods-sn').val('');         //商品编号
+            $('.goods-name').val('');       //商品名字
+            $('.goods-color-text').val(''); //商品颜色文字
+            $('.goods-color-input').val('');//商品颜色
+            $('.goods-size').val('');       //商品大小
+            $('.goods-price').val('');      //商品价钱
+            $('.goods-introdu').val('');    //商品介绍
+            $('#goodsStatus').val('');      //商品状态
 
             $('.goods-edit,.mask-bg').show();
             // 商品颜色添加一列
@@ -217,11 +231,6 @@ define(function(require, exports, module){
             // 输入显示对应颜色
             $('.goods-color-input').live('keyup', function(){
                 $(this).next().css({background: "#"+$(this).val()});
-            });
-            // 关闭
-            $('.close-x,.canle').live('click', function(){
-               $(this).parents('.goods-edit').hide();
-               $('.mask-bg').hide();
             });
             // 图片预览
             $('.goods-img').live('change',function(event) {
@@ -297,7 +306,7 @@ define(function(require, exports, module){
                     }
 
                     $.ajax({
-                        url : devUrl+'/goods/create',
+                        url : eightUrl+'/goods/create',
                         type : 'post',
                         contentType: "application/json; charset=utf-8",
                         dataType : 'json',
@@ -322,6 +331,33 @@ define(function(require, exports, module){
             });
         });
     };
-    
+    /**
+     * 查看商品详情
+     */
+    oGoods.detail = function(){
+        $('.goods-num').live('click', function(){
+            var id = $(this).parents('.goods-details').attr('data-id');
+            $('.goods-detial-pop,.mask-bg').show();
+            $.ajax({
+                url : eightUrl+'/goods/detail/'+id,
+                success : function(json){
+                    console.log(json);
+                },
+                error : function(json){
+                    console.log(json);
+                }
+            });
+        });
+    };
+    /**
+     * 关闭弹窗
+     */
+    oGoods.close = function(){
+        $('.close-x,.canle').live('click', function(){
+            $(this).parents('.goods-close').hide();
+            $('.mask-bg').hide();
+        });
+    };
+
     exports.goods = oGoods;
 });

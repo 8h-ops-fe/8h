@@ -10,6 +10,8 @@ textarea{resize:none;}
 header{height:60px;width:1200px;margin:0 auto;}
 .logo{width:200px; height:60px;background: url(../images/icon.png) center 14px no-repeat #e4624f;display:inline-block;float:left;}
 header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:18px;background:#343843;text-align:right;float:left;padding-right:20px;}
+/*退出*/
+.login-out{margin-left: 10px;cursor: pointer;}
 /*遮罩层样式*/
 .mask-bg{width: 100%;height: 100%;background: #000;opacity:0.3;position:fixed;z-index:9;display:none;}
 /*登录输入框样式star*/
@@ -43,14 +45,14 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .condition .ditail span{font-size:16px;color:#ccc;}
 .condition .ditail input{width:178px;height:22px;border:1px solid #ccc; }
 .condition .state li{ float:left;font-size:16px;color:#ccc; margin-right: 50px;}
-.condition .state span.r{display:inline-block; width:16px; height:18px; background:url(../images/icon.png) 0px -352px no-repeat;  margin-right: 5px; float:left;}
-.condition .state span.w{display:inline-block;float:left;font-size:16px;color:#ccc;}
+.condition .state .r{display:inline-block;  margin-right: 5px; float:left;}
+.condition .state .w{display:inline-block;float:left;font-size:16px;color:#ccc;}
 .search-box{width:970px;border-bottom:1px solid #cccccc; padding-bottom:30px;}
 .condition .search{font-size: 16px;display:block;width:120px;height:30px; background:#e4624f; text-align:center;line-height:30px; color:#fff; margin:0 auto;}
 /*第二页*/
 .condition .margin-t li{float:left;  margin-right: 16px;}
 .condition .ditail .radio li,.condition .state-t .radio li{float:left;font-size:16px;color:#ccc; margin-right:45px;}
-.condition .ditail .radio span.r,.condition .state-t .radio span.r{display:inline-block; width:16px; height:18px; background:url(../images/icon.png) 0px -352px no-repeat;  margin-right: 5px; float:left;}
+.condition .ditail .radio span.r,.condition .state-t .radio span.r{display:inline-block; width:16px; height:16px;  margin-right: 5px; float:left;}
 .condition .ditail .radio span.w,.condition .state-t .radio span.w{display:inline-block;float:left;font-size:16px;color:#ccc;}
 
 /*订单管理 条件end*/
