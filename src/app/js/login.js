@@ -44,7 +44,7 @@ define(function(require, exports, module){
                     xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
                     var token = $.cookie("token");
                     if (token) {
-                        xhr.setRequestHeader("X-Access-Token", token);
+                        xhr.setRequestHeader("X-Access-Auth-Token", token);
                     }
                 },
                 success : function(json){

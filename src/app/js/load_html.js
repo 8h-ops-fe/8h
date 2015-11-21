@@ -3,6 +3,7 @@
  */
 define(function(require, exports, module){
     require("jquery");
+    require('jCookie');
 
     var loadHtml = $(function(){
         // 动态加载内容

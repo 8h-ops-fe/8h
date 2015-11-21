@@ -296,74 +296,74 @@
 <!--订单编辑END-->
 
 <!--订单详情-->
-<div class="edit-order">
-    <h1 class="title">订单编辑</h1>
-    <p class="order-mes">订单号：<span>2015 1031 1349 2312</span></p>
-    <p class="order-mes">订单状态：<span class="red">已支付</span></p>
-    <ul class="process">
-        <li class="active">
-            <i class="order"></i>
-            <span class="mes">下单</span>
-            <span class="time">10-14&nbsp;&nbsp;15:32</span>
-        </li>
-        <li>
-            <i class="arrow"></i>
-        </li>
-        <li>
-            <i class="pay"></i>
-            <span class="mes">支付</span>
-            <span class="time">10-14&nbsp;&nbsp;15:32</span>
-        </li>
-        <li>
-            <i class="arrow"></i>
-        </li>
-        <li>
-            <i class="distribution"></i>
-            <span class="mes">配货</span>
-            <span class="time">10-14&nbsp;&nbsp;15:32</span>
-        </li>
-        <li>
-            <i class="arrow"></i>
-        </li>
-        <li>
-            <i class="retrieval"></i>
-            <span class="mes">出库</span>
-            <span class="time">10-14&nbsp;&nbsp;15:32</span>
-        </li>
-        <li>
-            <i class="arrow"></i>
-        </li>
-        <li>
-            <i class="finish"></i>
-            <span class="mes">完成</span>
-            <span class="time">10-14&nbsp;&nbsp;15:32</span>
-        </li>
-    </ul>
-    <div class="edit-detial">
-        <p class="title-e">商品信息：</p>
-        <ul class="list-e">
-            <li class="image"><img src="../images/order_e.jpg" /></li>
-            <li>8H床垫 × 1</li>
-            <li>1.5m× 2.0m</li>
-            <li>咖啡金</li>
-            <li>¥2799</li>
-            <li class="money">订单总额：<span>¥2799</span></li>
-        </ul>
+<div class="edit-order" id="order-details">
+    <div>
+        <h1 class="title">订单编辑</h1>
+        <div class="close-x"></div>
     </div>
-    <p class="title-e">下单信息：</p>
-    <ul class="user-de">
-        <li>下单人：13145347865</li>
-        <li>下单时间：2015-10-31</li>
-        <li>收货人：张一</li>
-        <li>手机号：13267548976</li>
-        <li>座机号：010-88889999</li>
-        <li>收货人地址：北京市海淀区上地十街辉煌国际</li>
-    </ul>
-    <p class="btn-e">
-        <a href="javascript:;" class="save">保存</a>
-        <a href="javascript:;" class="canle">取消</a>
-    </p>
-
+    <!--<div class="order-details-content">-->
+        <!--<p class="order-mes">订单号：<span>2015 1031 1349 2312</span></p>-->
+        <!--<p class="order-mes">订单状态：<span class="red">已支付</span></p>-->
+        <!--<ul class="process">-->
+            <!--<li class="active">-->
+                <!--<i class="order"></i>-->
+                <!--<span class="mes">下单</span>-->
+                <!--<span class="time">10-14&nbsp;&nbsp;15:32</span>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<i class="arrow"></i>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<i class="pay"></i>-->
+                <!--<span class="mes">支付</span>-->
+                <!--<span class="time">10-14&nbsp;&nbsp;15:32</span>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<i class="arrow"></i>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<i class="distribution"></i>-->
+                <!--<span class="mes">配货</span>-->
+                <!--<span class="time">10-14&nbsp;&nbsp;15:32</span>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<i class="arrow"></i>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<i class="retrieval"></i>-->
+                <!--<span class="mes">出库</span>-->
+                <!--<span class="time">10-14&nbsp;&nbsp;15:32</span>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<i class="arrow"></i>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<i class="finish"></i>-->
+                <!--<span class="mes">完成</span>-->
+                <!--<span class="time">10-14&nbsp;&nbsp;15:32</span>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<div class="edit-detial">-->
+            <!--<p class="title-e">商品信息：</p>-->
+            <!--<ul class="list-e">-->
+                <!--<li class="image"><img class="goods-detial-img" src="../images/order_e.jpg" /></li>-->
+                <!--<li>8H床垫 × 1</li>-->
+                <!--<li>1.5m× 2.0m</li>-->
+                <!--<li>咖啡金</li>-->
+                <!--<li>¥2799</li>-->
+                <!--<li class="money">订单总额：<span>¥2799</span></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--<p class="title-e">下单信息：</p>-->
+        <!--<ul class="user-de">-->
+            <!--<li>下单人：13145347865</li>-->
+            <!--<li>下单时间：2015-10-31</li>-->
+            <!--<li>收货人：张一</li>-->
+            <!--<li>手机号：13267548976</li>-->
+            <!--<li>座机号：010-88889999</li>-->
+            <!--<li>收货人地址：北京市海淀区上地十街辉煌国际</li>-->
+        <!--</ul>-->
+    <!--</div>-->
 </div>
 <!--订单详情END-->
 
@@ -378,39 +378,35 @@
 <!-- 取消订单END-->
 
 <!-- 仓库位置-->
-<div class="small-pop" style="display: none;">
-    <p class="margin-t-40 select-box">
-        <span>仓库位置:</span>
-        <select name="" id="">
-            <option value="">选择仓库位置</option>
-        </select>
-    </p>
-    <p class="margin-t-10 margin-b-30 select-box">
-        <span>仓库:</span>
-        <select name="" id="">
-            <option value="">选择仓库</option>
-        </select>
-    </p>
-    <div class="small-pop-btn">
-        <input type="button" value="确定" class="deter"/>
-        <input type="button" value="取消" class="cancel"/>
-    </div>
-</div>
+<!--<div class="small-pop" style="display: none;">-->
+    <!--<p class="margin-t-40 select-box">-->
+        <!--<span>仓库位置:</span>-->
+        <!--<select name="" id="">-->
+            <!--<option value="">选择仓库位置</option>-->
+        <!--</select>-->
+    <!--</p>-->
+    <!--<p class="margin-t-10 margin-b-30 select-box">-->
+        <!--<span>仓库:</span>-->
+        <!--<select name="" id="">-->
+            <!--<option value="">选择仓库</option>-->
+        <!--</select>-->
+    <!--</p>-->
+    <!--<div class="small-pop-btn">-->
+        <!--<input type="button" value="确定" class="deter"/>-->
+        <!--<input type="button" value="取消" class="cancel"/>-->
+    <!--</div>-->
+<!--</div>-->
 <!-- 仓库位置END-->
 
 <!-- 选择快递-->
-<div class="small-pop">
+<div class="small-pop order-express-box">
     <p class="margin-t-40 select-box">
         <span>快递公司:</span>
-        <select name="" id="">
-            <option value="">选择快递公司</option>
-        </select>
+        <input type="text" class="order-express"/>
     </p>
     <p class="margin-t-10 margin-b-30 select-box">
         <span>运单号:</span>
-        <select name="" id="">
-            <option value="">运单号</option>
-        </select>
+        <input type="text" class="order-express-num"/>
     </p>
     <div class="small-pop-btn">
         <input type="button" value="确定" class="deter"/>

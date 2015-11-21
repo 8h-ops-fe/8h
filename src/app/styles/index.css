@@ -49,6 +49,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .condition .state .w{display:inline-block;float:left;font-size:16px;color:#ccc;}
 .search-box{width:970px;border-bottom:1px solid #cccccc; padding-bottom:30px;}
 .condition .search{font-size: 16px;display:block;width:120px;height:30px; background:#e4624f; text-align:center;line-height:30px; color:#fff; margin:0 auto;}
+.goods-detial-img{width:98px; height:98px;}
 /*第二页*/
 .condition .margin-t li{float:left;  margin-right: 16px;}
 .condition .ditail .radio li,.condition .state-t .radio li{float:left;font-size:16px;color:#ccc; margin-right:45px;}
@@ -82,6 +83,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .detial-commodity dd.forth-btn .one li{font-size:14px;color:#333;width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:55px auto;cursor: pointer;}
 .detial-commodity dd.forth-btn .two{margin:30px 0;}
 .detial-commodity dd.forth-btn .two li{font-size:14px;color:#333; width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:10px auto;cursor: pointer;}
+.detial-commodity dd.forth-btn .three li{font-size:14px;color:#333; width:118px;height:28px;line-height:28px;text-align: center;border:1px solid #ccc; margin:12px auto;cursor: pointer;}
 /*订单管理 列表end*/
 /*订单编辑*/
 .edit-order{display:none;position: absolute;z-index: 10;top:10px;left:20px;padding:30px;background:#fff;width:870px}
