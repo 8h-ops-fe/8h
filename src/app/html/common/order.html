@@ -3,15 +3,15 @@
     <ul class="normol">
         <li>
             <span>订单号：</span>
-            <input type="text" />
+            <input type="text" class="orderSn" />
         </li>
         <li>
             <span>收件人：</span>
-            <input type="text" />
+            <input type="text" class="receiverName" />
         </li>
         <li>
             <span>联系电话：</span>
-            <input type="text" />
+            <input type="text" class="receiverPhone" />
         </li>
     </ul>
     <ul class="ditail">
@@ -23,20 +23,20 @@
         </li>
         <li>
             <span>订单总额：</span>
-            <input type="text" />
+            <input type="text" class="min-price"/>
             <span>-</span>
-            <input type="text" />
+            <input type="text" class="max-price"/>
         </li>
     </ul>
     <ul class="state">
         <li>订单状态：</li>
-        <li><input type="radio" name="status" value="全部订单" class="r"><span class="w">全部订单</span></li>
-        <li><input type="radio" name="status" value="代付款" class="r"><span class="w">代付款</span></li>
-        <li><input type="radio" name="status" value="已付款" class="r"><span class="w">已付款</span></li>
-        <li><input type="radio" name="status" value="已配货" class="r"><span class="w">已配货</span></li>
-        <li><input type="radio" name="status" value="已出库" class="r"><span class="w">已出库</span></li>
-        <li><input type="radio" name="status" value="已收货" class="r"><span class="w">已收货</span></li>
-        <li><input type="radio" name="status" value="订单取消" class="r"><span class="w">订单取消</span></li>
+        <li><input type="radio" name="status" value="0" class="r order-radio"><span class="w">全部订单</span></li>
+        <li><input type="radio" name="status" value="1" class="r order-radio"><span class="w">代付款</span></li>
+        <li><input type="radio" name="status" value="2" class="r order-radio"><span class="w">已付款</span></li>
+        <li><input type="radio" name="status" value="3" class="r order-radio"><span class="w">已配货</span></li>
+        <li><input type="radio" name="status" value="4" class="r order-radio"><span class="w">已出库</span></li>
+        <li><input type="radio" name="status" value="5" class="r order-radio"><span class="w">已收货</span></li>
+        <li><input type="radio" name="status" value="6" class="r order-radio"><span class="w">订单取消</span></li>
         <!--<li><span class="r"></span><span class="w">全部订单</span></li>-->
         <!--<li><span class="r"></span><span class="w">代付款</span></li>-->
         <!--<li><span class="r"></span><span class="w">已付款</span></li>-->
@@ -45,14 +45,15 @@
         <!--<li><span class="r"></span><span class="w">已收货</span></li>-->
         <!--<li><span class="r"></span><span class="w">订单取消</span></li>-->
     </ul>
-    <div class="search-box"><a href="javascript:;" class="search">查询</a></div>
+    <div class="search-box"><a href="javascript:;" class="search order-search">查询</a></div>
 </div>
 <!--条件END-->
 
 
 <!--右侧列表内容-->
-<div class="order-list-box list">
+<div class="list">
     <a href="javascript:;" class="btn">导出订单</a>
+    <div class="order-list-box"></div>
     <!--一个商品开始-->
     <!--<div class="order-list">-->
         <!--<ul class="detial-state">-->
@@ -164,7 +165,7 @@
 <!--右侧列表内容EDN-->
 
 <!--订单编辑-->
-<div class="edit-order">
+<div class="edit-order" id="edit-order">
     <h1 class="title">订单编辑</h1>
     <p class="order-mes">订单号：<span>2015 1031 1349 2312</span></p>
     <p class="order-mes">订单状态：<span class="red">已支付</span></p>
@@ -298,7 +299,7 @@
 <!--订单详情-->
 <div class="edit-order" id="order-details">
     <div>
-        <h1 class="title">订单编辑</h1>
+        <h1 class="title">订单详情</h1>
         <div class="close-x"></div>
     </div>
     <!--<div class="order-details-content">-->
