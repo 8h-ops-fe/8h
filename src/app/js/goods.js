@@ -250,6 +250,8 @@ define(function(require, exports, module){
 					</ul>\
 				</li>\
 			</ul>\
+			<table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table" id="addGoodsTable">\
+			</table>\
 			<p class="btn-e">\
 				<a href="javascript:;" class="save">保存</a>\
 				<a href="javascript:;" class="canle">取消</a>\
@@ -301,7 +303,7 @@ define(function(require, exports, module){
 										<li><input type="text" class="color-input" value="'+goodsColorInput+'" style="border-right-color:#'+goodsColorInput+'" /><span class="color" style="background:#'+goodsColorInput+'"></span></li>\
 										<li><img class="goods-image" /></li>\
 										<li><a href="javascript:;">替换图片</a><input type="file" class="file" /></li>\
-										<li><a href="javascript:;" class="remove">删除</a></li>\
+										<li><a href="javascript:;" class="remove" date-del="'+goodsSizeDate+'">删除</a></li>\
 									</ul>';	
 				
 				$(this).parents('.goods-color').after(goodsColor);
@@ -317,6 +319,22 @@ define(function(require, exports, module){
 			$('.goods-color .remove').die();
             $('.goods-color .remove').live('click', function(){
                 $(this).parents('.goods-color').remove();
+				var dataDel = $(this).attr('date-del');
+				var aTr = $('#addGoodsTable').find('.tr');
+				for(var i = 0;i < aTr.length;i++){
+					var dataColor = $(aTr[i]).attr('date-color');
+					if(dataColor == dataDel){
+						$(aTr[i]).remove();
+						$('#initGoodsSize').html('<ul class="goods-size">\
+												<li><input type="text" class="goods-size" /><a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>\
+											</ul>');
+					}
+				}
+				if($('#addGoodsTable').find('.tr').length == 0){
+					$('#addGoodsTable').html(' ');
+					return false;
+				}
+				
             });
 			// 商品规格添加一列
 			$('#saveGoodsSize').die();
@@ -325,12 +343,16 @@ define(function(require, exports, module){
 					alert('请先填写颜色并保存。');
 					return false;
 				}
+				var date = new Date();
+				var dizeDel = date.getTime();
+				
 				var sizeGthis = $(this).siblings('.goods-size');
 				var sizeGthisVal = sizeGthis.val();
-				var goodsSize = '<li><input type="text" value="'+sizeGthisVal+'" /><a href="javascript:;" class="remove">删除</a></li>';	
+				var goodsSize = '<li><input type="text" value="'+sizeGthisVal+'" /><a href="javascript:;" class="remove" data-sizedel="'+dizeDel+'">删除</a></li>';	
 				var jsonSize = {};
 				jsonSize.dateColor = $(this).attr('data-goodssizedate');
 				jsonSize.sizeGthisVal = sizeGthisVal;
+				jsonSize.dizeDel = dizeDel;
 				creatTableSize(jsonSize);
 				$(this).parents('.goods-size li').eq(0).after(goodsSize);
 				$(this).siblings('input').val('');
@@ -338,13 +360,27 @@ define(function(require, exports, module){
 			// 商品规格删除一列
 			$('.detial-color .remove').die();
 			$('.detial-color .remove').live('click', function(){
+				var delData = $(this).attr('data-sizedel');
+				var aTd = $('#addGoodsTable').find('.size-gthis-val');
+				for(var i = 0;i < aTd.length;i++ ){
+					var dataSize = $(aTd[i]).attr('data-size');
+					if(delData == dataSize){
+						$(aTd[i]).nextAll().remove();
+						var par = $(aTd[i]).parent('tr.tr');
+						if(par.find('td.goods-color-text').length == 0){
+							par.remove();
+						}
+						$(aTd[i]).remove();
+						
+					}
+				}
 				$(this).parent('li').remove();
 			});
 			//创建表格
 			function creatTableColor(json){
-				if($("#addGoodsTable").length == 0){
-					var tableStr = '<table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table" id="addGoodsTable">\
-										<tr class="title">\
+				
+				if($("#addGoodsTable").find('tr.title').length == 0){
+					var tableStr = '<tr class="title">\
 											<td width="150">商品颜色</td>\
 											<td width="190">商品规格</td>\
 											<td width="242">价格</td>\
@@ -353,24 +389,25 @@ define(function(require, exports, module){
 										</tr>\
 										<tr date-color="'+json.dateColor+'" class="tr">\
 											<td class="border goods-color-text">'+json.goodsColorText+'</td>\
-											<td class="border size-gthis-val">'+json.sizeGthisVal+'</td>\
-											<td class="border"><input type="text" class="goods-price" /></td>\
-											<td class="border"><input type="text" /></td>\
-											<td class="border"><input type="text" /></td>\
-										</tr>\
-									</table>';
-					$('.btn-e').prepend(tableStr);
+											<td class="size-gthis-val">'+json.sizeGthisVal+'</td>\
+											<td><input type="text" class="goods-price" /></td>\
+											<td><input type="text" /></td>\
+											<td><input type="text" /></td>\
+										</tr>';
+					$('#addGoodsTable').append(tableStr);
 				}else{
-					var tableStr = '<tr date-color="'+json.dateColor+'">\
+					var tableStr = '<tr date-color="'+json.dateColor+'" class="tr">\
 										<td class="border goods-color-text">'+json.goodsColorText+'</td>\
-										<td class="border size-gthis-val">'+json.sizeGthisVal+'</td>\
-										<td class="border"><input type="text" class="goods-price" /></td>\
-										<td class="border"><input type="text" /></td>\
-										<td class="border"><input type="text" /></td>\
+										<td class="size-gthis-val">'+json.sizeGthisVal+'</td>\
+										<td><input type="text" class="goods-price" /></td>\
+										<td><input type="text" /></td>\
+										<td><input type="text" /></td>\
 									</tr>';
 					$('#addGoodsTable').append(tableStr);
 				}
+				
 			}
+			//创建规格
             function creatTableSize(json){
 				
 				var row = 1;
@@ -382,26 +419,24 @@ define(function(require, exports, module){
 						rowArr.push($(oTR[i]));
 						row++;
 						if($(oTR[i]).find('td.size-gthis-val').html() == ''){
-							alert(1);
 							$(oTR[i]).find('td.size-gthis-val').html(json.sizeGthisVal);
+							$(oTR[i]).find('td.size-gthis-val').attr('data-size',json.dizeDel);
 						}else{
-							
+							$(oTR[i]).find('td').removeClass('border');
 							var tableStr = '<tr date-color="'+json.dateColor+'" class="tr">\
-										<td>'+json.sizeGthisVal+'</td>\
-										<td><input type="text" class="goods-price" /></td>\
-										<td><input type="text" /></td>\
-										<td><input type="text" /></td>\
+										<td class="border size-gthis-val" data-size="'+json.dizeDel+'">'+json.sizeGthisVal+'</td>\
+										<td class="border"><input type="text" class="goods-price" /></td>\
+										<td class="border"><input type="text" /></td>\
+										<td class="border"><input type="text" /></td>\
 									</tr>';
 							rowArr[0].find('.goods-color-text').attr('rowspan',row);
 						}
 					}
 					
-					
-					
+					$(oTR[i]).find('td.goods-color-text').addClass('border');
 				}
-				
-				
 				$('#addGoodsTable').append(tableStr);
+				
 			}
 			
             // 商品规格、价格添加一列
