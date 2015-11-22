@@ -39,9 +39,10 @@ define(function(require, exports, module){
                 console.log(json);
                 $('.user-list-box').html('');
                 for(var i=0 ; i<json.length ; i++){
+
                     var phone = json[i].mobile,                 //用户电话
                         createTime = json[i].createTime,        //注册时间
-                        status = json[i]==1 ? '已启用' : '已禁用',//用户状态
+                        status = json[i].status==1 ? '已启用' : '已禁用',//用户状态
                         operation = status == '已启用' ? '禁用' : '启用',
                         id = json[i].id,
                         userState = operation == '启用' ? 'user-open' : 'user-close';
@@ -101,6 +102,8 @@ define(function(require, exports, module){
                 },
                 success : function(json){
                     $('#user-details,.mask-bg').show();
+                    $('#user-details').css({top: ($(document).scrollTop+20)+'px'});
+
                     var createTime = json.createTime,               //创建时间
                         id = json.id,                               //ID
                         mobile = json.mobile || '未填写',            //电话
@@ -224,8 +227,11 @@ define(function(require, exports, module){
         var that = this;
         if( data.status ==1 ){
             $('#user_pop_open,.mask-bg').show();
+            $('#user_pop_open').css({top: ($(document).scrollTop+20)+'px'});
         }else{
             $('#user_pop_close,.mask-bg').show();
+            $('#user_pop_close').css({top: ($(document).scrollTop+20)+'px'});
+
         }
         $('#user_pop_open .deter,#user_pop_close .deter').click(function(){
             $.ajax({
