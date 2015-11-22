@@ -370,6 +370,15 @@ define(function(require, exports, module){
 						if(par.find('td.goods-color-text').length == 0){
 							par.remove();
 						}
+						var parDate = par.attr('date-color');
+						var aTR = $('#addGoodsTable').find('.tr');
+						var countTr = 0;
+						for(var j = 0;j < aTR.length;j++){
+							var dateClor = $(aTR[j]).attr('date-color');
+							if(dateClor == parDate){
+								countTr++;
+							}
+						}
 						$(aTd[i]).remove();
 						
 					}
