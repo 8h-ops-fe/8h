@@ -208,18 +208,8 @@ define(function(require, exports, module){
 		  "status": 0
 		}*/
         $('.goods-add').live('click', function(){
-            // 清空所有文字
-            //$('#goods-sn').val('');         //商品编号
-            //$('#goods-name').val('');       //商品名字
-            //$('.goods-color-text').val(''); //商品颜色文字
-            //$('.goods-color-input').val('');//商品颜色
-           // $('.goods-size').val('');       //商品大小
-            //$('.goods-price').val('');      //商品价钱
-            //$('.goods-introdu').val('');    //商品介绍
-            //$('#goodsStatus').val('');      //商品状态
-			
 			$('#add-goods').html('<div>\
-				<h1 class="title">商品详情</h1>\
+				<h1 class="title">添加商品</h1>\
 				<div class="close-x"></div>\
 			</div>\
 			<ul class="goods-detial">\
@@ -241,8 +231,8 @@ define(function(require, exports, module){
 							<p class="left">商品颜色：</p>\
 							<div class="right">\
 								<ul class="goods-color">\
-									<li><input type="text" class="goods-color-text" /></li>\
-									<li><input type="text" class="color-input goods-color-input" /><span class="color"></span></li>\
+									<li><input type="text" class="goods-color-text" id="goodsColorText" /></li>\
+									<li><input type="text" class="color-input goods-color-input" id="goodsColorInput" /><span class="color"></span></li>\
 									<li><img width="0" height="0" class="goods-image" /></li>\
 									<li><a href="javascript:;">上传图片</a><input type="file" class="file" /></li>\
 									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
@@ -251,9 +241,9 @@ define(function(require, exports, module){
 						</li>\
 						<li class="detial-color edit-right">\
 							<p class="left">商品规格:</p>\
-							<div class="right">\
+							<div class="right" id="initGoodsSize">\
 								<ul class="goods-size">\
-									<li><input type="text" class="goods-size" /><a href="javascript:;" id="save-goods-size">保存</a></li>\
+									<li><input type="text" class="goods-size" /><a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>\
 								</ul>\
 							</div>\
 						</li>\
@@ -266,11 +256,13 @@ define(function(require, exports, module){
 			</p>');
 
             $('#add-goods,.mask-bg').show();
-            // 商品颜色添加一列
-			$('.goods-color-input').live('keyup',function(){
-				var color = $(this).val();
-				$(this).css('borderRightColor','#'+color);
-				$(this).siblings('span.color').css('backgroundColor','#'+color);
+            // 商品颜色获得
+			
+			var sizeCount = {};
+			$('#goodsColorInput').live('keyup',function(){
+				var goodsColorInput = $(this).val();
+				$(this).css('borderRightColor','#'+goodsColorInput);
+				$(this).siblings('span.color').css('backgroundColor','#'+goodsColorInput);
 			});
 			$('.file').live('change',function(event) {
                 var that = $(this);
@@ -292,35 +284,126 @@ define(function(require, exports, module){
                 }
             });
 			$('#save-goods-color').die();
+			 // 商品颜色添加一列
+			 var count = 1;
 			$('#save-goods-color').live('click',function(){
-				var colorGthis = $(this).parents('.goods-color').find('.color-input').css('borderRightColor');
+				var date = new Date();
+				var goodsSizeDate = date.getTime();
+				
+				$('#initGoodsSize').html('<ul class="goods-size">\
+												<li><input type="text" class="goods-size" /><a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>\
+											</ul>');
+				$('#saveGoodsSize').attr('data-goodsSizeDate',goodsSizeDate);
+				var goodsColorText = $('#goodsColorText').val();
+				var goodsColorInput = $('#goodsColorInput').val();
 				var goodsColor = '<ul class="goods-color">\
-										<li><input type="text" /></li>\
-										<li><input type="text" class="color-input" style="border-right-color:'+colorGthis+'" /><span class="color" style="background:'+colorGthis+'"></span></li>\
+										<li><input type="text" value="'+goodsColorText+'" /></li>\
+										<li><input type="text" class="color-input" value="'+goodsColorInput+'" style="border-right-color:#'+goodsColorInput+'" /><span class="color" style="background:#'+goodsColorInput+'"></span></li>\
 										<li><img class="goods-image" /></li>\
 										<li><a href="javascript:;">替换图片</a><input type="file" class="file" /></li>\
 										<li><a href="javascript:;" class="remove">删除</a></li>\
 									</ul>';	
 				
 				$(this).parents('.goods-color').after(goodsColor);
+				creatTableColor({'goodsColorText':goodsColorText,'sizeCount':sizeCount,'sizeGthisVal':'','dateColor':goodsSizeDate});
+				
+				$(this).parents('ul.goods-color').find('input').val('');
+				
+				$('#goodsColorInput').css('borderRightColor','#ccc');
+				$('#goodsColorInput').siblings('span.color').css('backgroundColor','#fff');
+				
 			});
-            // 商品颜色删除一列
+			// 商品颜色删除一列
 			$('.goods-color .remove').die();
             $('.goods-color .remove').live('click', function(){
                 $(this).parents('.goods-color').remove();
             });
 			// 商品规格添加一列
-			$('#save-goods-size').die();
-            $('#save-goods-size').live('click', function(){
-                var sizeGthis = $(this).siblings('.goods-size');
-				var goodsSize = '<li><input type="text" /><a href="javascript:;" class="remove">删除</a></li>';	
+			$('#saveGoodsSize').die();
+			$('#saveGoodsSize').live('click', function(){
+				if($("#addGoodsTable").length == 0 || $('#saveGoodsSize').attr('data-goodssizedate') == ''){
+					alert('请先填写颜色并保存。');
+					return false;
+				}
+				var sizeGthis = $(this).siblings('.goods-size');
+				var sizeGthisVal = sizeGthis.val();
+				var goodsSize = '<li><input type="text" value="'+sizeGthisVal+'" /><a href="javascript:;" class="remove">删除</a></li>';	
+				var jsonSize = {};
+				jsonSize.dateColor = $(this).attr('data-goodssizedate');
+				jsonSize.sizeGthisVal = sizeGthisVal;
+				creatTableSize(jsonSize);
 				$(this).parents('.goods-size li').eq(0).after(goodsSize);
-            });
+				$(this).siblings('input').val('');
+			});
 			// 商品规格删除一列
 			$('.detial-color .remove').die();
-            $('.detial-color .remove').live('click', function(){
-                $(this).parent('li').remove();
-            });
+			$('.detial-color .remove').live('click', function(){
+				$(this).parent('li').remove();
+			});
+			//创建表格
+			function creatTableColor(json){
+				if($("#addGoodsTable").length == 0){
+					var tableStr = '<table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table" id="addGoodsTable">\
+										<tr class="title">\
+											<td width="150">商品颜色</td>\
+											<td width="190">商品规格</td>\
+											<td width="242">价格</td>\
+											<td width="242">库存</td>\
+											<td width="242">物料编号</td>\
+										</tr>\
+										<tr date-color="'+json.dateColor+'" class="tr">\
+											<td class="border goods-color-text">'+json.goodsColorText+'</td>\
+											<td class="border size-gthis-val">'+json.sizeGthisVal+'</td>\
+											<td class="border"><input type="text" class="goods-price" /></td>\
+											<td class="border"><input type="text" /></td>\
+											<td class="border"><input type="text" /></td>\
+										</tr>\
+									</table>';
+					$('.btn-e').prepend(tableStr);
+				}else{
+					var tableStr = '<tr date-color="'+json.dateColor+'">\
+										<td class="border goods-color-text">'+json.goodsColorText+'</td>\
+										<td class="border size-gthis-val">'+json.sizeGthisVal+'</td>\
+										<td class="border"><input type="text" class="goods-price" /></td>\
+										<td class="border"><input type="text" /></td>\
+										<td class="border"><input type="text" /></td>\
+									</tr>';
+					$('#addGoodsTable').append(tableStr);
+				}
+			}
+            function creatTableSize(json){
+				
+				var row = 1;
+				var rowArr = [];
+				var oTR = $("#addGoodsTable").find('.tr');
+				for(var i = 0;i<oTR.length;i++){
+					var attrDate = $($("#addGoodsTable .tr")[i]).attr('date-color');
+					if(json.dateColor == attrDate){
+						rowArr.push($(oTR[i]));
+						row++;
+						if($(oTR[i]).find('td.size-gthis-val').html() == ''){
+							alert(1);
+							$(oTR[i]).find('td.size-gthis-val').html(json.sizeGthisVal);
+						}else{
+							
+							var tableStr = '<tr date-color="'+json.dateColor+'" class="tr">\
+										<td>'+json.sizeGthisVal+'</td>\
+										<td><input type="text" class="goods-price" /></td>\
+										<td><input type="text" /></td>\
+										<td><input type="text" /></td>\
+									</tr>';
+							rowArr[0].find('.goods-color-text').attr('rowspan',row);
+						}
+					}
+					
+					
+					
+				}
+				
+				
+				$('#addGoodsTable').append(tableStr);
+			}
+			
             // 商品规格、价格添加一列
             $('.goods-size-box .add').live('click', function(){
                 $('.goods-size-box').append('\
@@ -443,7 +526,7 @@ define(function(require, exports, module){
     oGoods.detail = function(){
         $('.goods-num').live('click', function(){
             var id = $(this).parents('.goods-details').attr('data-id');
-            $('.goods-detial-pop,.mask-bg').show();
+            $('#detial,.mask-bg').show();
             $.ajax({
                 url : eightUrl+'/goods/detail/'+id,
                 success : function(json){
