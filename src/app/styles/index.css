@@ -212,6 +212,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .cus-service dt li.no-boder{border:0;}
 .cus-service dd{height:50px;border-bottom:1px solid #ccc;}
 .cus-service dd li{height:50px;line-height:50px; text-align:center; float:left; border-right:1px solid #ccc;font-size:14px;color:#333;}
+.cus-service dd .orange{color: orange;}
 .cus-service dd li.no-boder{border:0;}
 .cus-service dd li.blue{ color:#4f8ee4;}
 .cus-service dd li.red{color:#e4624f;}
@@ -419,6 +420,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .float-r{float:right;}
 .color-999{color:#999;}
 .no-data{font-size: 30px;}
+.cursor{cursor: pointer;}
 
 
 
