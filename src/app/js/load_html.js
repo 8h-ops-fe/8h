@@ -29,7 +29,7 @@ define(function(require, exports, module){
                 oOrder.init();
             });
 
-
+            // 订单管理
             $(".order").on("click", function(){
                 $(".wrap").load("common/order.html", function(){
                     myRadio('status');
@@ -37,6 +37,7 @@ define(function(require, exports, module){
                     oOrder.init();
                 });
             });
+            //售后管理
             $(".icon2").on("click", function(){
                 $(".wrap").load("common/afterSale.html", function(){
                     myRadio('type');
@@ -46,6 +47,7 @@ define(function(require, exports, module){
                     after.init();
                 });
             });
+            //商品管理
             $(".goods").on("click", function(){
                 $(".wrap").load("common/goods.html",function(){
                     myRadio('state');
@@ -54,6 +56,7 @@ define(function(require, exports, module){
 
                 });
             });
+            //用户管理
             $(".user").on("click", function(){
                 $(".wrap").load("common/user.html",function(){
                     myRadio('state');
@@ -61,6 +64,7 @@ define(function(require, exports, module){
                     user.init();
                 });
             });
+            //系统管理
             $(".icon5").on("click", function(){
                 $(".wrap").load("common/admin.html",function(){
                     myRadio('state');

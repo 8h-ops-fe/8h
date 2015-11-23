@@ -12,7 +12,6 @@ define(function(require, exports, module){
     require("datepicker");
     //退出
     require('judge');
-
 });
 
 

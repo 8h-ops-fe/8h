@@ -50,7 +50,6 @@ define(function(require, exports, module){
                         createTime = arr[i].createTime,//下单时间
                         userName = arr[i].userName,    //收货人
                         statusDesc = arr[i].statusDesc;//订单状态
-
                     // 商品信息
                     var goodsInfo = '';
                     if(arr[i].goodsInfoList)
@@ -171,15 +170,13 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    console.log(json);
                     var order = json;
                     $('#order-details,.mask-bg').show();
                     $('#order-details').css({top: ($(document).scrollTop()+20)+'px'});
-                    console.log(json);
                     var orderSn = order.orderGoodsInfo.orderSn,  //订单号
-                        statusDesc = order.orderGoodsInfo.statusDesc,       //订单状态
-                        orderTime= order.orderGoodsInfo.createTime;         //下单时间
-                    var orderGoodsInfo = '';
+                        statusDesc = order.orderGoodsInfo.statusDesc;       //订单状态
+
+                    var orderGoodsInfo = '';    //商品信息列表
                     for(var i=0 ; i<order.orderInfo.length ; i++){
                         orderGoodsInfo+='<li>'+order.orderInfo[i]+'</li>';
                     }
@@ -201,6 +198,72 @@ define(function(require, exports, module){
                                     <li class="money">订单总额：<span>¥2799</span></li>\
                                 </ul>';
                     }
+                    //商品状态
+                    //订单状态
+                    var bayTime = '',     //下单时间
+                        payTime = '',     //支付时间
+                        distribuTime = '',//配货时间
+                        outTime= '',      //出库时间
+                        succTime = '',    //完成时间
+                        orderStatus = order.orderStatusTimeMap;    //商品状态码
+
+                    for(var i=0 ; i<orderStatus.length ; i++){
+                        switch(orderStatus[i].status){
+                            case 1:
+                                bayTime = orderStatus[i].time;
+                                break;
+                            case 2:
+                                payTime = orderStatus[i].time;
+                                break;
+                            case 3:
+                                distribuTime = orderStatus[i].time;
+                                break;
+                            case 4:
+                                outTime = orderStatus[i].time;
+                                break;
+                            case 5:
+                                succTime = orderStatus[i].time;
+                                break;
+                        }
+                    }
+                    var orderStatusContent = '\
+                            <li class="active">\
+                                <i class="order"></i>\
+                                <span class="mes">下单</span>\
+                                <span class="time">'+bayTime+'</span>\
+                            </li>\
+                            <li>\
+                                <i class="arrow"></i>\
+                            </li>\
+                            <li>\
+                                <i class="pay"></i>\
+                                <span class="mes">支付</span>\
+                                <span class="time">'+payTime+'</span>\
+                            </li>\
+                            <li>\
+                                <i class="arrow"></i>\
+                            </li>\
+                            <li>\
+                                <i class="distribution"></i>\
+                                <span class="mes">配货</span>\
+                                <span class="time">'+distribuTime+'</span>\
+                            </li>\
+                            <li>\
+                                <i class="arrow"></i>\
+                            </li>\
+                            <li>\
+                                <i class="retrieval"></i>\
+                                <span class="mes">出库</span>\
+                                <span class="time">'+outTime+'</span>\
+                            </li>\
+                            <li>\
+                                <i class="arrow"></i>\
+                            </li>\
+                            <li>\
+                                <i class="finish"></i>\
+                                <span class="mes">完成</span>\
+                                <span class="time">'+succTime+'</span>\
+                            </li>';
 
                     // 商品详情弹窗
                     $('#order-details').html('\
@@ -212,44 +275,7 @@ define(function(require, exports, module){
                             <div class="order-details-content">\
                             <p class="order-mes">订单号：<span>'+orderSn+'</span></p>\
                             <p class="order-mes">订单状态：<span class="red">'+statusDesc+'</span></p>\
-                            <ul class="process">\
-                                <li class="active">\
-                                    <i class="order"></i>\
-                                    <span class="mes">下单</span>\
-                                    <span class="time">'+orderTime+'</span>\
-                                </li>\
-                                <li>\
-                                    <i class="arrow"></i>\
-                                </li>\
-                                <li>\
-                                    <i class="pay"></i>\
-                                    <span class="mes">支付</span>\
-                                    <span class="time">10-14&nbsp;&nbsp;15:32</span>\
-                                </li>\
-                                <li>\
-                                    <i class="arrow"></i>\
-                                </li>\
-                                <li>\
-                                    <i class="distribution"></i>\
-                                    <span class="mes">配货</span>\
-                                    <span class="time">10-14&nbsp;&nbsp;15:32</span>\
-                                </li>\
-                                <li>\
-                                    <i class="arrow"></i>\
-                                </li>\
-                                <li>\
-                                    <i class="retrieval"></i>\
-                                    <span class="mes">出库</span>\
-                                    <span class="time">10-14&nbsp;&nbsp;15:32</span>\
-                                </li>\
-                                <li>\
-                                    <i class="arrow"></i>\
-                                </li>\
-                                <li>\
-                                    <i class="finish"></i>\
-                                    <span class="mes">完成</span>\
-                                    <span class="time">10-14&nbsp;&nbsp;15:32</span>\
-                                </li>\
+                            <ul class="process">'+orderStatusContent+'\
                             </ul>\
                             <div class="edit-detial">\
                                 <p class="title-e">商品信息：</p>'+goodsInfo+'\
