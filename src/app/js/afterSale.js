@@ -11,6 +11,8 @@ define(function(require, exports, module){
         this.query();   //售后查询
         this.afterQuery();//售后订单查询
         this.orderQuery();//订单详情
+        this.through();   //审核
+        this.close();     //关闭
     };
     /**
      * 售后列表
@@ -60,7 +62,7 @@ define(function(require, exports, module){
                             sHandle = '<li class="w68 orange">待处理</li>';
                             sResult = '<li class="w94 no-boder">\
                                            <a href="javascript:;" class="audit-through">通过</a>\
-                                           <a href="javascript:;" class="noe-rhrough">不通过</a>\
+                                           <a href="javascript:;" class="not-through">不通过</a>\
                                        </li>'
                         }else if( result == 1 ){
                             sHandle = '<li class="w68">已处理</li>';
@@ -315,6 +317,71 @@ define(function(require, exports, module){
             })
         });
     };
-
+    oAfter.through = function(){
+        // 通过审核
+        $('.audit-through').die().live('click', function(){
+            var id = $(this).parents('.after-list-box').attr('data-ordersn');
+            $('#audit-through,.mask-bg').show();
+            $('#audit-through .deter').die().live('click', function(){
+                $.ajax({
+                    url : eightUrl+'afterSale/auditPass/'+id,
+                    type : 'get',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend : function(xhr) {
+                        // json格式传输，后台应该用@RequestBody方式接受
+                        xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                        var token = $.cookie("token");
+                        if (token) {
+                            xhr.setRequestHeader("X-Access-Auth-Token", token);
+                        }
+                    },
+                    success : function(json){
+                        console.log(json);
+                    },
+                    error : function(json){
+                        var json = JSON.parse(json.responseText);
+                        console.log(json.message);
+                    }
+                });
+            });
+        });
+        // 不通过审核
+        $('.not-through').die().live('click', function(){
+            var id = $(this).parents('.after-list-box').attr('data-ordersn');
+            $('#not-through,.mask-bg').show();
+            $('#not-through .deter').die().live('click', function(){
+                $.ajax({
+                    url : eightUrl+'afterSale/auditPass/'+id,
+                    type : 'get',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend : function(xhr) {
+                        // json格式传输，后台应该用@RequestBody方式接受
+                        xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                        var token = $.cookie("token");
+                        if (token) {
+                            xhr.setRequestHeader("X-Access-Auth-Token", token);
+                        }
+                    },
+                    success : function(json){
+                        console.log(json);
+                    },
+                    error : function(json){
+                        var json = JSON.parse(json.responseText);
+                        console.log(json.message);
+                    }
+                });
+            });
+        });
+    };
+    oAfter.close = function(){
+        $('.small-pop .cancel').die().live('click', function(){
+            $(this).parents('.small-pop').hide();
+            $('.mask-bg').hide();
+        });
+    };
     exports.after = oAfter;
 });
