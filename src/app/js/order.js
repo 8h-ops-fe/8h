@@ -19,6 +19,7 @@ define(function(require, exports, module){
      * @param data
      */
     oOrder.list = function(data){
+        var that = this;
         var json = JSON.stringify({
             pageNum: 1,
             pageSize: 10
@@ -43,13 +44,24 @@ define(function(require, exports, module){
             },
             success : function(json){
                 var arr = json;
+                if( json == ''){
+                    $('.order-list-box').html('<h1 class="no-data">暂无数据</h1>');
+                    return;
+                }
                 console.log(arr);
                 $('.order-list-box').html('');
                 for(var i=0 ; i<arr.length ; i++){
                     var orderSn = arr[i].orderSn,      //订单号
                         createTime = arr[i].createTime,//下单时间
-                        userName = arr[i].userName,    //收货人
-                        statusDesc = arr[i].statusDesc;//订单状态
+                        userName = arr[i].userName,    //下单用户
+                        receiverName = arr[i].receiverName,     //收货人
+                        receiverPhone = arr[i].receiverPhone,   //收货人座机
+                        receiverMobile = arr[i].receiverMobile || receiverPhone,  //收货人手机
+                        statusDesc = arr[i].statusDesc,//订单状态描述
+                        status = arr[i].status;    //订单状态码，1下单，2支付，3配货，4出库，5完成，6取消
+                        totalPrice = arr[i].totalPrice,//商品价钱
+                        orderPrice = '';               //商品总价
+
                     // 商品信息
                     var goodsInfo = '';
                     if(arr[i].goodsInfoList)
@@ -66,8 +78,39 @@ define(function(require, exports, module){
                                 expressInfoC = expressInfo[0];
                                 expressInfoN = expressInfo[1];
                             }
-                    var operationBtn = ''
-
+                        orderPrice = parseInt(totalPrice)*parseInt(goodsAmount);
+                        var operationBtn = '';
+                        //订单详情
+                        var orderDetails = '';
+                            console.log(status);
+                        //1下单，2支付，3配货
+                        if( status == 1 || status == 2 || status ==3){
+                            orderDetails = '<ul class="two">\
+                                                <li class="order-edit-btn">编辑订单</li>\
+                                                <li class="order-details-btn">订单详情</li>\
+                                            </ul>';
+                        //4出库
+                        }else if( status == 4 ){
+                            orderDetails = '<ul class="three">\
+                                                <li class="order-edit-btn">编辑订单</li>\
+                                                <li class="order-details-btn">订单详情</li>\
+                                                <li class="order-logist-btn">\
+                                                    <div class="order-express-box">\
+                                                        <span class="order-express">物流状态</span>\
+                                                        <div class="express-box">\
+                                                            <p><span>快递公司：</span><span class="express-company">'+expressInfoC+'</span></p>\
+                                                            <p><span>快递单号：</span><span class="express-num">'+expressInfoN+'</span></p>\
+                                                        </div>\
+                                                    </div>\
+                                                </li>\
+                                            </ul>';
+                        //5完成，6取消
+                        }else{
+                            orderDetails = '<ul class="one">\
+                                                <li class="order-details-btn">订单详情</li>\
+                                            </ul>';
+                        }
+                        // 订单列表
                         goodsInfo += '\
                                 <dl class="detial-commodity">\
                                     <dt><img src="'+goodsImg+'"></dt>\
@@ -76,24 +119,11 @@ define(function(require, exports, module){
                                         <dd>'+goodsName+'×'+goodsAmount+'</dd>\
                                         <dd>'+goodsSize+'</dd>\
                                         <dd>'+goodsColor+'</dd>\
-                                        <dd>￥2799</dd>\
-                                        <dd>订单总额：<span>￥2799</span></dd>\
+                                        <dd>￥'+totalPrice+'</dd>\
+                                        <dd>订单总额：<span>￥'+orderPrice+'</span></dd>\
                                         </dl>\
                                     </dd>\
-                                    <dd class="third-w">\
-                                        <ul class="three">\
-                                            <li class="order-edit-btn">编辑订单</li>\
-                                            <li class="order-details-btn">订单详情</li>\
-                                            <li class="order-logist-btn">\
-                                                <div class="order-express-box">\
-                                                    <span class="order-express">物流状态</span>\
-                                                    <div class="express-box">\
-                                                        <p><span>快递公司：</span><span class="express-company">'+expressInfoC+'</span></p>\
-                                                        <p><span>快递单号：</span><span class="express-num">'+expressInfoN+'</span></p>\
-                                                    </div>\
-                                                </div>\
-                                            </li>\
-                                        </ul>\
+                                    <dd class="third-w">'+orderDetails+'\
                                     </dd>\
                                     <dd class="forth-btn">\
                                         <ul class="detial-button">\
@@ -101,17 +131,19 @@ define(function(require, exports, module){
                                     </dd>\
                                 </dl>';
                     }
+                    // 添加商品信息
                     $('.order-list-box').append('\
                             <div class="order-list" data-orderSn="'+arr[i].orderSn+'">\
                                 <ul class="detial-state">\
                                     <li><span class="detial-n">订单号：</span><span class="detial-w">'+orderSn+'</span></li>\
                                     <li><span class="detial-n">下单时间：</span><span class="detial-w">'+createTime+'</span></li>\
-                                    <li><span class="detial-n">下单用户：</span><span class="detial-w">'+12112345678+'</span></li>\
-                                    <li><span class="detial-n">收货人：</span><span class="detial-w">'+userName+'</span></li>\
-                                    <li><span class="detial-n">联系电话：</span><span class="detial-w">12112112121</span></li>\
+                                    <li><span class="detial-n">下单用户：</span><span class="detial-w">'+userName+'</span></li>\
+                                    <li><span class="detial-n">收货人：</span><span class="detial-w">'+receiverName+'</span></li>\
+                                    <li><span class="detial-n">联系电话：</span><span class="detial-w">'+receiverMobile+'</span></li>\
                                     <li class="detial-z"><span class="detial-n">'+statusDesc+'</span></li>\
                                 </ul>'+goodsInfo+'\
                             </div>');
+                    // 调整距离
                     for(var j=0 ; j<arr[i].buttons.length ; j++){
                         var oButton = arr[i].buttons[j];
 
@@ -122,12 +154,67 @@ define(function(require, exports, module){
                         }else if(arr[i].buttons.length == 3){
                             $('.order-list').eq(i).find('.detial-button').addClass('three');
                         }
-                        $('.order-list').eq(i).find('.detial-commodity .detial-button').append('<li>\
-                        <span data-url="'+oButton.url+'">'+oButton.text+'</span>\
-                    </li>');
+                        var sTip = '',
+                            iStatus = 0;
+                        if( oButton.text == '取消订单' ){
+                            sTip = '确认取消订单么？';
+                            iStatus = 6;
+                        }else if( oButton.text == '配货完毕' ){
+                            sTip = '确定已完成配货？';
+                            iStatus = 4;
+                        }
+                        $('.order-list').eq(i).find('.detial-commodity .detial-button').append('\
+                                        <li data-status="'+iStatus+'" data-url="'+oButton.url+'" data-top="'+sTip+'" class="tip-btn">\
+                                            <span>'+oButton.text+'</span>\
+                                        </li>');
+                        $('.tip-btn').die().live('click', function(){
+                            that.tip( $(this), orderSn, $(this).attr('data-url'), $(this).attr('data-status') );
+                        });
                     }
                 }
             }
+        });
+    };
+    /**
+     * 提示信息
+     */
+    oOrder.tip = function(that, orderSn, url, status){
+        // 弹窗、遮罩层出现
+        $('.order-tip,.mask-bg').show();
+        $('.order-tip').css({top: ($(document).scrollTop()+20)+'px'});
+        $('.order-tip-text').html(that.attr('data-top'));
+        // 点击取消
+        $('.order-tip .cancel').die().live('click', function(){
+            $('.order-tip,.mask-bg').hide();
+        });
+        $('.order-tip .deter').die().live('click', function(){
+            $.ajax({
+                url : eightUrl+url,
+                type : 'post',
+                contentType: "application/json; charset=utf-8",
+                data : JSON.stringify({
+                    orderSn : orderSn,
+                    status : status,
+                }),
+                xhrFields: {
+                    withCredentials: true
+                },
+                beforeSend : function(xhr) {
+                    // json格式传输，后台应该用@RequestBody方式接受
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                    var token = $.cookie("token");
+                    if (token) {
+                        xhr.setRequestHeader("X-Access-Auth-Token", token);
+                    }
+                },
+                success : function(json){
+                    console.log(json);
+                },
+                error : function(json){
+                    var json = JSON.parse(json.responseText);
+                    alert(json.message);
+                }
+            });
         });
     };
     /**
@@ -187,11 +274,13 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
+                    console.log(json);
                     var order = json;
                     $('#order-details,.mask-bg').show();
                     $('#order-details').css({top: ($(document).scrollTop()+20)+'px'});
-                    var orderSn = order.orderGoodsInfo.orderSn,  //订单号
-                        statusDesc = order.orderGoodsInfo.statusDesc;       //订单状态
+                    var orderSn = order.orderGoodsInfo.orderSn,       //订单号
+                        status = order.orderGoodsInfo.status,         //订单状态码
+                        statusDesc = order.orderGoodsInfo.statusDesc; //订单状态
 
                     var orderGoodsInfo = '';    //商品信息列表
                     for(var i=0 ; i<order.orderInfo.length ; i++){
@@ -205,14 +294,16 @@ define(function(require, exports, module){
                             goodsName = order.orderGoodsInfo.goodsInfoList[i].goodsName,          //商品名字
                             goodsSize = order.orderGoodsInfo.goodsInfoList[i].goodsSize,          //商品大小
                             imageUrl = order.orderGoodsInfo.goodsInfoList[i].imageUrl;            //商品图片
+                            totalPrice = order.orderGoodsInfo.totalPrice,       //商品价格
+                            orderPrice = parseInt(goodsAmount)*parseInt(totalPrice);              //商品总价
 
                             goodsInfo += '<ul class="list-e">\
                                     <li class="image"><img class="goods-detial-img" src="'+imageUrl+'" /></li>\
                                     <li>'+goodsName+' × '+goodsAmount+'</li>\
                                     <li>'+goodsSize+'</li>\
                                     <li>'+goodsColor+'</li>\
-                                    <li>¥2799</li>\
-                                    <li class="money">订单总额：<span>¥2799</span></li>\
+                                    <li>¥'+totalPrice+'</li>\
+                                    <li class="money">订单总额：<span>¥'+orderPrice+'</span></li>\
                                 </ul>';
                     }
                     //商品状态
@@ -246,39 +337,39 @@ define(function(require, exports, module){
                     var orderStatusContent = '\
                             <li class="active">\
                                 <i class="order"></i>\
-                                <span class="mes">下单</span>\
+                                <span class="msg1">下单</span>\
                                 <span class="time">'+bayTime+'</span>\
                             </li>\
                             <li>\
-                                <i class="arrow"></i>\
+                                <i class="arrow arrow1"></i>\
                             </li>\
                             <li>\
                                 <i class="pay"></i>\
-                                <span class="mes">支付</span>\
+                                <span class="mes2">支付</span>\
                                 <span class="time">'+payTime+'</span>\
                             </li>\
                             <li>\
-                                <i class="arrow"></i>\
+                                <i class="arrow arrow2"></i>\
                             </li>\
                             <li>\
                                 <i class="distribution"></i>\
-                                <span class="mes">配货</span>\
+                                <span class="mes3">配货</span>\
                                 <span class="time">'+distribuTime+'</span>\
                             </li>\
                             <li>\
-                                <i class="arrow"></i>\
+                                <i class="arrow arrow3"></i>\
                             </li>\
                             <li>\
                                 <i class="retrieval"></i>\
-                                <span class="mes">出库</span>\
+                                <span class="mes4">出库</span>\
                                 <span class="time">'+outTime+'</span>\
                             </li>\
                             <li>\
-                                <i class="arrow"></i>\
+                                <i class="arrow arrow4"></i>\
                             </li>\
                             <li>\
                                 <i class="finish"></i>\
-                                <span class="mes">完成</span>\
+                                <span class="mes5">完成</span>\
                                 <span class="time">'+succTime+'</span>\
                             </li>';
 
@@ -292,7 +383,7 @@ define(function(require, exports, module){
                             <div class="order-details-content">\
                             <p class="order-mes">订单号：<span>'+orderSn+'</span></p>\
                             <p class="order-mes">订单状态：<span class="red">'+statusDesc+'</span></p>\
-                            <ul class="process">'+orderStatusContent+'\
+                            <ul class="process status'+status+'">'+orderStatusContent+'\
                             </ul>\
                             <div class="edit-detial">\
                                 <p class="title-e">商品信息：</p>'+goodsInfo+'\
@@ -337,7 +428,8 @@ define(function(require, exports, module){
                     $('#edit-order,.mask-bg').show();
                     // 保存
                     $('#edit-order .save').die().live('click', function(){
-                        that.editEnter();
+                        var goodsFormat = json.orderGoodsInfoList[0].goodsDomensionListInSize;
+                        that.editEnter(goodsFormat);
                     });
                     $('#edit-order').css({top: ($(document).scrollTop()+10)+'px'});
                     var orderSn = json.orderSn,      //订单号
@@ -349,6 +441,7 @@ define(function(require, exports, module){
                         receiverAddress = json.receiverAddress,               //收货人地址
                         goodsInfoList = json.orderGoodsInfoList,              //商品信息
                         orderStatusTimeMap = json.orderStatusTimeMap,         //订单状态
+                        status = json.status,                                 //订单状态码
                         provinceId = json.provinceId,                         //省编号
                         cityId = json.cityId,                                 //市编号
                         districtId = json.districtId,                         //区编号
@@ -366,9 +459,17 @@ define(function(require, exports, module){
                             sizeIndex = goodsInfoList[i].sizeIndex,   //当前选择尺寸index
                             colorIndex = goodsInfoList[i].colorIndex, //当前选择颜色index
                             totalPrice = goodsInfoList[i].totalPrice, //总价
-                            goodsListInSize = goodsInfoList[i].goodsDomensionListInSize;
+                            goodsListInSize = goodsInfoList[i].goodsDomensionListInSize;//商品规格
 
-
+                        var goodsSize = '',     //商品尺寸
+                            goodsColor = '';    //商品颜色
+                        for(var i=0 ; i<goodsListInSize.length ; i++){
+                            goodsSize += '<a href="javascript:;" class="order-size-btn">'+goodsListInSize[i].size+'</a>';
+                        }
+                        var goodsColorList = goodsListInSize[0].goodsDomensionListInColor;
+                        for(var i=0 ; i<goodsColorList.length ; i++){
+                            goodsColor +=' <a href="javascript:;" class="order-color-btn" data-color="'+goodsColorList[i].colorCode+'">'+goodsColorList[i].color+'</a>';
+                        }
 
                         GoodsList+='\
                             <ul class="list-e">\
@@ -379,21 +480,11 @@ define(function(require, exports, module){
                                 </li>\
                                 <li class="model">\
                                     <p class="line1"><span>*</span>选择型号</p>\
-                                    <p class="line2">\
-                                        <a href="javascript:;" class="order-size-btn">1.5m*2.0m</a>\
-                                        <a href="javascript:;" class="order-size-btn">1.8m*2.0m</a>\
-                                        <a href="javascript:;" class="order-size-btn">1.5m*2.0m</a>\
-                                        <a href="javascript:;" class="order-size-btn">1.8m*2.0m</a>\
-                                    </p>\
+                                    <p class="line2">'+goodsSize+'</p>\
                                 </li>\
                                 <li class="color">\
                                     <p class="line1"><span>*</span>选择颜色</p>\
-                                    <p class="line2">\
-                                        <a href="javascript:;" class="order-color-btn">玫瑰金</a>\
-                                        <a href="javascript:;" class="order-color-btn">素蓝灰</a>\
-                                        <a href="javascript:;" class="order-color-btn">玫瑰金</a>\
-                                        <a href="javascript:;" class="order-color-btn">素蓝灰</a>\
-                                    </p>\
+                                    <p class="line2">'+goodsColor+'</p>\
                                 </li>\
                                 <li class="money">\
                                     <p class="line1"><span>*</span>商品价格（元）</p>\
@@ -460,41 +551,41 @@ define(function(require, exports, module){
 
 
                             var orderStatus = '\
-                            <li class="active">\
+                            <li>\
                                 <i class="order"></i>\
-                                <span class="mes">下单</span>\
+                                <span class="mes1">下单</span>\
                                 <span class="time">'+bayTime+'</span>\
                             </li>\
                             <li>\
-                                <i class="arrow"></i>\
+                                <i class="arrow arrow1"></i>\
                             </li>\
                             <li>\
                                 <i class="pay"></i>\
-                                <span class="mes">支付</span>\
+                                <span class="mes2">支付</span>\
                                 <span class="time">'+payTime+'</span>\
                             </li>\
                             <li>\
-                                <i class="arrow"></i>\
+                                <i class="arrow arrow2"></i>\
                             </li>\
                             <li>\
                                 <i class="distribution"></i>\
-                                <span class="mes">配货</span>\
+                                <span class="mes3">配货</span>\
                                 <span class="time">'+distribuTime+'</span>\
                             </li>\
                             <li>\
-                                <i class="arrow"></i>\
+                                <i class="arrow arrow3"></i>\
                             </li>\
                             <li>\
                                 <i class="retrieval"></i>\
-                                <span class="mes">出库</span>\
+                                <span class="mes4">出库</span>\
                                 <span class="time">'+outTime+'</span>\
                             </li>\
                             <li>\
-                                <i class="arrow"></i>\
+                                <i class="arrow arrow4"></i>\
                             </li>\
                             <li>\
                                 <i class="finish"></i>\
-                                <span class="mes">完成</span>\
+                                <span class="mes5">完成</span>\
                                 <span class="time">'+succTime+'</span>\
                             </li>';
 
@@ -506,7 +597,7 @@ define(function(require, exports, module){
                                 </div>\
                                 <p class="order-mes">订单号：<span>'+orderSn+'</span></p>\
                                 <p class="order-mes">订单状态：<span class="red">'+statusDesc+'</span></p>\
-                                <ul class="process">'+orderStatus+'\
+                                <ul class="process status'+status+'">'+orderStatus+'\
                                 </ul>\
                                 <div class="editable">\
                                     <p class="title-e">商品信息：</p>'+GoodsList+'\
@@ -559,7 +650,8 @@ define(function(require, exports, module){
                             // 选中默认颜色和大小
                             for(var i=0 ; i<goodsInfoList.length ; i++){
                                 $('.list-e').eq(i).find('.model .line2 a').eq(sizeIndex).addClass('active-size');
-                                $('.list-e').eq(i).find('.color .line2 a').eq(sizeIndex).addClass('active-color');
+                                var oColor = $('.list-e').eq(i).find('.color .line2 a').eq(sizeIndex);
+                                oColor.addClass('active-color').css({background: oColor.attr('data-color'),color:'#fff'});
                             }
                         }
                     });
@@ -571,7 +663,7 @@ define(function(require, exports, module){
     /**
      * 确定修改订单
      */
-    oOrder.editEnter = function(){
+    oOrder.editEnter = function(goodsFormat){
         var that = this;
         var amount = $('.order-num').val(),       //订单数量
             provinceId = $('#prov').val(),        //收货人省编码
@@ -583,8 +675,25 @@ define(function(require, exports, module){
             receiverMobile = $('.receiverMobile').val() || '',  //收货人手机
             receiverName = $('.orderReceiverName').val() || '', //收货人
             singlePrice = $('.singlePrice').val() || '',        //单价
-            type = $('#edit-order').attr('data-type');    //类型
-
+            type = $('#edit-order').attr('data-type');          //类型
+            goodsDomensionId = '';                              //GoodsDomensionId
+        // 循环匹配选中的大小和颜色的goodsDomensionId
+        for(var i=0 ; i<goodsFormat.length ; i++){
+            $('.active-size').each(function(){
+                if( goodsFormat[i].size == $(this).html() ){
+                    for(var j=0 ; j<goodsFormat[i].goodsDomensionListInColor.length ; j++){
+                        var goodsColor = goodsFormat[i].goodsDomensionListInColor[j].color,
+                            id = goodsFormat[i].goodsDomensionListInColor[j].goodsDomensionId;
+                        $('.active-color').each(function(){
+                            console.log($(this).html());
+                            if( $(this).html() == goodsColor ){
+                                goodsDomensionId = id;
+                            }
+                        });
+                    }
+                }
+            })
+        }
         var data = JSON.stringify({
             amount : amount,
             provinceId : provinceId,
@@ -597,7 +706,7 @@ define(function(require, exports, module){
             receiverName : receiverName,
             singlePrice : singlePrice,
             invoiceType : type,
-            goodsDomensionId : 1
+            goodsDomensionId : goodsDomensionId
         });
         $.ajax({
             url : eightUrl+'order/orderEdit',
@@ -647,8 +756,8 @@ define(function(require, exports, module){
         });
         //选择颜色
         $('.order-color-btn').die().live('click', function(){
-            $('.order-color-btn').removeClass('active-color');
-            $(this).addClass('active-color');
+            $('.order-color-btn').removeClass('active-color').css({background: '#fff',color: '#000'});
+            $(this).addClass('active-color').css({background: $(this).attr('data-color'),color: '#fff'});
         });
         //选择大小
         $('.order-size-btn').live('click', function(){

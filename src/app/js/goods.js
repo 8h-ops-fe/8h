@@ -111,7 +111,7 @@ define(function(require, exports, module){
         "size": 0,
         "sort": {},
         "totalElements": 0,
-        "totalPages": 0*/
+        "totalPages": 0
     };
     
     var oGoods = {};
