@@ -486,16 +486,11 @@ define(function(require, exports, module){
                     sColorEng, //商品颜色
                     sSize,      //商品规格
                     sPrice,    //商品价钱
-                    sIntrodu,//商品介绍
+                    sIntrodu = $('#goods-introduction').val(),//商品介绍
                     inventory , //商品库存
                     iColor = $('.goods-color-add').length,//商品颜色个数
-                    sStatus,//商品状态
+                    sStatus = $('#goods-status option:selected').attr('date-s'),//商品状态
 					sMaterial;    //物料编码
-					for(var i = 0;i < $('#goods-status option').length;i++ ){
-						if($($('#goods-status option')[i]).attr('selected') == 'selected'){
-							sStatus = $($('#goods-status option')[i]).attr('date-s');
-						}
-					}
 					var goodsDomensions = [];
 					var data = {
 								  "goodsDomensions": goodsDomensions,
@@ -506,35 +501,6 @@ define(function(require, exports, module){
 								  "status": sStatus,
 								  "userId": ''
 								};
-								
-								/*[
-									{
-									  "color": "string",
-									  "colorCode": "string",
-									  "goodsId": 0,
-									  "id": 0,
-									  "images": [
-										{
-										  "domensionId": 0,
-										  "imageURL": "string"
-										}
-									  ],
-									  "inventory": 0,
-									  "materialCode": "string",
-									  "price": 0,
-									  "size": "string"
-									}
-								  ]*/
-								  /*var sSn = $('#goods-sn').val(),          //商品编号
-									sName = $('#goods-name').val(),      //商品名字
-									sColorText, //商品颜色文字
-									sColorEng, //商品颜色
-									sSize,      //商品规格
-									sPrice,    //商品价钱
-									sIntrodu;//商品介绍
-									inventory ; //商品库存
-									iColor = $('.goods-color-add').length,//商品颜色个数
-									sStatus;    //商品状态*/
 					var aTrGoods = $('#addGoodsTable').find('.tr');
 					for(var i = 0;i < aTrGoods.length;i++){
 						var dateColor = $(aTrGoods[i]).attr('date-color');
@@ -542,6 +508,8 @@ define(function(require, exports, module){
 						var json = {};
 						sColorText =  $(oneFimTr[0]).find('.goods-color-text').html();
 						sColorEng = $('#editLeft .remove[date-del='+dateColor+']').parents('.goods-color .color-input').val();
+						
+						alert(1);
 						for(var j = 0;j < oneFimTr;j++){
 							sSize = $(oneFimTr[j]).find('.size-gthis-val').html();
 							sPrice = $(oneFimTr[j]).find('.goods-price').val();
@@ -552,17 +520,20 @@ define(function(require, exports, module){
 										'colorCode':sColorText,
 										'goodsId':'',
 										'id':'',
+										'introduction': gIntroduction,
 										'images':[{
 										  "domensionId": 0,
 										  "imageURL": "string"
 										}],
-										'inventory':inventory,
+										'inventory':sIntrodu,
 										'materialCode':sMaterial,
 										'price':sPrice,
 										'size':sSize
 									};
+							goodsDomensions.push(json);
+							console.log(json);
 						}
-						goodsDomensions.push(json);
+						
 					}
 					console.log(goodsDomensions);
 					console.log(data);
