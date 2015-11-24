@@ -132,9 +132,10 @@ define(function(require, exports, module){
 			url : eightUrl+'goods/query',
 			type : 'post',
 			dataType:'json',
-			/*data:JSON.stringify({
-			
-			}),*/
+			data:JSON.stringify({
+				page : 0,
+				pageSize : 10
+			}),
 			contentType:'application/json; charset=utf-8',
 			xhrFields: {
 				withCredentials: true

@@ -353,7 +353,7 @@ define(function(require, exports, module){
             $('#not-through,.mask-bg').show();
             $('#not-through .deter').die().live('click', function(){
                 $.ajax({
-                    url : eightUrl+'afterSale/auditPass/'+id,
+                    url : eightUrl+'afterSale/auditRefuse/'+id,
                     type : 'get',
                     xhrFields: {
                         withCredentials: true

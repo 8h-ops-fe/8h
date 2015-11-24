@@ -164,11 +164,11 @@ define(function(require, exports, module){
                             iStatus = 4;
                         }
                         $('.order-list').eq(i).find('.detial-commodity .detial-button').append('\
-                                        <li data-status="'+iStatus+'" data-url="'+oButton.url+'" data-top="'+sTip+'" class="tip-btn">\
+                                        <li data-orderSn="'+orderSn+'" data-status="'+iStatus+'" data-url="'+oButton.url+'" data-top="'+sTip+'" class="tip-btn">\
                                             <span>'+oButton.text+'</span>\
                                         </li>');
                         $('.tip-btn').die().live('click', function(){
-                            that.tip( $(this), orderSn, $(this).attr('data-url'), $(this).attr('data-status') );
+                            that.tip( $(this), $(this).attr('data-orderSn'), $(this).attr('data-url'), $(this).attr('data-status') );
                         });
                     }
                 }
@@ -179,6 +179,7 @@ define(function(require, exports, module){
      * 提示信息
      */
     oOrder.tip = function(that, orderSn, url, status){
+        var _this = this;
         // 弹窗、遮罩层出现
         $('.order-tip,.mask-bg').show();
         $('.order-tip').css({top: ($(document).scrollTop()+20)+'px'});
@@ -208,6 +209,8 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
+                    $('.edit-order,.mask-bg').hide();
+                    _this.list();
                     console.log(json);
                 },
                 error : function(json){
