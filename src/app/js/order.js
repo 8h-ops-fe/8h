@@ -44,12 +44,11 @@ define(function(require, exports, module){
             },
             success : function(json){
                 var arr = json;
+                $('.order-list-box').html('');
                 if( json == ''){
                     $('.order-list-box').html('<h1 class="no-data">暂无数据</h1>');
                     return;
                 }
-                console.log(arr);
-                $('.order-list-box').html('');
                 for(var i=0 ; i<arr.length ; i++){
                     var orderSn = arr[i].orderSn,      //订单号
                         createTime = arr[i].createTime,//下单时间
@@ -82,7 +81,6 @@ define(function(require, exports, module){
                         var operationBtn = '';
                         //订单详情
                         var orderDetails = '';
-                            console.log(status);
                         //1下单，2支付，3配货
                         if( status == 1 || status == 2 || status ==3){
                             orderDetails = '<ul class="two">\
@@ -110,6 +108,46 @@ define(function(require, exports, module){
                                                 <li class="order-details-btn">订单详情</li>\
                                             </ul>';
                         }
+                        // 调整距离
+                        var orderBtn = '';
+                        if( arr[i].buttons ){
+                            for(var k=0 ; k<arr[i].buttons.length ; k++){
+                                var oButton = arr[i].buttons[k];
+                                if(arr[i].buttons.length == 1){
+                                    $('.order-list').eq(i).find('.detial-button').addClass('one');
+                                }else if(arr[i].buttons.length == 2){
+                                    $('.order-list').eq(i).find('.detial-button').addClass('two');
+                                }else if(arr[i].buttons.length == 3){
+                                    $('.order-list').eq(i).find('.detial-button').addClass('three');
+                                }
+
+                                var sTip = '',
+                                    iStatus = 0;
+                                if( oButton.text == '取消订单' ){
+                                    sTip = '确认取消订单么？';
+                                    iStatus = 6;
+                                }else if( oButton.text == '配货订单' ){
+                                    sTip = '确定已完成配货？';
+                                    iStatus = 4;
+                                }
+
+                                var tipClass = '';
+                                if( oButton.text == '填写物流信息' ){
+                                    tipClass = 'tip-btn-info';
+                                }else{
+                                    tipClass = 'tip-btn';
+                                }
+                                orderBtn += '<li data-orderSn="'+orderSn+'" data-status="'+iStatus+'" data-url="'+oButton.url+'" data-top="'+sTip+'" class="'+tipClass+'">\
+                                            <span>'+oButton.text+'</span>\
+                                        </li>';
+                                $('.tip-btn').die().live('click', function(){
+                                    that.tip( $(this), $(this).attr('data-orderSn'), $(this).attr('data-url'), $(this).attr('data-status') );
+                                });
+                                $('.tip-btn-info').die().live('click', function(){
+                                    that.distri($(this).attr('data-orderSn'));
+                                });
+                            }
+                        }
                         // 订单列表
                         goodsInfo += '\
                                 <dl class="detial-commodity">\
@@ -126,51 +164,31 @@ define(function(require, exports, module){
                                     <dd class="third-w">'+orderDetails+'\
                                     </dd>\
                                     <dd class="forth-btn">\
-                                        <ul class="detial-button">\
+                                        <ul class="detial-button">'+orderBtn+'\
                                         </ul>\
                                     </dd>\
                                 </dl>';
+
+                        var statusDescT = '';
+                        if( status == 5 ){
+                            statusDescT = '<span class="detial-n blank">'+statusDesc+'</span>'
+                        }else if( status == 6 ){
+                            statusDescT = '<span class="detial-n ccc">'+statusDesc+'</span>'
+                        }else{
+                            statusDescT = '<span class="detial-n orange">'+statusDesc+'</span>'
+                        }
                     }
                     // 添加商品信息
                     $('.order-list-box').append('\
                             <div class="order-list" data-orderSn="'+arr[i].orderSn+'">\
                                 <ul class="detial-state">\
                                     <li><span class="detial-n">订单号：</span><span class="detial-w">'+orderSn+'</span></li>\
-                                    <li><span class="detial-n">下单时间：</span><span class="detial-w">'+createTime+'</span></li>\
                                     <li><span class="detial-n">下单用户：</span><span class="detial-w">'+userName+'</span></li>\
                                     <li><span class="detial-n">收货人：</span><span class="detial-w">'+receiverName+'</span></li>\
                                     <li><span class="detial-n">联系电话：</span><span class="detial-w">'+receiverMobile+'</span></li>\
-                                    <li class="detial-z"><span class="detial-n">'+statusDesc+'</span></li>\
+                                    <li class="detial-z">'+statusDescT+'</li>\
                                 </ul>'+goodsInfo+'\
                             </div>');
-                    // 调整距离
-                    for(var j=0 ; j<arr[i].buttons.length ; j++){
-                        var oButton = arr[i].buttons[j];
-
-                        if(arr[i].buttons.length == 1){
-                            $('.order-list').eq(i).find('.detial-button').addClass('one');
-                        }else if(arr[i].buttons.length == 2){
-                            $('.order-list').eq(i).find('.detial-button').addClass('two');
-                        }else if(arr[i].buttons.length == 3){
-                            $('.order-list').eq(i).find('.detial-button').addClass('three');
-                        }
-                        var sTip = '',
-                            iStatus = 0;
-                        if( oButton.text == '取消订单' ){
-                            sTip = '确认取消订单么？';
-                            iStatus = 6;
-                        }else if( oButton.text == '配货完毕' ){
-                            sTip = '确定已完成配货？';
-                            iStatus = 4;
-                        }
-                        $('.order-list').eq(i).find('.detial-commodity .detial-button').append('\
-                                        <li data-orderSn="'+orderSn+'" data-status="'+iStatus+'" data-url="'+oButton.url+'" data-top="'+sTip+'" class="tip-btn">\
-                                            <span>'+oButton.text+'</span>\
-                                        </li>');
-                        $('.tip-btn').die().live('click', function(){
-                            that.tip( $(this), $(this).attr('data-orderSn'), $(this).attr('data-url'), $(this).attr('data-status') );
-                        });
-                    }
                 }
             }
         });
@@ -209,15 +227,69 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    $('.edit-order,.mask-bg').hide();
                     _this.list();
-                    console.log(json);
+                    $('.edit-order,.order-tip,.mask-bg').hide();
                 },
                 error : function(json){
                     var json = JSON.parse(json.responseText);
                     alert(json.message);
                 }
             });
+        });
+    };
+    /**
+     * 填写配货信息
+     */
+    oOrder.distri = function(orderSn){
+        var that = this;
+        $('#order-express-box,.mask-bg').show();
+        $('#order-express-box').css({top: ($(document).scrollTop()+20)+'px'});
+        $('#order-express-box .cancel').die().live('click', function(){
+            $('#order-express-box,.mask-bg').hide();
+        });
+        $('#order-express-box .deter').die().live('click', function(){
+            var expressName = $('#order-express-box .order-express').val(),
+                expressOrder = $('#order-express-box .order-express-num').val();
+            if(!expressName){
+                alert('请填写快递公司！');
+                return;
+            }
+            if(!expressOrder) {
+                alert('请填写快递单号！');
+                return;
+            }
+            data = JSON.stringify({
+                expressName : expressName,
+                expressOrder : expressOrder,
+                orderSn : orderSn,
+                status : 4
+            });
+            $.ajax({
+                url : eightUrl+'order/orderDelivered',
+                type : 'post',
+                data : data,
+                xhrFields: {
+                    withCredentials: true
+                },
+                dataType : 'json',
+                contentType: "application/json; charset=utf-8",
+                beforeSend : function(xhr) {
+                    // json格式传输，后台应该用@RequestBody方式接受
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                    var token = $.cookie("token");
+                    if (token) {
+                        xhr.setRequestHeader("X-Access-Auth-Token", token);
+                    }
+                },
+                success : function(json){
+                    $('#order-express-box,.mask-bg').hide();
+                    that.list();
+                },
+                error : function(json){
+                    var json = JSON.parse(json.responseText);
+                    alert(json.message);
+                }
+            })
         });
     };
     /**

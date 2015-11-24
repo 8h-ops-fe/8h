@@ -62,7 +62,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .list .btn{display:block;font-size:16px;color:#e4624f;width:118px;height:29px;line-height:29px;border:1px solid #ccc; text-align:center; margin-bottom:30px;}
 .order-list{width:970px; margin-bottom:30px;}
 .order-list .detial-state{overflow:hidden; height:68px; background:#f5f5f5; border:1px solid #ccc;}
-.order-list .detial-state li{float:left; line-height:68px;  margin: 0 8px;}
+.order-list .detial-state li{float:left; line-height:68px;  margin: 0 25px;}
 .order-list .detial-state span.detial-n{font-size:14px;color:#999;}
 .order-list .detial-state span.detial-w{font-size:14px;color:#333;}
 .order-list .detial-state li.detial-z{float:right;}
@@ -144,7 +144,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 /*订单编辑结束*/
 /*订单详情*/
 .order-det{position: absolute;z-index: 10;top:10px;left:20px;display:block;}
-.edit-detial{width:852px; border:1px solid #ccc;margin-top:60px;padding:0 5px; margin-bottom:30px;}
+.edit-detial{width:852px; border:1px solid #ccc;margin-top:40px;padding:0 5px; margin-bottom:30px;}
 .title-e{color:#333;font-size:18px; padding:15px; text-align:left;}
 .edit-detial .list-e{overflow:hidden;}
 .edit-detial .list-e li{ float:left;margin:10px;width:98px;height:98px;font-size:14px;color:#333;line-height:98px; text-align:center;}
@@ -310,7 +310,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .small-pop-btn{width:100%;text-align: center;}
 .small-pop-btn input{width:98px;height:28px;border:1px solid #e4624f;border-radius: 2px;background: #fff;color:#e4624f;cursor: pointer;}
 .small-pop-btn input.deter{background: #e4624f;color:#fff;margin-right:20px;}
-.small-pop p.select-box{width: 254px;display: inline-block;text-align: right;margin-left:42px;}
+.small-pop p.select-box{width: 254px;display: inline-block;text-align: right;margin-left:20px;}
 .small-pop select{width: 158px;height:28px;border:1px solid #ccc;margin-left:15px;}
 #refuse{width: 276px;height:78px;border:1px solid #ccc;margin:29px 0 20px 21px;padding:10px;font-size:14px;color:#999;resize:none;}
 /*库存编辑*/
@@ -388,10 +388,16 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .edit-order .status5 i.retrieval{ background: url("../images/order_icon.png") -123px 7px  no-repeat;}
 .edit-order .status5 i.finish{ background: url("../images/order_icon.png") -169px 7px no-repeat;}
 .edit-order .status5 span{display:block; width:96px; text-align:center; font-size:14px;line-height:22px;}
+/*取消订单*/
+.edit-order .status6 i.order{ background: url("../images/order_icon.png") 11px -38px no-repeat;}
+.edit-order .status6 i.arrow{ background: url("../images/order_icon.png") -220px -30px no-repeat;}
+.edit-order .status6 i.pay{ background: url("../images/order_icon.png") -31px -41px no-repeat;}
+.edit-order .status6 i.distribution{ background: url("../images/order_icon.png") -75px -38px no-repeat;}
+.edit-order .status6 i.retrieval{ background: url("../images/order_icon.png") -123px -36px  no-repeat;}
+.edit-order .status6 i.finish{ background: url("../images/order_icon.png") -169px -37px no-repeat;}
+.edit-order .status6 span{display:block; width:96px; text-align:center; font-size:14px;line-height:22px;}
+
 /*过程小图标end*/
-
-
-
 
 
 /*公用*/
@@ -421,33 +427,6 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .color-999{color:#999;}
 .no-data{font-size: 30px;}
 .cursor{cursor: pointer;}
-
-
-
-
+.order-list .detial-state li.detial-z .blank{color:#000;}
+.order-list .detial-state li.detial-z .ccc{color:#ccc;}
 /*更新时间插件样式*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
