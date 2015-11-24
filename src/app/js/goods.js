@@ -4,7 +4,119 @@
 define(function(require, exports, module){
     require("jquery");
     require("jCookie");
+<<<<<<< HEAD
     var goods = {};
+=======
+    var goods = {
+        "content": [
+
+            {
+                "goodsDomensions": [
+                    {
+                        "color": "嘿嘿嘿",
+                        "goodsId": 0,
+                        "imageURLs": [
+                            {
+                                "domensionId": 0,
+                                "imageURL": "string"
+                            }
+                        ],
+                        "inventory": 49,
+                        "price": 2341,
+                        "size": "1.5m × 2.0m"
+                    },
+                    {
+                        "color": "白白白",
+                        "goodsId": 0,
+                        "imageURLs": [
+                            {
+                                "domensionId": 0,
+                                "imageURL": "string"
+                            }
+                        ],
+                        "inventory": 92,
+                        "price": 2799,
+                        "size": "1.5m × 2.0m"
+                    }
+                ],
+                "id": 0,
+                "introduction": "string",
+                "name": "Q1床垫",
+                "sn": "CD001",
+                "status": "已上架"
+            },
+            {
+                "goodsDomensions": [
+                    {
+                        "color": "土豪金",
+                        "goodsId": 0,
+                        "imageURLs": [
+                            {
+                                "domensionId": 0,
+                                "imageURL": "string"
+                            }
+                        ],
+                        "inventory": 0,
+                        "price": 8888,
+                        "size": "1.5m × 2.0m"
+                    },
+                    {
+                        "color": "大天蓝",
+                        "goodsId": 0,
+                        "imageURLs": [
+                            {
+                                "domensionId": 0,
+                                "imageURL": "string"
+                            }
+                        ],
+                        "inventory": 99,
+                        "price": 1111,
+                        "size": "1.5m × 2.0m"
+                    },
+                    {
+                        "color": "咖啡金",
+                        "goodsId": 0,
+                        "imageURLs": [
+                            {
+                                "domensionId": 0,
+                                "imageURL": "string"
+                            }
+                        ],
+                        "inventory": 44,
+                        "price": 9999,
+                        "size": "1.5m × 2.0m"
+                    },
+                    {
+                        "color": "素蓝灰",
+                        "goodsId": 0,
+                        "imageURLs": [
+                            {
+                                "domensionId": 0,
+                                "imageURL": "string"
+                            }
+                        ],
+                        "inventory": 4444,
+                        "price": 2222,
+                        "size": "1.5m × 2.0m"
+                    }
+                ],
+                "id": 0,
+                "introduction": "string",
+                "name": "Q2床垫",
+                "sn": "CD003",
+                "status": "上架啦"
+            }
+        ],
+        "first": true,
+        "last": true,
+        "number": 0,
+        "numberOfElements": 0,
+        "size": 0,
+        "sort": {},
+        "totalElements": 0,
+        "totalPages": 0
+    };
+>>>>>>> 14bc3829db7cf07158e14f540003da08b1d5af64
     
     var oGoods = {};
     oGoods.init = function(){
@@ -30,7 +142,14 @@ define(function(require, exports, module){
 			url : eightUrl+'goods/query',
 			type : 'post',
 			dataType:'json',
+<<<<<<< HEAD
             data : data,
+=======
+			data:JSON.stringify({
+				page : 0,
+				pageSize : 10
+			}),
+>>>>>>> 14bc3829db7cf07158e14f540003da08b1d5af64
 			contentType:'application/json; charset=utf-8',
 			xhrFields: {
 				withCredentials: true
