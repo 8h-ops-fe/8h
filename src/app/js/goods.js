@@ -14,16 +14,13 @@ define(function(require, exports, module){
         this.close();     //关闭弹窗
 		oGoods.edit();		//商品编辑
 		oGoods.operate();   //商品操作
-<<<<<<< HEAD
 		oGoods.conditional(); //商品查询
 		oGoods.status();	  //商品上架下架
-=======
->>>>>>> 9fd17e9593c6773168061b3ad2ad7dbe7d3e55db
     };
     /**
      * 初始化商品
      */
-    oGoods.create = function(){
+    oGoods.create = function(data){
         // 循环商品
 		var json = JSON.stringify({
             page: 0,
@@ -48,8 +45,8 @@ define(function(require, exports, module){
 				}
 			},
 			success : function(json){
+				console.log(json);
 				goods = json;
-<<<<<<< HEAD
 				$(".cus-adm").html('<dt>\
 										<ul class="line">\
 											<li class="w124">商品编号</li>\
@@ -61,8 +58,6 @@ define(function(require, exports, module){
 											<li class="w154 no-boder">操作</li>\
 										</ul>\
 									</dt>');
-=======
->>>>>>> 9fd17e9593c6773168061b3ad2ad7dbe7d3e55db
 				for(var i=0 ; i<goods.content.length ; i++){
 					var that = goods.content[i];
 					//循环商品颜色、规格、库存,id
@@ -132,12 +127,40 @@ define(function(require, exports, module){
 	/**
      * 商品操查询
      */
-	oGoods.conditional = function(){
+	oGoods.conditional = function(date){
+		var that = this;
 		var json = JSON.stringify({
             page: 0,
             pageSize: 10
         });
-        var data = dd;
+		
+		$('#goodsSearch').click(function(){
+			var inventoryDown = parseInt($('#inventoryDown').val()); //商品库存范围下限值 ,
+			var inventoryUp = parseInt($('#inventoryUp').val()); //商品库存范围上限值 ,
+			var name = $('#name').val()					// 商品名称 ,
+			var priceDown = parseInt($('#priceDown').val());		//商品单价范围下限值 ,
+			var priceUp = parseInt($('#priceUp').val());  		//商品单价范围上限值 ,
+			var sn = $('#sn').val();					//商品编码 ,
+			var status;									//商品状态
+			for(var i = 0;i < $('#status input').length;i++){
+				if($($('#status input')[i]).attr('checked') == 'checked'){
+					status = parseInt($($('#status input')[i]).val());
+				}
+			}
+			 
+			var data = JSON.stringify({
+						  "inventoryDown": inventoryDown,
+						  "inventoryUp": inventoryUp,
+						  "name": name,
+						  "page": 0,
+						  "pageSize": 10,
+						  "priceDown": priceDown,
+						  "priceUp": priceUp,
+						  "sn": sn,
+						  "status": status
+						});
+			that.create(data);
+		})
 	};
     /**
      * 商品操作
@@ -310,8 +333,8 @@ define(function(require, exports, module){
 										<td class="border goods-color-text" rowspan="1">'+json.goodsColorText+'</td>\
 										<td class="border size-gthis-val">'+json.sizeGthisVal+'</td>\
 										<td class="border"><input type="text" class="goods-price" /></td>\
-										<td class="border"><input type="text" /></td>\
-										<td class="border"><input type="text" /></td>\
+										<td class="border"><input type="text" class="goods-number" /></td>\
+										<td class="border"><input type="text" class="material-code" /></td>\
 									</tr>';
 				$('#addGoodsTable').append(tableStr);
 			}else{
@@ -321,8 +344,8 @@ define(function(require, exports, module){
 									<td class="border goods-color-text" rowspan="1">'+json.goodsColorText+'</td>\
 									<td class="border size-gthis-val">'+json.sizeGthisVal+'</td>\
 									<td class="border"><input type="text" class="goods-price" /></td>\
-									<td class="border"><input type="text" /></td>\
-									<td class="border"><input type="text" /></td>\
+									<td class="border"><input type="text" class="goods-number" /></td>\
+									<td class="border"><input type="text" class="material-code" /></td>\
 								</tr>';
 				}else{
 					
@@ -340,8 +363,8 @@ define(function(require, exports, module){
 										<td class="border goods-color-text" rowspan="'+rowSpan+'">'+json.goodsColorText+'</td>\
 										<td class="border size-gthis-val" date-size="'+dateSize+'">'+sizeVal+'</td>\
 										<td class="border"><input type="text" class="goods-price" /></td>\
-										<td class="border"><input type="text" /></td>\
-										<td class="border"><input type="text" /></td>\
+										<td class="border"><input type="text" class="goods-number" /></td>\
+										<td class="border"><input type="text" class="material-code" /></td>\
 									</tr>';
 						}else{
 							if(i == 0){
@@ -349,22 +372,22 @@ define(function(require, exports, module){
 										<td class="goods-color-text" rowspan="'+rowSpan+'">'+json.goodsColorText+'</td>\
 										<td class="size-gthis-val" date-size="'+dateSize+'">'+sizeVal+'</td>\
 										<td><input type="text" class="goods-price" /></td>\
-										<td><input type="text" /></td>\
-										<td><input type="text" /></td>\
+										<td><input type="text" class="goods-number" /></td>\
+										<td><input type="text" class="material-code" /></td>\
 									</tr>';
 							}else if(i == trSizeAll.length-1){
 								tableStr += '<tr date-color="'+json.dateColor+'">\
 										<td class="border size-gthis-val" date-size="'+dateSize+'">'+sizeVal+'</td>\
 										<td class="border"><input type="text" class="goods-price" /></td>\
-										<td class="border"><input type="text" /></td>\
-										<td class="border"><input type="text" /></td>\
+										<td class="border"><input type="text" class="goods-number" /></td>\
+										<td class="border"><input type="text" class="material-code" /></td>\
 									</tr>';
 							}else{
 								tableStr += '<tr date-color="'+json.dateColor+'">\
 										<td class="size-gthis-val" date-size="'+dateSize+'">'+sizeVal+'</td>\
 										<td><input type="text" class="goods-price" /></td>\
-										<td><input type="text" /></td>\
-										<td><input type="text" /></td>\
+										<td><input type="text" class="goods-number" /></td>\
+										<td><input type="text" class="material-code" /></td>\
 									</tr>';
 							}
 						}
@@ -391,8 +414,8 @@ define(function(require, exports, module){
 					var tdStr = '<tr date-color="'+dateColor+'">\
 									<td class="border size-gthis-val" date-size="'+json.dizeDel+'">'+json.sizeGthisVal+'</td>\
 									<td class="border"><input type="text" class="goods-price" /></td>\
-									<td class="border"><input type="text" /></td>\
-									<td class="border"><input type="text" /></td>\
+									<td class="border"><input type="text" class="goods-number" /></td>\
+									<td class="border"><input type="text" class="material-code" /></td>\
 								</tr>';
 					$(oTr).siblings('tr[date-color='+dateColor+']').find('td').removeClass('border');
 					$(oTr).find('td').removeClass('border');
@@ -435,13 +458,13 @@ define(function(require, exports, module){
 					<p class="left line1"><span class="c9">商品编号：</span><span class="c3" ><input type="text" id="goods-sn" /></span></p>\
 					<p class="right line1"><span class="c9">商品名称：</span><span class="c3"><input type="text" id="goods-name" /></span></p>\
 					<p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">\
-								<option>上架</option>\
-								<option>下架</option>\
+								<option date-s="1">上架</option>\
+								<option date-s="2">下架</option>\
 							</select></p>\
 				</li>\
 				<li>\
 					<p class="left">商品介绍：</p>\
-					<p class="right"><textarea class="goods-introdu"></textarea></p>\
+					<p class="right"><textarea class="goods-introdu" id="goods-introduction"></textarea></p>\
 				</li>\
 				<li class="margin-none">\
 					<ul>\
@@ -478,7 +501,6 @@ define(function(require, exports, module){
             $('#add-goods,.mask-bg').show();
 
             // 添加商品
-<<<<<<< HEAD
 			$('#add-goods .save').die();
             $('#add-goods .save').live('click', function(){
                 var sSn = $('#goods-sn').val(),          //商品编号
@@ -556,90 +578,6 @@ define(function(require, exports, module){
 						that.create();
 					}
 				});
-=======
-            $('.goods-edit .save').live('click', function(){
-                var sSn = $('.goods-sn').val(),          //商品编号
-                    sName = $('.goods-name').val(),      //商品名字
-                    sColorText = $('.goods-color-text').val(), //商品颜色文字
-                    sColorEng = $('.goods-color-input').val(), //商品颜色
-                    sColorImg = $('.goods-color-img').attr('src');//商品图片
-                    sSize = $('.goods-size').val(),      //商品大小
-                    sPrice = $('.goods-price').val(),    //商品价钱
-                    sIntrodu = $('.goods-introdu').val();//商品介绍
-                    iSize = $('.goods-size-num').length; //商品大小个数
-                    iColor = $('.goods-color-add').length,//商品颜色个数
-                    sStatus = $('#goodsStatus').val();    //商品状态
-
-                // 判断不能为空
-                var bFlag = true;
-                $('.goods-edit input').each(function(){
-                    if( !$(this).val() ){
-                        $(this).css({border: '1px solid red'});
-                        bFlag = false;
-                    }
-                });
-                if( !sIntrodu ){
-                    $('.goods-introdu').css({border: '1px solid red'});
-                    bFlag = false;
-                }
-                // 如果添加的商品颜色和大小个数不符则提醒
-                if( iSize != iColor ){
-                    alert('请填写正确的商品颜色和规格');
-                    return false;
-                }
-
-                // 添加商品
-                if( bFlag ){
-                    var aGoodsDomensions = [];
-                    for(var i=0 ; i<$('.goods-color-add').length ; i++){
-                        aGoodsDomensions.push({
-                            color : $('.goods-color-add-box .goods-color-text').eq(i).val(),
-                            goodsId : null,
-                            id : null,
-                            images : [
-                                {
-                                    domensionId : null,
-                                    imageURL : 'string'
-                                }
-                            ],
-                            inventory : 0,
-                            price : $('.goods-size-box .goods-prize').eq(i).val(),
-                            size : $('.goods-size-box .goods-size').eq(i).val(),
-                        })
-                    }
-                    var oData = {
-                        "goodsDomensions": aGoodsDomensions,
-                        "id": null,
-                        "introduction": sIntrodu,
-                        "name": sName,
-                        "sn": sSn,
-                        "status": sStatus
-                    }
-
-                    $.ajax({
-                        url : eightUrl+'/goods/create',
-                        type : 'post',
-                        contentType: "application/json; charset=utf-8",
-                        dataType : 'json',
-                        data : oData,
-                        beforeSend: function (xhr) {
-                            // json格式传输，后台应该用@RequestBody方式接受
-                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-                            var token = $.cookie("token");
-                            if (token) {
-                                xhr.setRequestHeader("X-Auth-Token", token);
-                            }
-                        },
-                        success : function(json){
-                            console.log(json);
-
-                        },
-                        error : function(json){
-                            console.log(json);
-                        }
-                    });
-                }
->>>>>>> 9fd17e9593c6773168061b3ad2ad7dbe7d3e55db
             });
         });
     };
