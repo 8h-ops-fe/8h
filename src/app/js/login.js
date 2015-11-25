@@ -4,6 +4,7 @@
 
 
 define(function(require, exports, module){
+    require('api');
     require('jquery');
     require('jCookie');
 
