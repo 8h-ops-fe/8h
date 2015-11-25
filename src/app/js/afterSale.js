@@ -41,6 +41,8 @@ define(function(require, exports, module){
                 }
             },
             success : function(json){
+                console.log(json);
+                var json = json.content;
                 var afterList = '';
                 for(var i=0 ; i<json.length ; i++){
                     console.log(json[i]);
@@ -55,6 +57,8 @@ define(function(require, exports, module){
                         sn = json[i].sn,                                     //售后编号
                         orderSn = json[i].orderSn,                           //订单编号
                         result = json[i].result,                             //审核结果
+                        createDate = json[i].createDate,                     //申请时间
+                        receiveDate = json[i].receiveDate,                   //收货时间
                         type = json[i].type == 1 ? '换货' : '退货';            //退货类型
                     var sHandle = '',                                        //处理状态
                         sResult = '';                                        //处理结果
@@ -75,15 +79,15 @@ define(function(require, exports, module){
                             sResult = '<li class="w94 no-boder">未知</li>';
                         }
                     afterList += '\
-                            <dd data-orderSn="'+orderSn+'" data-sn="'+sn+'" class="after-list-box">\
+                            <dd data-orderSn="'+orderSn+'" data-goodsId="'+goodsId+'" class="after-list-box">\
                                 <ul class="line" >\
                                     <li class="w124 blue cursor after-details-btn">'+sn+'</li>\
                                     <li class="w156 blue cursor after-order-btn">'+orderSn+'</li>\
                                     <li class="w60">'+type+'</li>\
                                     <li class="w60">'+receiverName+'</li>\
                                     <li class="w110">'+receiver_mobile+'</li>\
-                                    <li class="w116">2015-10-31</li>\
-                                    <li class="w94">2015-10-31</li>\
+                                    <li class="w116">'+createDate+'</li>\
+                                    <li class="w94">'+receiveDate+'</li>\
                                     <li class="w77">'+reason+'</li>'+sHandle+'\
                                     '+sResult+'\
                                 </ul>\
@@ -145,7 +149,7 @@ define(function(require, exports, module){
      */
     oAfter.afterQuery = function(){
         $('.after-details-btn').die().live('click', function(){
-            var id = $(this).parents('.after-list-box').attr('data-sn');
+            var id = $(this).parents('.after-list-box').attr('data-goodsId');
             $.ajax({
                 url : eightUrl+'afterSale/detail/'+id,
                 type : 'get',
@@ -162,6 +166,69 @@ define(function(require, exports, module){
                 },
                 success : function(json){
                     console.log(json);
+                    var order = json;
+                    $('#after-result,.mask-bg').show();
+                    $('#after-result').css({top: ($(document).scrollTop()+20)+'px'});
+                    var orderSn = order.orderSn,       //订单号
+                        orderGoodsInfo = order.orderGoodsInfo;//商品信息
+
+                    var goodsInfo = '';
+                    var amount = orderGoodsInfo.amount,    //商品数量
+                        color = orderGoodsInfo.color,              //商品颜色
+                        goodsDomensionId = orderGoodsInfo.goodsDomensionId,//orderGoodsInfo
+                        goodsId = orderGoodsInfo.goodsId,          //goodsId
+                        goodsName = orderGoodsInfo.goodsName,      //商品名称
+                        orderSn = orderGoodsInfo.orderSn,          //订单号
+                        singlePrice = orderGoodsInfo.singlePrice,  //单价
+                        size = orderGoodsInfo.size,                //尺寸
+                        totalPrice = orderGoodsInfo.totalPrice,    //总价
+                        reason = order.reason,            //退货原因
+                        createDate  = order.createDate,   //申请时间
+                        receiverName = order.receiverName,//收件人
+                        receiverLandline = order.receiverLandline,//收货人座机
+                        receiver_mobile = order.receiver_mobile || receiverLandline,  //收货人手机
+                        receiverAddress = order.receiverAddress,  //收货人地址
+                        result = order.result,                    //审核结果
+                        refuseReason = order.refuseReason || '';  //审核拒绝原因
+                    if(result == 0){
+                        result = '未处理';
+                    }else if(result == 1){
+                        result = '通过';
+                    }else if( result == 2){
+                        result = '拒绝';
+                    }
+                    goodsInfo += '<ul class="list-e">\
+                                    <li class="image"><img width="98" height="98" src="../images/order_e.jpg" /></li>\
+                                    <li>'+goodsName+' × '+amount+'</li>\
+                                    <li>'+size+'</li>\
+                                    <li>'+color+'</li>\
+                                    <li>¥'+singlePrice+'</li>\
+                                    <li class="money">订单总额：<span>¥'+totalPrice+'</span></li>\
+                                </ul>';
+                    $('#after-result').html('\
+                                <div>\
+                                    <h1 class="title">售后详情</h1>\
+                                    <div class="close-x"></div>\
+                                </div>\
+                                <p class="order-mes">售后单号：<span>'+orderSn+'</span></p>\
+                                <div class="edit-detial">\
+                                    <p class="title-e padding10">商品信息：</p>'+goodsInfo+'\
+                                </div>\
+                                <p class="title-e padding10">申请信息：</p>\
+                                <ul class="user-de border-de">\
+                                    <li>退货原因：'+reason+'</li>\
+                                    <li>申请时间：'+createDate+'</li>\
+                                </ul>\
+                                <p class="title-e padding10">联系信息：</p>\
+                                <ul class="user-de border-de">\
+                                    <li>联系人：'+receiverName+'</li>\
+                                    <li>手机号：'+receiver_mobile+'</li>\
+                                    <li>收货人地址：'+receiverAddress+'</li>\
+                                </ul>\
+                                <ul class="user-de">\
+                                    <li>审核结果：'+result+'</li>\
+                                    <li>不通过原因：'+refuseReason+'</li>\
+                                </ul>');
                 },
                 error : function(json){
                     var json = JSON.parse(json.responseText);
@@ -318,9 +385,10 @@ define(function(require, exports, module){
         });
     };
     oAfter.through = function(){
+        var that = this;
         // 通过审核
         $('.audit-through').die().live('click', function(){
-            var id = $(this).parents('.after-list-box').attr('data-ordersn');
+            var id = $(this).parents('.after-list-box').attr('data-goodsId');
             $('#audit-through,.mask-bg').show();
             $('#audit-through .deter').die().live('click', function(){
                 $.ajax({
@@ -338,6 +406,8 @@ define(function(require, exports, module){
                         }
                     },
                     success : function(json){
+                        $('#audit-through,.mask-bg').hide();
+                        that.list();
                         console.log(json);
                     },
                     error : function(json){
@@ -349,14 +419,22 @@ define(function(require, exports, module){
         });
         // 不通过审核
         $('.not-through').die().live('click', function(){
-            var id = $(this).parents('.after-list-box').attr('data-ordersn');
+            var id = $(this).parents('.after-list-box').attr('data-goodsId');
             $('#not-through,.mask-bg').show();
             $('#not-through .deter').die().live('click', function(){
+                var refuseReason = $('#refuse').val();
+                if(!refuseReason){
+                    alert('请填写原因！');
+                    return false;
+                }
                 $.ajax({
                     url : eightUrl+'afterSale/auditRefuse/'+id,
                     type : 'get',
                     xhrFields: {
                         withCredentials: true
+                    },
+                    data : {
+                        refuseReason :refuseReason
                     },
                     beforeSend : function(xhr) {
                         // json格式传输，后台应该用@RequestBody方式接受
@@ -367,7 +445,9 @@ define(function(require, exports, module){
                         }
                     },
                     success : function(json){
-                        console.log(json);
+                        $('#refuseReason').val('');
+                        $('#not-through,.mask-bg').hide();
+                        that.list();
                     },
                     error : function(json){
                         var json = JSON.parse(json.responseText);
@@ -381,6 +461,9 @@ define(function(require, exports, module){
         $('.small-pop .cancel').die().live('click', function(){
             $(this).parents('.small-pop').hide();
             $('.mask-bg').hide();
+        });
+        $('.close-x,.canle').die().live('click', function(){
+            $('.edit-order,.mask-bg').hide();
         });
     };
     exports.after = oAfter;

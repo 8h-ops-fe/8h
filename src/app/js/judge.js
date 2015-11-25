@@ -3,7 +3,7 @@
  */
 define(function(require, exports, module){
     require('jCookie');
-    //if( !$.cookie('token') ){
-    //    window.location.href = 'login.html';
-    //}
+    if( !$.cookie('token') ){
+        window.location.href = 'login.html';
+    }
 });

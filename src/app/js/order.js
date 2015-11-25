@@ -13,6 +13,7 @@ define(function(require, exports, module){
         this.close();   //关闭
         this.query();   //订单查询
         this.edit();    //订单编辑
+        this.export();  //导出订单
     };
     /**
      * 订单列表
@@ -43,14 +44,14 @@ define(function(require, exports, module){
                 }
             },
             success : function(json){
+                console.log(json);
                 var arr = json;
+                $('.order-list-box').html('');
                 if( json == ''){
                     $('.order-list-box').html('<h1 class="no-data">暂无数据</h1>');
                     return;
                 }
-                console.log(arr);
-                $('.order-list-box').html('');
-                for(var i=0 ; i<arr.length ; i++){
+                for(var i=0 ; i<arr.length ; i++) {
                     var orderSn = arr[i].orderSn,      //订单号
                         createTime = arr[i].createTime,//下单时间
                         userName = arr[i].userName,    //下单用户
@@ -59,119 +60,144 @@ define(function(require, exports, module){
                         receiverMobile = arr[i].receiverMobile || receiverPhone,  //收货人手机
                         statusDesc = arr[i].statusDesc,//订单状态描述
                         status = arr[i].status;    //订单状态码，1下单，2支付，3配货，4出库，5完成，6取消
-                        totalPrice = arr[i].totalPrice,//商品价钱
+                    totalPrice = arr[i].totalPrice,//商品价钱
                         orderPrice = '';               //商品总价
 
                     // 商品信息
                     var goodsInfo = '';
-                    if(arr[i].goodsInfoList)
-                    for(var j=0 ; j<arr[i].goodsInfoList.length ; j++){
-                        var goodsImg = arr[i].goodsInfoList[j].imageUrl,      //商品图片
-                            goodsSize = arr[i].goodsInfoList[j].goodsSize,    //商品大小
-                            goodsName = arr[i].goodsInfoList[j].goodsName,    //商品名字
-                            goodsColor = arr[i].goodsInfoList[j].goodsColor,  //商品颜色
-                            goodsAmount = arr[i].goodsInfoList[j].goodsAmount,//商品个数
-                            expressInfo = arr[i].expressInfo,                 //快递信息
-                            expressInfoC = '',                                //快递公司
-                            expressInfoN = '';                                //快递号
-                            if(expressInfo){
+                    if (arr[i].goodsInfoList)
+                        for (var j = 0; j < arr[i].goodsInfoList.length; j++) {
+                            var goodsImg = arr[i].goodsInfoList[j].imageUrl,      //商品图片
+                                goodsSize = arr[i].goodsInfoList[j].goodsSize,    //商品大小
+                                goodsName = arr[i].goodsInfoList[j].goodsName,    //商品名字
+                                goodsColor = arr[i].goodsInfoList[j].goodsColor,  //商品颜色
+                                goodsAmount = arr[i].goodsInfoList[j].goodsAmount,//商品个数
+                                expressInfo = arr[i].expressInfo,                 //快递信息
+                                expressInfoC = '',                                //快递公司
+                                expressInfoN = '';                                //快递号
+                            if (expressInfo) {
                                 expressInfoC = expressInfo[0];
                                 expressInfoN = expressInfo[1];
                             }
-                        orderPrice = parseInt(totalPrice)*parseInt(goodsAmount);
-                        var operationBtn = '';
-                        //订单详情
-                        var orderDetails = '';
-                            console.log(status);
-                        //1下单，2支付，3配货
-                        if( status == 1 || status == 2 || status ==3){
-                            orderDetails = '<ul class="two">\
+                            orderPrice = parseInt(totalPrice) * parseInt(goodsAmount);
+                            var operationBtn = '';
+                            //订单详情
+                            var orderDetails = '';
+                            //1下单，2支付，3配货
+                            if (status == 1 || status == 2 || status == 3) {
+                                orderDetails = '<ul class="two">\
                                                 <li class="order-edit-btn">编辑订单</li>\
                                                 <li class="order-details-btn">订单详情</li>\
                                             </ul>';
-                        //4出库
-                        }else if( status == 4 ){
-                            orderDetails = '<ul class="three">\
+                                //4出库
+                            } else if (status == 4) {
+                                orderDetails = '<ul class="three">\
                                                 <li class="order-edit-btn">编辑订单</li>\
                                                 <li class="order-details-btn">订单详情</li>\
                                                 <li class="order-logist-btn">\
                                                     <div class="order-express-box">\
                                                         <span class="order-express">物流状态</span>\
                                                         <div class="express-box">\
-                                                            <p><span>快递公司：</span><span class="express-company">'+expressInfoC+'</span></p>\
-                                                            <p><span>快递单号：</span><span class="express-num">'+expressInfoN+'</span></p>\
+                                                            <p><span>快递公司：</span><span class="express-company">' + expressInfoC + '</span></p>\
+                                                            <p><span>快递单号：</span><span class="express-num">' + expressInfoN + '</span></p>\
                                                         </div>\
                                                     </div>\
                                                 </li>\
                                             </ul>';
-                        //5完成，6取消
-                        }else{
-                            orderDetails = '<ul class="one">\
+                                //5完成，6取消
+                            } else {
+                                orderDetails = '<ul class="one">\
                                                 <li class="order-details-btn">订单详情</li>\
                                             </ul>';
-                        }
-                        // 订单列表
-                        goodsInfo += '\
+                            }
+
+                            // 订单列表
+                            goodsInfo += '\
                                 <dl class="detial-commodity">\
-                                    <dt><img src="'+goodsImg+'"></dt>\
+                                    <dt><img src="' + goodsImg + '"></dt>\
                                     <dd class="second-w">\
                                         <dl>\
-                                        <dd>'+goodsName+'×'+goodsAmount+'</dd>\
-                                        <dd>'+goodsSize+'</dd>\
-                                        <dd>'+goodsColor+'</dd>\
-                                        <dd>￥'+totalPrice+'</dd>\
-                                        <dd>订单总额：<span>￥'+orderPrice+'</span></dd>\
+                                        <dd>' + goodsName + '×' + goodsAmount + '</dd>\
+                                        <dd>' + goodsSize + '</dd>\
+                                        <dd>' + goodsColor + '</dd>\
+                                        <dd>￥' + totalPrice + '</dd>\
+                                        <dd>订单总额：<span>￥' + orderPrice + '</span></dd>\
                                         </dl>\
                                     </dd>\
-                                    <dd class="third-w">'+orderDetails+'\
+                                    <dd class="third-w">' + orderDetails + '\
                                     </dd>\
                                     <dd class="forth-btn">\
                                         <ul class="detial-button">\
                                         </ul>\
                                     </dd>\
                                 </dl>';
-                    }
+
+                            var statusDescT = '';
+                            if (status == 5) {
+                                statusDescT = '<span class="detial-n blank">' + statusDesc + '</span>'
+                            } else if (status == 6) {
+                                statusDescT = '<span class="detial-n ccc">' + statusDesc + '</span>'
+                            } else {
+                                statusDescT = '<span class="detial-n orange">' + statusDesc + '</span>'
+                            }
+                        }
                     // 添加商品信息
                     $('.order-list-box').append('\
-                            <div class="order-list" data-orderSn="'+arr[i].orderSn+'">\
+                            <div class="order-list" data-orderSn="' + arr[i].orderSn + '">\
                                 <ul class="detial-state">\
-                                    <li><span class="detial-n">订单号：</span><span class="detial-w">'+orderSn+'</span></li>\
-                                    <li><span class="detial-n">下单时间：</span><span class="detial-w">'+createTime+'</span></li>\
-                                    <li><span class="detial-n">下单用户：</span><span class="detial-w">'+userName+'</span></li>\
-                                    <li><span class="detial-n">收货人：</span><span class="detial-w">'+receiverName+'</span></li>\
-                                    <li><span class="detial-n">联系电话：</span><span class="detial-w">'+receiverMobile+'</span></li>\
-                                    <li class="detial-z"><span class="detial-n">'+statusDesc+'</span></li>\
-                                </ul>'+goodsInfo+'\
+                                    <li><span class="detial-n">订单号：</span><span class="detial-w">' + orderSn + '</span></li>\
+                                    <li><span class="detial-n">下单用户：</span><span class="detial-w">' + userName + '</span></li>\
+                                    <li><span class="detial-n">收货人：</span><span class="detial-w">' + receiverName + '</span></li>\
+                                    <li><span class="detial-n">联系电话：</span><span class="detial-w">' + receiverMobile + '</span></li>\
+                                    <li class="detial-z">' + statusDescT + '</li>\
+                                </ul>' + goodsInfo + '\
                             </div>');
                     // 调整距离
-                    for(var j=0 ; j<arr[i].buttons.length ; j++){
-                        var oButton = arr[i].buttons[j];
+                    var orderBtn = '';
+                    if (arr[i].buttons) {
+                        for (var k = 0; k < arr[i].buttons.length; k++) {
+                            var oButton = arr[i].buttons[k];
+                            if (arr[i].buttons.length == 1) {
+                                $('.order-list').eq(i).find('.detial-button').addClass('one');
+                            } else if (arr[i].buttons.length == 2) {
+                                $('.order-list').eq(i).find('.detial-button').addClass('two');
+                            } else if (arr[i].buttons.length == 3) {
+                                $('.order-list').eq(i).find('.detial-button').addClass('three');
+                            }
 
-                        if(arr[i].buttons.length == 1){
-                            $('.order-list').eq(i).find('.detial-button').addClass('one');
-                        }else if(arr[i].buttons.length == 2){
-                            $('.order-list').eq(i).find('.detial-button').addClass('two');
-                        }else if(arr[i].buttons.length == 3){
-                            $('.order-list').eq(i).find('.detial-button').addClass('three');
+                            var sTip = '',
+                                iStatus = 0;
+                            if (oButton.text == '取消订单') {
+                                sTip = '确认取消订单么？';
+                                iStatus = 6;
+                            } else if (oButton.text == '配货订单') {
+                                sTip = '确定已完成配货？';
+                                iStatus = 4;
+                            }
+
+                            var tipClass = '';
+                            if (oButton.text == '填写物流信息') {
+                                tipClass = 'tip-btn-info';
+                            } else {
+                                tipClass = 'tip-btn';
+                            }
+                            orderBtn += '<li data-orderSn="' + orderSn + '" data-status="' + iStatus + '" data-url="' + oButton.url + '" data-top="' + sTip + '" class="' + tipClass + '">\
+                                            <span>' + oButton.text + '</span>\
+                                        </li>';
+                            $('.tip-btn').die().live('click', function () {
+                                that.tip($(this), $(this).attr('data-orderSn'), $(this).attr('data-url'), $(this).attr('data-status'));
+                            });
+                            $('.tip-btn-info').die().live('click', function () {
+                                that.distri($(this).attr('data-orderSn'));
+                            });
                         }
-                        var sTip = '',
-                            iStatus = 0;
-                        if( oButton.text == '取消订单' ){
-                            sTip = '确认取消订单么？';
-                            iStatus = 6;
-                        }else if( oButton.text == '配货完毕' ){
-                            sTip = '确定已完成配货？';
-                            iStatus = 4;
-                        }
-                        $('.order-list').eq(i).find('.detial-commodity .detial-button').append('\
-                                        <li data-orderSn="'+orderSn+'" data-status="'+iStatus+'" data-url="'+oButton.url+'" data-top="'+sTip+'" class="tip-btn">\
-                                            <span>'+oButton.text+'</span>\
-                                        </li>');
-                        $('.tip-btn').die().live('click', function(){
-                            that.tip( $(this), $(this).attr('data-orderSn'), $(this).attr('data-url'), $(this).attr('data-status') );
-                        });
+                        $('.order-list').eq(i).find('.detial-commodity .detial-button').html(orderBtn);
                     }
                 }
+            },
+            error : function(json){
+                var json = JSON.parse(json.responseText);
+                alert(json.message);
             }
         });
     };
@@ -209,15 +235,69 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    $('.edit-order,.mask-bg').hide();
                     _this.list();
-                    console.log(json);
+                    $('.edit-order,.order-tip,.mask-bg').hide();
                 },
                 error : function(json){
                     var json = JSON.parse(json.responseText);
                     alert(json.message);
                 }
             });
+        });
+    };
+    /**
+     * 填写配货信息
+     */
+    oOrder.distri = function(orderSn){
+        var that = this;
+        $('#order-express-box,.mask-bg').show();
+        $('#order-express-box').css({top: ($(document).scrollTop()+20)+'px'});
+        $('#order-express-box .cancel').die().live('click', function(){
+            $('#order-express-box,.mask-bg').hide();
+        });
+        $('#order-express-box .deter').die().live('click', function(){
+            var expressName = $('#order-express-box .order-express').val(),
+                expressOrder = $('#order-express-box .order-express-num').val();
+            if(!expressName){
+                alert('请填写快递公司！');
+                return;
+            }
+            if(!expressOrder) {
+                alert('请填写快递单号！');
+                return;
+            }
+            data = JSON.stringify({
+                expressName : expressName,
+                expressOrder : expressOrder,
+                orderSn : orderSn,
+                status : 4
+            });
+            $.ajax({
+                url : eightUrl+'order/orderDelivered',
+                type : 'post',
+                data : data,
+                xhrFields: {
+                    withCredentials: true
+                },
+                dataType : 'json',
+                contentType: "application/json; charset=utf-8",
+                beforeSend : function(xhr) {
+                    // json格式传输，后台应该用@RequestBody方式接受
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                    var token = $.cookie("token");
+                    if (token) {
+                        xhr.setRequestHeader("X-Access-Auth-Token", token);
+                    }
+                },
+                success : function(json){
+                    $('#order-express-box,.mask-bg').hide();
+                    that.list();
+                },
+                error : function(json){
+                    var json = JSON.parse(json.responseText);
+                    alert(json.message);
+                }
+            })
         });
     };
     /**
@@ -396,6 +476,10 @@ define(function(require, exports, module){
                                 '+orderGoodsInfo+'\
                             </ul>\
                         </div>');
+                },
+                error : function(json){
+                    var json = JSON.parse(json.responseText);
+                    alert(json.message);
                 }
             })
         });
@@ -408,7 +492,7 @@ define(function(require, exports, module){
         // 商品数量加减、颜色、大小
         this.operation();
         $('.order-edit-btn').die().live('click', function(){
-            var orderSn = $(this).parents('.order-list').attr('data-orderSn');
+            var orderSn = $(this).parents('.order-list').attr('data-ordersn');
             $.ajax({
                 url: eightUrl + 'order/orderEditInfo',
                 type: 'get',
@@ -656,9 +740,18 @@ define(function(require, exports, module){
                                 var oColor = $('.list-e').eq(i).find('.color .line2 a').eq(sizeIndex);
                                 oColor.addClass('active-color').css({background: oColor.attr('data-color'),color:'#fff'});
                             }
+                        },
+                        error : function(json){
+                            var json = JSON.parse(json.responseText);
+                            alert(json.message);
+                            $('#edit-order,.mask-bg').hide();
                         }
                     });
 
+                },
+                error : function(json){
+                    var json = JSON.parse(json.responseText);
+                    alert(json.message);
                 }
             });
         });
@@ -808,6 +901,10 @@ define(function(require, exports, module){
                         dist += '<option value="'+json[i].regionId+'">'+json[i].regionName+'</option>';
                     }
                     $('#dist').html(dist);
+                },
+                error : function(json){
+                    var json = JSON.parse(json.responseText);
+                    alert(json.message);
                 }
             })
         });
@@ -860,10 +957,70 @@ define(function(require, exports, module){
                             dist += '<option value="'+json[i].regionId+'">'+json[i].regionName+'</option>';
                         }
                         $('#dist').html(dist);
+                    },
+                    error : function(json){
+                        var json = JSON.parse(json.responseText);
+                        alert(json.message);
                     }
                 });
+            },
+            error : function(json){
+                var json = JSON.parse(json.responseText);
+                alert(json.message);
             }
         });
+    };
+    /**
+     * 导出订单
+     */
+    oOrder.export = function(){
+        $('#export').die().live('click', function(){
+            var orderSn = $('.orderSn').val(),             //订单号
+                receiverName = $('.receiverName').val(),   //收件人
+                receiverPhone = $('.receiverPhone').val(), //联系电话
+                startTime = $('.start-time').val(),        //开始时间
+                endTime = $('.end-time').val(),            //结束时间
+                minAmount = $('.min-price').val(),         //最小价钱
+                maxAmount = $('.max-price').val(),         //最大价钱
+                status = 0;                                //状态码
+            // 更新状态码
+            $('.order-radio').each(function(){
+                if( $(this).attr('checked') ){
+                    status = $(this).val();
+                }
+            });
+            var data = JSON.stringify({
+                maxAmount : maxAmount,
+                minAmount : minAmount,
+                maxTime : endTime,
+                minTime : startTime,
+                orderSn : orderSn,
+                phone : receiverPhone,
+                receiverName : receiverName,
+                status : status
+            });
+            $.ajax({
+                url : eightUrl+'orderExport/exportUserOrder',
+                type : 'post',
+                data : data,
+                xhrFields: {
+                    withCredentials: true
+                },
+                dataType : 'json',
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function (xhr) {
+                    // json格式传输，后台应该用@RequestBody方式接受
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                    var token = $.cookie("token");
+                    if (token) {
+                        xhr.setRequestHeader("X-Access-Auth-Token", token);
+                    }
+                },
+                success : function(json){
+                    console.log(json);
+                }
+            })
+        })
     };
     /**
      * 关闭
@@ -873,5 +1030,6 @@ define(function(require, exports, module){
             $('.edit-order,.mask-bg').hide();
         });
     };
+
     exports.oOrder = oOrder;
 });
