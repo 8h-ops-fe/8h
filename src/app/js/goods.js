@@ -5,17 +5,17 @@ define(function(require, exports, module){
     require("jquery");
     require("jCookie");
     var goods = {};
-
     
     var oGoods = {};
     oGoods.init = function(){
         this.create();    //初始化商品
         this.add();       //添加商品
-        this.detail();    //商品详情
+        this.detail();    //获取商品详情
         this.close();     //关闭弹窗
 		oGoods.edit();		//商品编辑
 		oGoods.operate();   //商品操作
 		oGoods.conditional(); //商品查询
+		oGoods.status();	  //商品上架下架
     };
     /**
      * 初始化商品
@@ -47,17 +47,39 @@ define(function(require, exports, module){
 			success : function(json){
 				console.log(json);
 				goods = json;
-				$(".cus-adm").html('');
+				$(".cus-adm").html('<dt>\
+										<ul class="line">\
+											<li class="w124">商品编号</li>\
+											<li class="w156">商品名称</li>\
+											<li class="w190">颜色/规格</li>\
+											<li class="w110">价格</li>\
+											<li class="w118">库存</li>\
+											<li class="w110">商品状态</li>\
+											<li class="w154 no-boder">操作</li>\
+										</ul>\
+									</dt>');
 				for(var i=0 ; i<goods.content.length ; i++){
 					var that = goods.content[i];
-					//循环商品颜色、规格、库存
+					//循环商品颜色、规格、库存,id
+					
+					var oGoodsId = that.goodsDomensions[0].goodsId;
 					var oGoodsDetails = document.createElement('dd'),
 						oUl = document.createElement('ul');
 					oGoodsDetails.className = 'goods-details';
-					$(oGoodsDetails).attr('data-id',that.id);
 					oUl.className = 'line-term';
 					// 商品内容
-					$(oUl).html('<li class="w124"><p><a href="javascript:;" class="goods-num">'+that.sn+'</a></p></li>\
+					
+					var status,unstatus,dateS;
+					if(that.status == '1'){
+						status = '上架';
+						unstatus = '下架';
+						dateS=2;
+					}else{
+						status = '下架';
+						unstatus = '上架';
+						dateS=1;
+					}
+					$(oUl).html('<li class="w124"><p><a href="javascript:;" class="goods-num" data-id="'+oGoodsId+'">'+that.sn+'</a></p></li>\
 										<li class="w156"><p>'+that.name+'</p></li>\
 										<li class="w190 goods-color-size">\
 										</li>\
@@ -66,18 +88,18 @@ define(function(require, exports, module){
 										</li>\
 										<li class="w118 goods-inventory">\
 										</li>\
-										<li class="w110"><p>'+that.status+'</p></li>\
+										<li class="w110"><p class="sale-status">'+status+'</p></li>\
 										<li class="w154 no-boder">\
 											<p>\
 											<a href="javascript:;" class="edit-ga">编辑</a>\
-											<a href="javascript:;">下架</a>\
+											<a href="javascript:;" date-s="'+dateS+'" class="status-goods-query">'+unstatus+'</a>\
 											</p>\
 										</li>');
 					$(oGoodsDetails).append(oUl);
 					for(var j=0 ; j<that.goodsDomensions.length ; j++){
 						var _that = goods.content[i].goodsDomensions[j],
 							oColor = _that.color,
-							oSize = _that.size,
+							oSize = _that.size, 
 							oInventory = parseInt(_that.inventory);
 						$(oUl).find('.goods-color-size').append('<p>'+oColor+' / '+oSize+'</p>');
 						// 为空显示编辑库存
@@ -205,8 +227,8 @@ define(function(require, exports, module){
 			
 		});
 		// 商品颜色删除一列
-		$('.goods-color .remove').die();
-		$('.goods-color .remove').live('click', function(){
+		$('#editLeft .remove').die();
+		$('#editLeft .remove').live('click', function(){
 			
 			var dataDel = $(this).attr('date-del');
 			var aTr = $('#addGoodsTable').find('tr[date-color='+dataDel+']');
@@ -248,8 +270,8 @@ define(function(require, exports, module){
 			$(this).siblings('input').val('');
 		});
 		// 商品规格删除一列
-		$('.detial-color .remove').die();
-		$('.detial-color .remove').live('click', function(){
+		$('#initGoodsSize .remove').die();
+		$('#initGoodsSize .remove').live('click', function(){
 			var delSize = $(this).attr('data-sizedel');
 			var aTd = $("#addGoodsTable").find('.size-gthis-val');
 			var aTr = $("#addGoodsTable").find('.tr');
@@ -425,6 +447,7 @@ define(function(require, exports, module){
 		});
     };
 	oGoods.add = function(){
+		var that = this;
         $('.goods-add').live('click', function(){
 			$('#add-goods').html('<div>\
 				<h1 class="title">添加商品</h1>\
@@ -476,9 +499,9 @@ define(function(require, exports, module){
 			</p>');
 
             $('#add-goods,.mask-bg').show();
-            
 
             // 添加商品
+			$('#add-goods .save').die();
             $('#add-goods .save').live('click', function(){
                 var sSn = $('#goods-sn').val(),          //商品编号
                     sName = $('#goods-name').val(),      //商品名字
@@ -486,109 +509,178 @@ define(function(require, exports, module){
                     sColorEng, //商品颜色
                     sSize,      //商品规格
                     sPrice,    //商品价钱
-                    sIntrodu,//商品介绍
+                    sIntrodu = $('#goods-introduction').val(),//商品介绍
                     inventory , //商品库存
                     iColor = $('.goods-color-add').length,//商品颜色个数
-                    sStatus,//商品状态
+                    sStatus = $('#goods-status option:selected').attr('date-s'),//商品状态
 					sMaterial;    //物料编码
-					for(var i = 0;i < $('#goods-status option').length;i++ ){
-						if($($('#goods-status option')[i]).attr('selected') == 'selected'){
-							sStatus = $($('#goods-status option')[i]).attr('date-s');
-						}
-					}
-					var goodsDomensions = [];
-					var data = {
-								  "goodsDomensions": goodsDomensions,
-								  "id": '',
-								  "introduction": sIntrodu,
-								  "name": sName,
-								  "sn": sSn,
-								  "status": sStatus,
-								  "userId": ''
+
+				var goodsDomensions = [];
+				var aTrGoods = $('#addGoodsTable').find('.tr');
+				for(var i = 0;i < aTrGoods.length;i++){
+					var dateColor = $(aTrGoods[i]).attr('date-color');
+					var oneFimTr = $('#addGoodsTable').find('tr[date-color='+dateColor+']');
+					var json = {};
+					var delBtn = $('#editLeft .remove[date-del='+dateColor+']');
+					sColorText =  $(oneFimTr[0]).find('.goods-color-text').html();
+					sColorEng = delBtn.parents('.goods-color').find('.color-input').val();
+					for(var j = 0;j < oneFimTr.length;j++){
+						sSize = $(oneFimTr[j]).find('.size-gthis-val').html();
+						sPrice = $(oneFimTr[j]).find('.goods-price').val();
+						inventory = $(oneFimTr[j]).find('.goods-number').val();
+						sMaterial = $(oneFimTr[j]).find('.material-code').val();
+						json = {
+									'color':sColorText,
+									'colorCode':sColorText,
+									'goodsId':'',
+									'id':'',
+									'images':[{
+									  "domensionId": 0,
+									  "imageURL": "string"
+									}],
+									'inventory':inventory,
+									'materialCode':sMaterial,
+									'price':sPrice,
+									'size':sSize
 								};
-								
-								/*[
-									{
-									  "color": "string",
-									  "colorCode": "string",
-									  "goodsId": 0,
-									  "id": 0,
-									  "images": [
-										{
-										  "domensionId": 0,
-										  "imageURL": "string"
-										}
-									  ],
-									  "inventory": 0,
-									  "materialCode": "string",
-									  "price": 0,
-									  "size": "string"
-									}
-								  ]*/
-								  /*var sSn = $('#goods-sn').val(),          //商品编号
-									sName = $('#goods-name').val(),      //商品名字
-									sColorText, //商品颜色文字
-									sColorEng, //商品颜色
-									sSize,      //商品规格
-									sPrice,    //商品价钱
-									sIntrodu;//商品介绍
-									inventory ; //商品库存
-									iColor = $('.goods-color-add').length,//商品颜色个数
-									sStatus;    //商品状态*/
-					var aTrGoods = $('#addGoodsTable').find('.tr');
-					for(var i = 0;i < aTrGoods.length;i++){
-						var dateColor = $(aTrGoods[i]).attr('date-color');
-						var oneFimTr = $('#addGoodsTable').find('tr[date-color='+dateColor+']');
-						var json = {};
-						sColorText =  $(oneFimTr[0]).find('.goods-color-text').html();
-						sColorEng = $('#editLeft .remove[date-del='+dateColor+']').parents('.goods-color .color-input').val();
-						for(var j = 0;j < oneFimTr;j++){
-							sSize = $(oneFimTr[j]).find('.size-gthis-val').html();
-							sPrice = $(oneFimTr[j]).find('.goods-price').val();
-							inventory = $(oneFimTr[j]).find('.goods-number').val();
-							sMaterial = $(oneFimTr[j]).find('.material-code').val();
-							json = {
-										'color':sColorText,
-										'colorCode':sColorText,
-										'goodsId':'',
-										'id':'',
-										'images':[{
-										  "domensionId": 0,
-										  "imageURL": "string"
-										}],
-										'inventory':inventory,
-										'materialCode':sMaterial,
-										'price':sPrice,
-										'size':sSize
-									};
-						}
 						goodsDomensions.push(json);
 					}
-					console.log(goodsDomensions);
-					console.log(data);
+				}
+				var data = JSON.stringify({
+							  "goodsDomensions": goodsDomensions,
+							  "id": '',
+							  "introduction": sIntrodu,
+							  "name": sName,
+							  "sn": sSn,
+							  "status": sStatus,
+							  "userId": 1212
+							});
                 // 添加商品
-
+				$.ajax({
+					url : eightUrl+'goods/create',
+					type : 'post',
+					dataType:'json',
+					data : data,
+					contentType:'application/json; charset=utf-8',
+					xhrFields: {
+						withCredentials: true
+					},
+					beforeSend: function (xhr) {
+						// json格式传输，后台应该用@RequestBody方式接受
+						xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+						var token = $.cookie("token");
+						if (token) {
+							xhr.setRequestHeader("X-Access-Auth-Token", token);
+						}
+					},
+					success : function(json){
+						$('#add-goods,.mask-bg').hide();
+						that.create();
+					}
+				});
             });
         });
     };
     /**
-     * 查看商品详情
+     * 获取商品详情
      */
-    oGoods.detail = function(){
-        $('.goods-num').live('click', function(){
-            var id = $(this).parents('.goods-details').attr('data-id');
-            $('#detial,.mask-bg').show();
-            $.ajax({
-                url : eightUrl+'/goods/detail/'+id,
-                success : function(json){
-                    console.log(json);
-                },
-                error : function(json){
-                    console.log(json);
-                }
-            });
-        });
+    oGoods.detail = function(id){
+		$('.goods-num').die();
+		$('.goods-num').live('click',function(){
+			var id = $(this).attr('data-id');
+			$.ajax({
+				url : eightUrl+'goods/detail/'+id,
+				type : 'get',
+				contentType:'application/json; charset=utf-8',
+				xhrFields: {
+					withCredentials: true
+				},
+				beforeSend: function (xhr) {
+					// json格式传输，后台应该用@RequestBody方式接受
+					xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+					var token = $.cookie("token");
+					if (token) {
+						xhr.setRequestHeader("X-Access-Auth-Token", token);
+					}
+				},
+				success : function(json){
+					var data = json;
+					var goodsDomensions = data.goodsDomensions;
+					var htmlStr = '<div>\
+										<h1 class="title">商品详情</h1>\
+										<div class="close-x"></div>\
+									</div>\
+									<ul class="goods-detial">\
+										<li class="detial1">\
+											<p class="left line1"><span class="c9">商品编号：</span><span class="c3" >'+data.sn+'</span></p>\
+											<p class="right line1"><span class="c9">商品名称：</span><span class="c3">'+data.name+'</span><\/p>\
+											<p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">\
+														<option>上架</option>\
+														<option>下架</option>\
+													</select></p>\
+										</li>\
+										<li>\
+											<p class="left">商品介绍：</p>\
+											<p class="right">'+data.introduction+'</p>\
+										</li>\
+										<li class="margin-none">\
+											<ul>\
+												<li class="detial-color">\
+													<p class="left">商品颜色：</p>\
+													<div class="right" id="detial-color">\
+													</div>\
+												</li>\
+												<li class="detial-color">\
+													<p class="left">商品规格:</p>\
+													<div class="right">\
+														<ul class="goods-size" id="detial-size">\
+														</ul>\
+													</div>\
+												</li>\
+											</ul>\
+										</li>\
+									</ul>\
+									<table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table b">\
+										<tr class="title">\
+											<td width="217">商品颜色</td>\
+											<td width="200">商品规格</td>\
+											<td width="150">价格</td>\
+											<td width="148">库存</td>\
+											<td width="220">物料编号</td>\
+										</tr>\
+									</table>\
+									<p class="btn-e">\
+										<a href="javascript:;" class="save">保存</a>\
+										<a href="javascript:;" class="canle">取消</a>\
+									</p>';
+					$('#detial').html(htmlStr);
+					for(var i = 0;i < goodsDomensions.length;i++){
+						var color = goodsDomensions[i].color;
+						var colorCode = goodsDomensions[i].colorCode;
+						var inventory = goodsDomensions[i].inventory; //库存
+						var materialCode = goodsDomensions[i].materialCode; // 物料编码
+						var price = goodsDomensions[i].price;
+						var size = goodsDomensions[i].size;
+						var img = goodsDomensions[i].images[0].imageURL || '';
+						var detialColor = '<ul class="goods-color">\
+												<li>'+color+'</li>\
+												<li>'+colorCode+'</li>\
+												<li class="color" style="background:#'+colorCode+'"></li>\
+												<li><img width="24" height="24" src="'+img+'" /></li>\
+											</ul>';
+						var detialSize = '<li>'+size+'</li>';
+						$('#detial-color').append(detialColor);
+						$('#detial-size').append(detialSize);
+					}
+					$('#detial,.mask-bg').show();
+				},
+				error : function(json){
+					console.log(json);
+				}
+			});
+		});
     };
+		
 	/**
      * 商品编辑
      */
@@ -646,7 +738,50 @@ define(function(require, exports, module){
 			$('#eidit-goods,.mask-bg').show();
 		});
 	};
-	
+	/**
+     * 商品上架下架
+     */
+	 oGoods.status = function(){
+		$('.goods-details a.status-goods-query').die();
+	 	$('.goods-details a.status-goods-query').live('click',function(){
+			var that = $(this);
+			var status = $(this).attr('date-s');
+			var data,urlAjax;
+			var goodsIdGet = $(this).parents('ul.line-term').find('a.goods-num').attr('data-id');
+			if(status == '1'){
+				urlAjax = eightUrl+'goods/saleIn/'+goodsIdGet;
+			}else if(status == '2'){
+				urlAjax = eightUrl+'goods/saleOut/'+goodsIdGet;
+			}
+			$.ajax({
+				url : urlAjax,
+				type : 'get',
+				contentType:'application/json; charset=utf-8',
+				xhrFields: {
+					withCredentials: true
+				},
+				beforeSend: function (xhr) {
+					// json格式传输，后台应该用@RequestBody方式接受
+					xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+					var token = $.cookie("token");
+					if (token) {
+						xhr.setRequestHeader("X-Access-Auth-Token", token);
+					}
+				},
+				success : function(json){
+					if(status == '1'){
+						$(that).attr('date-s','2');
+						$(that).html('下架');
+						$(that).parents('dd.goods-details').find('p.sale-status').html('上架');
+					}else if(status == '2'){
+						$(that).attr('date-s','1');
+						$(that).html('上架');
+						$(that).parents('dd.goods-details').find('p.sale-status').html('下架');
+					}
+				}
+			});
+		});	 
+	 }
     /**
      * 关闭弹窗
      */
