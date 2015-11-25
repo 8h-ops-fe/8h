@@ -7,6 +7,8 @@ define(function(require, exports, module){
     var loadHtml = $(function(){
         // 动态加载内容
         ;(function tpl(){
+            var name = $.cookie('name');
+            $('.username').html(name);
             $(".nav li").on('click', function(){
                 $(".nav li").removeClass("active");
                 $(this).addClass("active");

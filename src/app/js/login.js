@@ -50,7 +50,7 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    console.log(json);
+                    $.cookie('name', username);
                     if( json.accessToken ){
                         $.cookie('token', json.accessToken);
                         window.location.href = 'index.html';
