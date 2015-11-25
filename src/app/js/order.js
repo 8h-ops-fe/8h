@@ -13,6 +13,7 @@ define(function(require, exports, module){
         this.close();   //关闭
         this.query();   //订单查询
         this.edit();    //订单编辑
+        this.export();  //导出订单
     };
     /**
      * 订单列表
@@ -968,6 +969,58 @@ define(function(require, exports, module){
                 alert(json.message);
             }
         });
+    };
+    /**
+     * 导出订单
+     */
+    oOrder.export = function(){
+        $('#export').die().live('click', function(){
+            var orderSn = $('.orderSn').val(),             //订单号
+                receiverName = $('.receiverName').val(),   //收件人
+                receiverPhone = $('.receiverPhone').val(), //联系电话
+                startTime = $('.start-time').val(),        //开始时间
+                endTime = $('.end-time').val(),            //结束时间
+                minAmount = $('.min-price').val(),         //最小价钱
+                maxAmount = $('.max-price').val(),         //最大价钱
+                status = 0;                                //状态码
+            // 更新状态码
+            $('.order-radio').each(function(){
+                if( $(this).attr('checked') ){
+                    status = $(this).val();
+                }
+            });
+            var data = JSON.stringify({
+                maxAmount : maxAmount,
+                minAmount : minAmount,
+                maxTime : endTime,
+                minTime : startTime,
+                orderSn : orderSn,
+                phone : receiverPhone,
+                receiverName : receiverName,
+                status : status
+            });
+            $.ajax({
+                url : eightUrl+'orderExport/exportUserOrder',
+                type : 'post',
+                data : data,
+                xhrFields: {
+                    withCredentials: true
+                },
+                dataType : 'json',
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function (xhr) {
+                    // json格式传输，后台应该用@RequestBody方式接受
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                    var token = $.cookie("token");
+                    if (token) {
+                        xhr.setRequestHeader("X-Access-Auth-Token", token);
+                    }
+                },
+                success : function(json){
+                    console.log(json);
+                }
+            })
+        })
     };
     /**
      * 关闭
