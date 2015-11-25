@@ -16,6 +16,8 @@ define(function(require, exports, module){
 		oGoods.operate();   //商品操作
 		oGoods.conditional(); //商品查询
 		oGoods.status();	  //商品上架下架
+		oGoods.upDown();      //商品详情中上下架
+		oGoods.editUp();	  //商品编辑上传
     };
     /**
      * 初始化商品
@@ -531,7 +533,7 @@ define(function(require, exports, module){
 						sMaterial = $(oneFimTr[j]).find('.material-code').val();
 						json = {
 									'color':sColorText,
-									'colorCode':sColorText,
+									'colorCode':sColorEng,
 									'goodsId':'',
 									'id':'',
 									'images':[{
@@ -606,17 +608,19 @@ define(function(require, exports, module){
 				success : function(json){
 					var data = json;
 					var goodsDomensions = data.goodsDomensions;
+					var statusGoods = parseInt(data.status);
+					var idGoods = goodsDomensions[0].goodsId;
 					var htmlStr = '<div>\
-										<h1 class="title">商品详情</h1>\
+										<h1 class="title" data-id="'+idGoods+'">商品详情</h1>\
 										<div class="close-x"></div>\
 									</div>\
 									<ul class="goods-detial">\
 										<li class="detial1">\
 											<p class="left line1"><span class="c9">商品编号：</span><span class="c3" >'+data.sn+'</span></p>\
 											<p class="right line1"><span class="c9">商品名称：</span><span class="c3">'+data.name+'</span><\/p>\
-											<p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">\
-														<option>上架</option>\
-														<option>下架</option>\
+											<p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status-detial" value="status">\
+														<option data-s="1">上架</option>\
+														<option data-s="2">下架</option>\
 													</select></p>\
 										</li>\
 										<li>\
@@ -654,14 +658,18 @@ define(function(require, exports, module){
 										<a href="javascript:;" class="canle">取消</a>\
 									</p>';
 					$('#detial').html(htmlStr);
+					
+					if(statusGoods == 1){
+						$('#goods-status-detial option').eq(0).attr("selected",true); 
+					}else{
+						$('#goods-status-detial option').eq(1).attr("selected",true); 
+					}
+					
 					for(var i = 0;i < goodsDomensions.length;i++){
 						var color = goodsDomensions[i].color;
 						var colorCode = goodsDomensions[i].colorCode;
-						var inventory = goodsDomensions[i].inventory; //库存
-						var materialCode = goodsDomensions[i].materialCode; // 物料编码
-						var price = goodsDomensions[i].price;
 						var size = goodsDomensions[i].size;
-						var img = goodsDomensions[i].images[0].imageURL || '';
+						var img = /*goodsDomensions[i].images[0].imageURL || */'';
 						var detialColor = '<ul class="goods-color">\
 												<li>'+color+'</li>\
 												<li>'+colorCode+'</li>\
@@ -672,6 +680,62 @@ define(function(require, exports, module){
 						$('#detial-color').append(detialColor);
 						$('#detial-size').append(detialSize);
 					}
+					var colorText='',
+						sizeText=[];
+					var allColor = $('#detial-color').find('.goods-color');
+					var allSize = $('#detial-size li');
+					for(var i = 0;i < allColor.length;i++){
+						if(colorText == $(allColor[i]).find('li').eq(0).html()){
+							$(allColor[i]).remove();
+						}else{
+							colorText = $(allColor[i]).find('li').eq(0).html();
+						}
+					}
+					for(var i = 0;i < allSize.length;i++){
+						sizeText.push($(allSize[i]).html());
+					}
+					$('#detial-size').html('');
+					var len = sizeText.length/$('#detial-color').find('.goods-color').length;
+					for(var i = 0;i < len;i++){
+						var detialSize = '<li>'+sizeText[i]+'</li>';
+						$('#detial-size').append(detialSize);
+					}
+					var tableTrOne = '';
+					for(var i = 0;i < $('#detial-color .goods-color').length;i++){
+						var goodsColor = $($('#detial-color .goods-color')[i]).find('li').eq(0).html();
+						var sizeLen = $('#detial-size li').length;
+						for(var j = 0;j < sizeLen;j++){
+							if(j == 0){
+								tableTrOne += '<tr>\
+												<td width="217" rowspan="'+sizeLen+'">'+goodsColor+'</td>\
+												<td width="200" class="sizeDetial"></td>\
+												<td width="150" class="priceGoods"></td>\
+												<td width="148" class="numberGoods"></td>\
+												<td width="220" class="snGoods"></td>\
+											</tr>';
+							}else{
+								tableTrOne += '<tr>\
+												<td width="200" class="sizeDetial"></td>\
+												<td width="150" class="priceGoods"></td>\
+												<td width="148" class="numberGoods"></td>\
+												<td width="220" class="snGoods"></td>\
+											</tr>';
+							}
+						}
+					}
+					$('.detial-table').append(tableTrOne);
+					for(var i = 0;i < goodsDomensions.length;i++){
+						var inventory = goodsDomensions[i].inventory; //库存
+						var materialCode = goodsDomensions[i].materialCode; // 物料编码
+						var price = goodsDomensions[i].price;
+						var size = goodsDomensions[i].size;
+						var aTr = $('.detial-table tr');
+						$(aTr[i+1]).find('.sizeDetial').html(size);
+						$(aTr[i+1]).find('.priceGoods').html(price);
+						$(aTr[i+1]).find('.numberGoods').html(inventory);
+						$(aTr[i+1]).find('.snGoods').html(materialCode);
+					}
+					
 					$('#detial,.mask-bg').show();
 				},
 				error : function(json){
@@ -680,63 +744,324 @@ define(function(require, exports, module){
 			});
 		});
     };
+	/**
+     * 商品详情中商品上下架
+     */	
 		
+	oGoods.upDown = function(){
+		var that = this;
+		$('#detial .save').die();
+		$('#detial .save').live('click',function(){
+			var urlAjax,
+				status = $('#goods-status-detial option:selected').attr('data-s'),
+				goodsIdGet = $('#detial .title').attr('data-id');
+			if(status == '1'){
+				urlAjax = eightUrl+'goods/saleIn/'+goodsIdGet;
+			}else if(status == '2'){
+				urlAjax = eightUrl+'goods/saleOut/'+goodsIdGet;
+			}
+			$.ajax({
+				url : urlAjax,
+				type : 'get',
+				contentType:'application/json; charset=utf-8',
+				xhrFields: {
+					withCredentials: true
+				},
+				beforeSend: function (xhr) {
+					// json格式传输，后台应该用@RequestBody方式接受
+					xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+					var token = $.cookie("token");
+					if (token) {
+						xhr.setRequestHeader("X-Access-Auth-Token", token);
+					}
+				},
+				success : function(json){
+					$('#detial,.mask-bg').hide();
+					that.create(); 
+				}
+			});
+		});
+	}
 	/**
      * 商品编辑
      */
 	oGoods.edit = function(){
 		$('.edit-ga').live('click',function(){
-			$('#eidit-goods').html('<div>\
-				<h1 class="title">商品详情</h1>\
-				<div class="close-x"></div>\
-			</div>\
-			<ul class="goods-detial">\
-				<li class="detial1">\
-					<p class="left line1"><span class="c9">商品编号：</span><span class="c3" ><input type="text" id="goods-sn" /></span></p>\
-					<p class="right line1"><span class="c9">商品名称：</span><span class="c3"><input type="text" id="goods-name" /></span></p>\
-					<p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">\
-								<option>上架</option>\
-								<option>下架</option>\
-							</select></p>\
-				</li>\
-				<li>\
-					<p class="left">商品介绍：</p>\
-					<p class="right"><textarea class="goods-introdu"></textarea></p>\
-				</li>\
-				<li class="margin-none">\
-					<ul>\
-						<li class="detial-color edit-left">\
-							<p class="left">商品颜色：</p>\
-							<div class="right">\
-								<ul class="goods-color">\
-									<li><input type="text" class="goods-color-text" id="goodsColorText" /></li>\
-									<li><input type="text" class="color-input goods-color-input" id="goodsColorInput" /><span class="color"></span></li>\
-									<li><img width="0" height="0" class="goods-image" /></li>\
-									<li><a href="javascript:;">上传图片</a><input type="file" class="file" /></li>\
-									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
-								</ul>\
-							</div>\
-						</li>\
-						<li class="detial-color edit-right">\
-							<p class="left">商品规格:</p>\
-							<div class="right" id="initGoodsSize">\
-								<ul class="goods-size">\
-									<li><input type="text" class="goods-size" /><a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>\
-								</ul>\
-							</div>\
-						</li>\
-					</ul>\
-				</li>\
-			</ul>\
-			<table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table" id="addGoodsTable">\
-			</table>\
-			<p class="btn-e">\
-				<a href="javascript:;" class="save">保存</a>\
-				<a href="javascript:;" class="canle">取消</a>\
-			</p>');
-
-			$('#eidit-goods,.mask-bg').show();
+			var id = $(this).parents('ul.line-term').find('a.goods-num').attr('data-id');
+			$.ajax({
+				url : eightUrl+'goods/detail/'+id,
+				type : 'get',
+				contentType:'application/json; charset=utf-8',
+				xhrFields: {
+					withCredentials: true
+				},
+				beforeSend: function (xhr) {
+					// json格式传输，后台应该用@RequestBody方式接受
+					xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+					var token = $.cookie("token");
+					if (token) {
+						xhr.setRequestHeader("X-Access-Auth-Token", token);
+					}
+				},
+				success : function(json){
+					var data = json;
+					var goodsDomensions = data.goodsDomensions;
+					var statusGoods = parseInt(data.status);
+					var idGoods = goodsDomensions[0].goodsId;
+					var htmlStr = '<div>\
+									<h1 class="title" data-id="'+idGoods+'">编辑商品</h1>\
+									<div class="close-x"></div>\
+								  </div>\
+								  <ul class="goods-detial">\
+									<li class="detial1">\
+									  <p class="left line1"><span class="c9">商品编号：</span><span class="c3">\
+										<input type="text" id="goods-sn" value="'+data.sn+'">\
+										</span></p>\
+									  <p class="right line1"><span class="c9">商品名称：</span><span class="c3">\
+										<input type="text" id="goods-name" value="'+data.name+'">\
+										</span></p>\
+									  <p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span>\
+										<select id="goods-status-edit" value="status">\
+										  <option date-s="1">上架</option>\
+										  <option date-s="2">下架</option>\
+										</select>\
+									  </p>\
+									</li>\
+									<li>\
+									  <p class="left">商品介绍：</p>\
+									  <p class="right">\
+										<textarea class="goods-introdu" id="goods-introduction" value="'+data.introduction+'">'+data.introduction+'</textarea>\
+									  </p>\
+									</li>\
+									<li class="margin-none">\
+									  <ul>\
+										<li class="detial-color edit-left">\
+										  <p class="left">商品颜色：</p>\
+										  <div class="right" id="editLeft">\
+											<ul class="goods-color">\
+											  <li>\
+												<input type="text" class="goods-color-text" id="goodsColorText">\
+											  </li>\
+											  <li>\
+												<input type="text" class="color-input goods-color-input" id="goodsColorInput">\
+												<span class="color"></span></li>\
+											  <li><img width="0" height="0" class="goods-image"></li>\
+											  <li><a href="javascript:;">上传图片</a>\
+												<input type="file" class="file">\
+											  </li>\
+											  <li><a href="javascript:;" id="save-goods-color">保存</a></li>\
+											</ul>\
+										  </div>\
+										</li>\
+										<li class="detial-color edit-right">\
+										  <p class="left">商品规格:</p>\
+										  <div class="right" id="initGoodsSize">\
+											<ul class="goods-size">\
+											  <li>\
+												<input type="text" class="goods-size">\
+												<a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>\
+											</ul>\
+										  </div>\
+										</li>\
+									  </ul>\
+									</li>\
+								  </ul>\
+								  <table width="870" cellspacing="0" border="0" class="detial-table" id="addGoodsTable">\
+								  	<tr class="title">\
+									  <td width="150">商品颜色</td>\
+									  <td width="190">商品规格</td>\
+									  <td width="242">价格</td>\
+									  <td width="242">库存</td>\
+									  <td width="242">物料编号</td>\
+									</tr>\
+								  </table>\
+								  <p class="btn-e"> <a href="javascript:;" class="save">保存</a> <a href="javascript:;" class="canle">取消</a> </p>';
+					$('#eidit-goods').html(htmlStr);
+					
+					if(statusGoods == 1){
+						$('#goods-status-edit option').eq(0).attr("selected",true); 
+					}else{
+						$('#goods-status-edit option').eq(1).attr("selected",true); 
+					}
+					
+					for(var i = 0;i < goodsDomensions.length;i++){
+						var color = goodsDomensions[i].color;
+						var colorCode = goodsDomensions[i].colorCode;
+						var size = goodsDomensions[i].size;
+						var img = /*goodsDomensions[i].images[0].imageURL || */'';
+						var editeColor = '<ul class="goods-color">\
+											  <li>\
+												<input type="text" value="'+color+'">\
+											  </li>\
+											  <li>\
+												<input type="text" class="color-input" value="'+colorCode+'" style="border-right-color:#aaa">\
+												<span class="color" style="background:#'+colorCode+'"></span></li>\
+											  <li><img class="goods-image" src="'+img+'"></li>\
+											  <li><a href="javascript:;">替换图片</a>\
+												<input type="file" class="file">\
+											  </li>\
+											  <li><a href="javascript:;" class="remove" date-del="'+colorCode+'">删除</a></li>\
+											</ul>';
+						var editSize = '<li><input type="text" value="'+size+'" class="input"><a href="javascript:;" class="remove" data-sizedel="'+size+'">删除</a></li>';
+						$('#editLeft').append(editeColor);
+						$('#initGoodsSize .goods-size').append(editSize);
+					}
+					var colorText='',
+						sizeText=[];
+					var allColor = $('#editLeft').find('.goods-color');
+					var allSize = $('#initGoodsSize ul').find('li .input');
+					for(var i = 0;i < allColor.length;i++){
+						if(colorText == $(allColor[i+1]).find('input').eq(0).val()){
+							$(allColor[i+1]).remove();
+						}else{
+							colorText = $(allColor[i+1]).find('input').eq(0).val();
+						}
+					}
+					for(var i = 0;i < allSize.length/2;i++){
+						sizeText.push($(allSize[i]).val());
+					}
+					$('#initGoodsSize .goods-size').html('<li><input type="text" class="goods-size"></input><a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>');
+					var len = sizeText.length/($('#editLeft .goods-color').length - 1);
+					for(var i = 0;i < len;i++){
+						var editSize = '<li><input type="text" value="'+sizeText[i]+'"  class="input"><a href="javascript:;" class="remove" data-sizedel="'+sizeText[i]+'">删除</a></li>';
+						$('#initGoodsSize .goods-size').append(editSize);
+					}
+					var tableTrOne = '';
+					for(var i = 0;i < $('#editLeft .goods-color').length;i++){
+						if(i > 0){
+							var goodsColor = $($('#editLeft .goods-color')[i]).find('input').eq(0).val();
+							var sizeLen = $('#initGoodsSize .input').length/2;
+							for(var j = 0;j < sizeLen;j++){
+								var size = $($('#initGoodsSize .input')[j]).val();
+								if(j == 0){
+									tableTrOne += '<tr date-color="'+goodsColor+'" class="tr">\
+													  <td class="goods-color-text border" rowspan="'+sizeLen+'">'+goodsColor+'</td>\
+													  <td class="size-gthis-val" date-size="'+size+'">'+size+'</td>\
+													  <td class=""><input type="text" class="goods-price"></td>\
+													  <td class=""><input type="text" class="goods-number"></td>\
+													  <td class=""><input type="text" class="material-code"></td>\
+													</tr>';
+								}else if(j == sizeLen-1){
+									tableTrOne += '<tr date-color="'+goodsColor+'">\
+													  <td class="border size-gthis-val" date-size="'+size+'">'+size+'</td>\
+													  <td class="border"><input type="text" class="goods-price"></td>\
+													  <td class="border"><input type="text" class="goods-number"></td>\
+													  <td class="border"><input type="text" class="material-code"></td>\
+													</tr>';
+								}else{
+									tableTrOne += '<tr date-color="'+goodsColor+'">\
+													  <td class="size-gthis-val" date-size="'+size+'">'+size+'</td>\
+													  <td><input type="text" class="goods-price"></td>\
+													  <td><input type="text" class="goods-number"></td>\
+													  <td><input type="text" class="material-code"></td>\
+													</tr>';
+								}
+							}
+						}
+					}
+					$('#addGoodsTable').append(tableTrOne);
+					for(var i = 0;i < goodsDomensions.length;i++){
+						var inventory = goodsDomensions[i].inventory; //库存
+						var materialCode = goodsDomensions[i].materialCode; // 物料编码
+						var price = goodsDomensions[i].price;
+						var aTr = $('#addGoodsTable tr');
+						$(aTr[i+1]).find('.goods-price').val(price);
+						$(aTr[i+1]).find('.goods-number').val(inventory);
+						$(aTr[i+1]).find('.material-code').val(materialCode);
+					}
+					
+					$('#eidit-goods,.mask-bg').show();
+				},
+				error : function(json){
+					console.log(json);
+				}
+			});
 		});
+	};
+	/**
+     * 商品编辑上传
+     */
+	oGoods.editUp = function(){
+		var that = this;
+		$('#eidit-goods .save').die();
+		$('#eidit-goods .save').live('click',function(){
+			var sSn = $($('#eidit-goods .detial1 input')[0]).val(),          //商品编号
+				sName = $($('#eidit-goods .detial1 input')[1]).val(),      //商品名字
+				sColorText, //商品颜色文字
+				sColorEng, //商品颜色
+				sSize,      //商品规格
+				sPrice,    //商品价钱
+				sIntrodu = $('#goods-introduction').val(),//商品介绍
+				inventory , //商品库存
+				iColor = $('.goods-color-add').length,//商品颜色个数
+				sStatus = $('#eidit-goods .detial1 option:selected').attr('date-s'),//商品状态
+				sMaterial
+				goodsId = $('#eidit-goods .title').attr('data-id');    //物料编码
+	
+			var goodsDomensions = [];
+			var aTrGoods = $('#addGoodsTable').find('.tr');
+			for(var i = 0;i < aTrGoods.length;i++){
+				var dateColor = $(aTrGoods[i]).attr('date-color');
+				var oneFimTr = $('#addGoodsTable').find('tr[date-color='+dateColor+']');
+				var json = {};
+				var delBtn = $('#editLeft .remove[date-del='+dateColor+']');
+				sColorText =  $(oneFimTr[0]).find('.goods-color-text').html();
+				sColorEng = delBtn.parents('.goods-color').find('.color-input').val();
+				for(var j = 0;j < oneFimTr.length;j++){
+					sSize = $(oneFimTr[j]).find('.size-gthis-val').html();
+					sPrice = $(oneFimTr[j]).find('.goods-price').val();
+					inventory = $(oneFimTr[j]).find('.goods-number').val();
+					sMaterial = $(oneFimTr[j]).find('.material-code').val();
+					json = {
+								'color':sColorText,
+								'colorCode':sColorEng,
+								'goodsId':goodsId,
+								'id':'',
+								'images':[{
+								  "domensionId": 0,
+								  "imageURL": "string"
+								}],
+								'inventory':inventory,
+								'materialCode':sMaterial,
+								'price':sPrice,
+								'size':sSize
+							};
+					goodsDomensions.push(json);
+				}
+			}
+			var data = JSON.stringify({
+						  "goodsDomensions": goodsDomensions,
+						  "id": '',
+						  "introduction": sIntrodu,
+						  "name": sName,
+						  "sn": sSn,
+						  "status": sStatus
+						});
+			$.ajax({
+				url : eightUrl+'goods/modify',
+				type : 'post',
+				dataType:'json',
+				data : data,
+				contentType:'application/json; charset=utf-8',
+				xhrFields: {
+					withCredentials: true
+				},
+				beforeSend: function (xhr) {
+					// json格式传输，后台应该用@RequestBody方式接受
+					xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+					var token = $.cookie("token");
+					if (token) {
+						xhr.setRequestHeader("X-Access-Auth-Token", token);
+					}
+				},
+				success : function(json){
+					alert('0');
+					$('eidit-goods,.mask-bg').hide();
+					that.create();
+				}
+			});
+		})
+		
 	};
 	/**
      * 商品上架下架
