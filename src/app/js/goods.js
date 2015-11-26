@@ -480,9 +480,9 @@ define(function(require, exports, module){
 									<li><img width="0" height="0" class="goods-image" /></li>\
 									<li>\
 										<a href="javascript:;">上传图片</a>\
-										<form class="file" action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
+										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
 											<img id="photo_show">\
-											<input type="file" id="uploadPicture" name="file" accept="image/*" class="photo-upload-input input" data-type="1">\
+											<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
 										</form>\
 									</li>\
 									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
@@ -1069,8 +1069,7 @@ define(function(require, exports, module){
 					}
 				},
 				success : function(json){
-					alert('0');
-					$('eidit-goods,.mask-bg').hide();
+					$('#eidit-goods,.mask-bg').hide();
 					that.create();
 				}
 			});
@@ -1081,7 +1080,8 @@ define(function(require, exports, module){
 	 * 图片上传
 	 */
 	oGoods.upload = function(){
-		$("#save-goods-color").die().live('click',function(){
+		$("#save-goods-color").live('click',function(){
+			var _this = $(this);
 			var s = $('#editLeft').find("form");
 			var formData = new FormData(s[0]);
 			$.ajax({
@@ -1089,7 +1089,6 @@ define(function(require, exports, module){
 				crossDomain: true,
 				type: "POST",
 				beforeSend: function (xhr) {
-					alert('1111111');
 					// json格式传输，后台应该用@RequestBody方式接受
 					//xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
 					var token = $.cookie("token");
@@ -1106,12 +1105,7 @@ define(function(require, exports, module){
 				cache: false,
 				processData: false,
 				success: function (result) {
-					alert(result);
-					if (result.code == "SUCCESS") {
-						var data = result.data;
-						$("#photo_show").attr("src", data.filePath);
-						$("#pictureId").val(data.id);
-					}
+					_this.parents('.goods-color').find('.goods-image').attr({src: result});
 				},
 				error: function (respResult){
 					if (respResult.status == 401) {
