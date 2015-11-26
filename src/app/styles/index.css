@@ -163,7 +163,7 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .goods-detial .goods-color,.goods-detial .goods-size,.goods-size-c{overflow:hidden;}
 .goods-detial .goods-color li{float:left;margin:0 5px;}
 .goods-detial .goods-color li input{width:140px; padding:0 10px;}
-.goods-detial .goods-color .file{width: 46px;height: 17px;margin-left: -67px;opacity: 0;filter:alpha(opacity=0);}
+.goods-detial .goods-color .file{width: 46px;height: 17px;margin-left: -17px;position:relative;top:-27px;opacity: 0;filter:alpha(opacity=0);}
 .goods-detial .goods-size{line-height:20px;color:#333;}
 .goods-detial .goods-size li{width:80px; margin-bottom:10px;}
 .goods-detial .goods-color li{margin-bottom:20px;}

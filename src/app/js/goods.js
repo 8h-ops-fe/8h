@@ -4,6 +4,7 @@
 define(function(require, exports, module){
     require("jquery");
     require("jCookie");
+	require("ajaxfileupload");
     var goods = {};
     
     var oGoods = {};
@@ -47,7 +48,6 @@ define(function(require, exports, module){
 				}
 			},
 			success : function(json){
-				console.log(json);
 				goods = json;
 				$(".cus-adm").html('<dt>\
 										<ul class="line">\
@@ -211,15 +211,22 @@ define(function(require, exports, module){
 			var goodsSizeDate = date.getTime();
 			var goodsColorText = $('#goodsColorText').val();
 			var goodsColorInput = $('#goodsColorInput').val();
+			var goodsImgae = $('#goodsImage').attr('src');
 			var goodsColor = '<ul class="goods-color">\
 									<li><input type="text" value="'+goodsColorText+'" /></li>\
 									<li><input type="text" class="color-input" value="'+goodsColorInput+'" style="border-right-color:#'+goodsColorInput+'" /><span class="color" style="background:#'+goodsColorInput+'"></span></li>\
-									<li><img class="goods-image" /></li>\
-									<li><a href="javascript:;">替换图片</a><input type="file" class="file" /></li>\
+									<li><img class="goods-image" src="'+goodsImgae+'" style="width: 24px; height: 24px; border: 1px solid rgb(204, 204, 204);" /></li>\
+									<li><a href="javascript:;">替换图片</a>\
+										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
+												<img id="photo_show">\
+												<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+											</form>\
+									</li>\
 									<li><a href="javascript:;" class="remove" date-del="'+goodsSizeDate+'">删除</a></li>\
 								</ul>';	
 			
 			$(this).parents('.goods-color').after(goodsColor);
+			$('#goodsImage').attr('src','');
 			creatTableColor({'goodsColorText':goodsColorText,'sizeCount':sizeCount,'sizeGthisVal':'','dateColor':goodsSizeDate});
 			
 			$(this).parents('ul.goods-color').find('input').val('');
@@ -313,8 +320,13 @@ define(function(require, exports, module){
 				$('#editLeft').html('<ul class="goods-color">\
 									<li><input type="text" class="goods-color-text" id="goodsColorText" /></li>\
 									<li><input type="text" class="color-input goods-color-input" id="goodsColorInput" /><span class="color"></span></li>\
-									<li><img width="0" height="0" class="goods-image" /></li>\
-									<li><a href="javascript:;">上传图片</a><input type="file" class="file" /></li>\
+									<li><img width="0" height="0" class="goods-image" id="goodsImage" /></li>\
+									<li><a href="javascript:;">上传图片</a>\
+										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
+												<img id="photo_show">\
+												<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+											</form>\
+									</li>\
 									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
 								</ul>');
 			}
@@ -476,8 +488,14 @@ define(function(require, exports, module){
 								<ul class="goods-color">\
 									<li><input type="text" class="goods-color-text" id="goodsColorText" /></li>\
 									<li><input type="text" class="color-input goods-color-input" id="goodsColorInput" /><span class="color"></span></li>\
-									<li><img width="0" height="0" class="goods-image" /></li>\
-									<li><a href="javascript:;">上传图片</a><input type="file" class="file" /></li>\
+									<li><img width="0" height="0" class="goods-image" id="goodsImage" /></li>\
+									<li>\
+										<a href="javascript:;">上传图片</a>\
+										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
+											<img id="photo_show">\
+											<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+										</form>\
+									</li>\
 									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
 								</ul>\
 							</div>\
@@ -501,7 +519,7 @@ define(function(require, exports, module){
 			</p>');
 
             $('#add-goods,.mask-bg').show();
-
+			that.upload();
             // 添加商品
 			$('#add-goods .save').die();
             $('#add-goods .save').live('click', function(){
@@ -669,7 +687,7 @@ define(function(require, exports, module){
 						var color = goodsDomensions[i].color;
 						var colorCode = goodsDomensions[i].colorCode;
 						var size = goodsDomensions[i].size;
-						var img = /*goodsDomensions[i].images[0].imageURL || */'';
+						var img = goodsDomensions[i].images[0].imageURL;
 						var detialColor = '<ul class="goods-color">\
 												<li>'+color+'</li>\
 												<li>'+colorCode+'</li>\
@@ -680,63 +698,65 @@ define(function(require, exports, module){
 						$('#detial-color').append(detialColor);
 						$('#detial-size').append(detialSize);
 					}
-					var colorText='',
-						sizeText=[];
-					var allColor = $('#detial-color').find('.goods-color');
-					var allSize = $('#detial-size li');
-					for(var i = 0;i < allColor.length;i++){
-						if(colorText == $(allColor[i]).find('li').eq(0).html()){
-							$(allColor[i]).remove();
-						}else{
-							colorText = $(allColor[i]).find('li').eq(0).html();
-						}
-					}
-					for(var i = 0;i < allSize.length;i++){
-						sizeText.push($(allSize[i]).html());
-					}
-					$('#detial-size').html('');
-					var len = sizeText.length/$('#detial-color').find('.goods-color').length;
-					for(var i = 0;i < len;i++){
-						var detialSize = '<li>'+sizeText[i]+'</li>';
-						$('#detial-size').append(detialSize);
-					}
-					var tableTrOne = '';
-					for(var i = 0;i < $('#detial-color .goods-color').length;i++){
-						var goodsColor = $($('#detial-color .goods-color')[i]).find('li').eq(0).html();
-						var sizeLen = $('#detial-size li').length;
-						for(var j = 0;j < sizeLen;j++){
-							if(j == 0){
-								tableTrOne += '<tr>\
-												<td width="217" rowspan="'+sizeLen+'">'+goodsColor+'</td>\
-												<td width="200" class="sizeDetial"></td>\
-												<td width="150" class="priceGoods"></td>\
-												<td width="148" class="numberGoods"></td>\
-												<td width="220" class="snGoods"></td>\
-											</tr>';
+					setTimeout(function(){
+						var colorText='',
+							sizeText=[];
+						var allColor = $('#detial-color').find('.goods-color');
+						var allSize = $('#detial-size li');
+						for(var i = 0;i < allColor.length;i++){
+							if(colorText == $(allColor[i]).find('li').eq(0).html()){
+								$(allColor[i]).remove();
 							}else{
-								tableTrOne += '<tr>\
-												<td width="200" class="sizeDetial"></td>\
-												<td width="150" class="priceGoods"></td>\
-												<td width="148" class="numberGoods"></td>\
-												<td width="220" class="snGoods"></td>\
-											</tr>';
+								colorText = $(allColor[i]).find('li').eq(0).html();
 							}
 						}
-					}
-					$('.detial-table').append(tableTrOne);
-					for(var i = 0;i < goodsDomensions.length;i++){
-						var inventory = goodsDomensions[i].inventory; //库存
-						var materialCode = goodsDomensions[i].materialCode; // 物料编码
-						var price = goodsDomensions[i].price;
-						var size = goodsDomensions[i].size;
-						var aTr = $('.detial-table tr');
-						$(aTr[i+1]).find('.sizeDetial').html(size);
-						$(aTr[i+1]).find('.priceGoods').html(price);
-						$(aTr[i+1]).find('.numberGoods').html(inventory);
-						$(aTr[i+1]).find('.snGoods').html(materialCode);
-					}
-					
-					$('#detial,.mask-bg').show();
+						for(var i = 0;i < allSize.length;i++){
+							sizeText.push($(allSize[i]).html());
+						}
+						$('#detial-size').html('');
+						var len = sizeText.length/$('#detial-color').find('.goods-color').length;
+						for(var i = 0;i < len;i++){
+							var detialSize = '<li>'+sizeText[i]+'</li>';
+							$('#detial-size').append(detialSize);
+						}
+						var tableTrOne = '';
+						for(var i = 0;i < $('#detial-color .goods-color').length;i++){
+							var goodsColor = $($('#detial-color .goods-color')[i]).find('li').eq(0).html();
+							var sizeLen = $('#detial-size li').length;
+							for(var j = 0;j < sizeLen;j++){
+								if(j == 0){
+									tableTrOne += '<tr>\
+													<td width="217" rowspan="'+sizeLen+'">'+goodsColor+'</td>\
+													<td width="200" class="sizeDetial"></td>\
+													<td width="150" class="priceGoods"></td>\
+													<td width="148" class="numberGoods"></td>\
+													<td width="220" class="snGoods"></td>\
+												</tr>';
+								}else{
+									tableTrOne += '<tr>\
+													<td width="200" class="sizeDetial"></td>\
+													<td width="150" class="priceGoods"></td>\
+													<td width="148" class="numberGoods"></td>\
+													<td width="220" class="snGoods"></td>\
+												</tr>';
+								}
+							}
+						}
+						$('.detial-table').append(tableTrOne);
+						for(var i = 0;i < goodsDomensions.length;i++){
+							var inventory = goodsDomensions[i].inventory; //库存
+							var materialCode = goodsDomensions[i].materialCode; // 物料编码
+							var price = goodsDomensions[i].price;
+							var size = goodsDomensions[i].size;
+							var aTr = $('.detial-table tr');
+							$(aTr[i+1]).find('.sizeDetial').html(size);
+							$(aTr[i+1]).find('.priceGoods').html(price);
+							$(aTr[i+1]).find('.numberGoods').html(inventory);
+							$(aTr[i+1]).find('.snGoods').html(materialCode);
+						}
+						
+						$('#detial,.mask-bg').show();
+					},30)
 				},
 				error : function(json){
 					console.log(json);
@@ -846,9 +866,12 @@ define(function(require, exports, module){
 											  <li>\
 												<input type="text" class="color-input goods-color-input" id="goodsColorInput">\
 												<span class="color"></span></li>\
-											  <li><img width="0" height="0" class="goods-image"></li>\
+											  <li><img width="0" height="0" class="goods-image" id="goodsImage"></li>\
 											  <li><a href="javascript:;">上传图片</a>\
-												<input type="file" class="file">\
+												<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
+													<img id="photo_show">\
+													<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+												</form>\
 											  </li>\
 											  <li><a href="javascript:;" id="save-goods-color">保存</a></li>\
 											</ul>\
@@ -898,9 +921,12 @@ define(function(require, exports, module){
 											  <li>\
 												<input type="text" class="color-input" value="'+colorCode+'" style="border-right-color:#aaa">\
 												<span class="color" style="background:#'+colorCode+'"></span></li>\
-											  <li><img class="goods-image" src="'+img+'" data-imgid="'+imgId+'"></li>\
+											  <li><img class="goods-image" src="'+img+'" data-imgid="'+imgId+'" id="goodsImage"></li>\
 											  <li><a href="javascript:;">替换图片</a>\
-												<input type="file" class="file">\
+												<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
+													<img id="photo_show">\
+													<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+												</form>\
 											  </li>\
 											  <li><a href="javascript:;" class="remove" date-del="'+colorCode+'">删除</a></li>\
 											</ul>';
@@ -908,71 +934,74 @@ define(function(require, exports, module){
 						$('#editLeft').append(editeColor);
 						$('#initGoodsSize .goods-size').append(editSize);
 					}
-					var colorText='',
+					setTimeout(function(){
+						var colorText='',
 						sizeText=[];
-					var allColor = $('#editLeft').find('.goods-color');
-					var allSize = $('#initGoodsSize ul').find('li .input');
-					for(var i = 0;i < allColor.length;i++){
-						if(colorText == $(allColor[i+1]).find('input').eq(0).val()){
-							$(allColor[i+1]).remove();
-						}else{
-							colorText = $(allColor[i+1]).find('input').eq(0).val();
+						var allColor = $('#editLeft').find('.goods-color');
+						var allSize = $('#initGoodsSize ul').find('li .input');
+						for(var i = 0;i < allColor.length;i++){
+							if(colorText == $(allColor[i+1]).find('input').eq(0).val()){
+								$(allColor[i+1]).remove();
+							}else{
+								colorText = $(allColor[i+1]).find('input').eq(0).val();
+							}
 						}
-					}
-					for(var i = 0;i < allSize.length/2;i++){
-						sizeText.push($(allSize[i]).val());
-					}
-					$('#initGoodsSize .goods-size').html('<li><input type="text" class="goods-size"></input><a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>');
-					var len = sizeText.length/($('#editLeft .goods-color').length - 1);
-					for(var i = 0;i < len;i++){
-						var editSize = '<li><input type="text" value="'+sizeText[i]+'"  class="input"><a href="javascript:;" class="remove" data-sizedel="'+sizeText[i]+'">删除</a></li>';
-						$('#initGoodsSize .goods-size').append(editSize);
-					}
-					var tableTrOne = '';
-					for(var i = 0;i < $('#editLeft .goods-color').length;i++){
-						if(i > 0){
-							var goodsColor = $($('#editLeft .goods-color')[i]).find('input').eq(0).val();
-							var sizeLen = $('#initGoodsSize .input').length/2;
-							for(var j = 0;j < sizeLen;j++){
-								var size = $($('#initGoodsSize .input')[j]).val();
-								if(j == 0){
-									tableTrOne += '<tr date-color="'+goodsColor+'" class="tr">\
-													  <td class="goods-color-text border" rowspan="'+sizeLen+'">'+goodsColor+'</td>\
-													  <td class="size-gthis-val" date-size="'+size+'">'+size+'</td>\
-													  <td class=""><input type="text" class="goods-price"></td>\
-													  <td class=""><input type="text" class="goods-number"></td>\
-													  <td class=""><input type="text" class="material-code"></td>\
-													</tr>';
-								}else if(j == sizeLen-1){
-									tableTrOne += '<tr date-color="'+goodsColor+'">\
-													  <td class="border size-gthis-val" date-size="'+size+'">'+size+'</td>\
-													  <td class="border"><input type="text" class="goods-price"></td>\
-													  <td class="border"><input type="text" class="goods-number"></td>\
-													  <td class="border"><input type="text" class="material-code"></td>\
-													</tr>';
-								}else{
-									tableTrOne += '<tr date-color="'+goodsColor+'">\
-													  <td class="size-gthis-val" date-size="'+size+'">'+size+'</td>\
-													  <td><input type="text" class="goods-price"></td>\
-													  <td><input type="text" class="goods-number"></td>\
-													  <td><input type="text" class="material-code"></td>\
-													</tr>';
+						for(var i = 0;i < allSize.length/2;i++){
+							sizeText.push($(allSize[i]).val());
+						}
+						$('#initGoodsSize .goods-size').html('<li><input type="text" class="goods-size"></input><a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>');
+						var len = sizeText.length/($('#editLeft .goods-color').length - 1);
+						for(var i = 0;i < len;i++){
+							var editSize = '<li><input type="text" value="'+sizeText[i]+'"  class="input"><a href="javascript:;" class="remove" data-sizedel="'+sizeText[i]+'">删除</a></li>';
+							$('#initGoodsSize .goods-size').append(editSize);
+						}
+						var tableTrOne = '';
+						for(var i = 0;i < $('#editLeft .goods-color').length;i++){
+							if(i > 0){
+								var goodsColor = $($('#editLeft .goods-color')[i]).find('input').eq(0).val();
+								var sizeLen = $('#initGoodsSize .input').length/2;
+								for(var j = 0;j < sizeLen;j++){
+									var size = $($('#initGoodsSize .input')[j]).val();
+									if(j == 0){
+										tableTrOne += '<tr date-color="'+goodsColor+'" class="tr">\
+														  <td class="goods-color-text border" rowspan="'+sizeLen+'">'+goodsColor+'</td>\
+														  <td class="size-gthis-val" date-size="'+size+'">'+size+'</td>\
+														  <td class=""><input type="text" class="goods-price"></td>\
+														  <td class=""><input type="text" class="goods-number"></td>\
+														  <td class=""><input type="text" class="material-code"></td>\
+														</tr>';
+									}else if(j == sizeLen-1){
+										tableTrOne += '<tr date-color="'+goodsColor+'">\
+														  <td class="border size-gthis-val" date-size="'+size+'">'+size+'</td>\
+														  <td class="border"><input type="text" class="goods-price"></td>\
+														  <td class="border"><input type="text" class="goods-number"></td>\
+														  <td class="border"><input type="text" class="material-code"></td>\
+														</tr>';
+									}else{
+										tableTrOne += '<tr date-color="'+goodsColor+'">\
+														  <td class="size-gthis-val" date-size="'+size+'">'+size+'</td>\
+														  <td><input type="text" class="goods-price"></td>\
+														  <td><input type="text" class="goods-number"></td>\
+														  <td><input type="text" class="material-code"></td>\
+														</tr>';
+									}
 								}
 							}
 						}
-					}
-					$('#addGoodsTable').append(tableTrOne);
-					for(var i = 0;i < goodsDomensions.length;i++){
-						var inventory = goodsDomensions[i].inventory; //库存
-						var materialCode = goodsDomensions[i].materialCode; // 物料编码
-						var price = goodsDomensions[i].price;
-						var aTr = $('#addGoodsTable tr');
-						$(aTr[i+1]).find('.goods-price').val(price);
-						$(aTr[i+1]).find('.goods-number').val(inventory);
-						$(aTr[i+1]).find('.material-code').val(materialCode);
-					}
+						$('#addGoodsTable').append(tableTrOne);
+						for(var i = 0;i < goodsDomensions.length;i++){
+							var inventory = goodsDomensions[i].inventory; //库存
+							var materialCode = goodsDomensions[i].materialCode; // 物料编码
+							var price = goodsDomensions[i].price;
+							var aTr = $('#addGoodsTable tr');
+							$(aTr[i+1]).find('.goods-price').val(price);
+							$(aTr[i+1]).find('.goods-number').val(inventory);
+							$(aTr[i+1]).find('.material-code').val(materialCode);
+						}
+						
+						$('#eidit-goods,.mask-bg').show();
+					},30);
 					
-					$('#eidit-goods,.mask-bg').show();
 				},
 				error : function(json){
 					console.log(json);
@@ -1011,7 +1040,6 @@ define(function(require, exports, module){
 				var imageeDomensionId = $(imgageGoods).attr('data-imgid');
 				var imageSrc = $(imgageGoods).attr('src');
 				var json = {};
-				alert(imageeDomensionId+'|'+imageSrc);
 				var delBtn = $('#editLeft .remove[date-del='+dateColor+']');
 				sColorText =  $(oneFimTr[0]).find('.goods-color-text').html();
 				sColorEng = delBtn.parents('.goods-color').find('.color-input').val();
@@ -1064,12 +1092,52 @@ define(function(require, exports, module){
 					}
 				},
 				success : function(json){
-					$('eidit-goods,.mask-bg').hide();
+					$('#eidit-goods,.mask-bg').hide();
 					that.create();
 				}
 			});
 		})
 		
+	};
+	/**
+	 * 图片上传
+	 */
+	oGoods.upload = function(){
+		$("#save-goods-color").live('click',function(){
+			var _this = $(this);
+			var s = $('#editLeft').find("form");
+			var formData = new FormData(s[0]);
+			$.ajax({
+				url: eightUrl+'goods/uploadImage',
+				crossDomain: true,
+				type: "POST",
+				beforeSend: function (xhr) {
+					// json格式传输，后台应该用@RequestBody方式接受
+					//xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+					var token = $.cookie("token");
+					if (token) {
+						xhr.setRequestHeader("X-Access-Auth-Token", token);
+					}
+				},
+				xhrFields: {
+					withCredentials: true // 确保请求会携带上Cookie
+				},
+				data: formData,
+				contentType: false,
+				async: false,
+				cache: false,
+				processData: false,
+				success: function (result) {
+					_this.parents('.goods-color').find('.goods-image').attr({src: result});
+				},
+				error: function (respResult){
+					if (respResult.status == 401) {
+						alert("超时，请重新登录");
+						window.location.href = "login.html";
+					}
+				}
+			});
+		})
 	};
 	/**
      * 商品上架下架
