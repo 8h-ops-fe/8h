@@ -219,7 +219,7 @@ define(function(require, exports, module){
 									<li><a href="javascript:;">替换图片</a>\
 										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
 												<img id="photo_show">\
-												<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+												<input type="file" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
 											</form>\
 									</li>\
 									<li><a href="javascript:;" class="remove" date-del="'+goodsSizeDate+'">删除</a></li>\
@@ -228,8 +228,6 @@ define(function(require, exports, module){
 			$(this).parents('.goods-color').after(goodsColor);
 			$('#goodsImage').attr('src','');
 			creatTableColor({'goodsColorText':goodsColorText,'sizeCount':sizeCount,'sizeGthisVal':'','dateColor':goodsSizeDate});
-			
-			$(this).parents('ul.goods-color').find('input').val('');
 			
 			$('#goodsColorInput').css('borderRightColor','#ccc');
 			$('#goodsColorInput').siblings('span.color').css('backgroundColor','#fff');
@@ -321,11 +319,12 @@ define(function(require, exports, module){
 									<li><input type="text" class="goods-color-text" id="goodsColorText" /></li>\
 									<li><input type="text" class="color-input goods-color-input" id="goodsColorInput" /><span class="color"></span></li>\
 									<li><img width="0" height="0" class="goods-image" id="goodsImage" /></li>\
-									<li><a href="javascript:;">上传图片</a>\
+									<li>\
+										<a href="javascript:;">上传图片</a>\
 										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
-												<img id="photo_show">\
-												<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
-											</form>\
+											<img id="photo_show">\
+											<input type="file" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+										</form>\
 									</li>\
 									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
 								</ul>');
@@ -491,7 +490,7 @@ define(function(require, exports, module){
 									<li><img width="0" height="0" class="goods-image" id="goodsImage" /></li>\
 									<li>\
 										<a href="javascript:;">上传图片</a>\
-										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
+										<form class="add-img-form" action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
 											<img id="photo_show">\
 											<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
 										</form>\
@@ -551,7 +550,7 @@ define(function(require, exports, module){
 						sMaterial = $(oneFimTr[j]).find('.material-code').val();
 						var arrImage = [{
 									  "domensionId": '',
-									  "imageURL": "string"
+									  "imageURL": $('.goods-image').eq(i+1).attr('src')
 									}];
 						json = {
 									'color':sColorText,
@@ -575,6 +574,7 @@ define(function(require, exports, module){
 							  "sn": sSn,
 							  "status": sStatus
 							});
+				console.log(data);
                 // 添加商品
 				$.ajax({
 					url : eightUrl+'goods/create',
@@ -870,7 +870,7 @@ define(function(require, exports, module){
 											  <li><a href="javascript:;">上传图片</a>\
 												<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
 													<img id="photo_show">\
-													<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+													<input type="file" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
 												</form>\
 											  </li>\
 											  <li><a href="javascript:;" id="save-goods-color">保存</a></li>\
@@ -925,7 +925,7 @@ define(function(require, exports, module){
 											  <li><a href="javascript:;">替换图片</a>\
 												<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
 													<img id="photo_show">\
-													<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+													<input type="file" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
 												</form>\
 											  </li>\
 											  <li><a href="javascript:;" class="remove" date-del="'+colorCode+'">删除</a></li>\
@@ -1105,7 +1105,7 @@ define(function(require, exports, module){
 	oGoods.upload = function(){
 		$("#save-goods-color").live('click',function(){
 			var _this = $(this);
-			var s = $('#editLeft').find("form");
+			var s = $('#editLeft').find(".add-img-form");
 			var formData = new FormData(s[0]);
 			$.ajax({
 				url: eightUrl+'goods/uploadImage',
@@ -1128,7 +1128,8 @@ define(function(require, exports, module){
 				cache: false,
 				processData: false,
 				success: function (result) {
-					_this.parents('.goods-color').find('.goods-image').attr({src: result});
+					_this.parents('.goods-color').next().find('.goods-image').attr({src: result});
+					_this.parents('ul.goods-color').find('input').val('');
 				},
 				error: function (respResult){
 					if (respResult.status == 401) {
