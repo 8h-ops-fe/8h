@@ -245,12 +245,12 @@ header .user{width:980px;height:60px; line-height:60px;color:#cccccc;font-size:1
 .cus-adm dd li a{font-size:14px; color:#4f8ee4;}
 .cus-adm dd li.w124 p,
 .cus-adm dd li.w156 p,
-.cus-adm dd li.w110 p,
+.cus-adm dd li.w111 p,
 .cus-adm dd li.w154 p{ position:absolute; top:50%;margin-top:-25px; border:none; text-align:center; width:100%;}
 .w124{width: 124px;}
 .w156{width: 156px;}
 .w190{width: 190px;}
-.w110{width: 110px;}
+.w111{width: 110px;}
 .w118{width: 118px;}
 .w154{width: 154px;}
 /*商品管理END*/

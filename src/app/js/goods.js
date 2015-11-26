@@ -49,6 +49,7 @@ define(function(require, exports, module){
 			},
 			success : function(json){
 				goods = json;
+				console.log(json);
 				$(".cus-adm").html('<dt>\
 										<ul class="line">\
 											<li class="w124">商品编号</li>\
@@ -81,16 +82,21 @@ define(function(require, exports, module){
 						unstatus = '上架';
 						dateS=1;
 					}
+					// 价钱
+					var goodsPrice = '';
+					for(var m=0 ; m<that.goodsDomensions.length ; m++){
+						goodsPrice+='<p>'+that.goodsDomensions[m].price+'</p>';
+					}
+
 					$(oUl).html('<li class="w124"><p><a href="javascript:;" class="goods-num" data-id="'+oGoodsId+'">'+that.sn+'</a></p></li>\
 										<li class="w156"><p>'+that.name+'</p></li>\
 										<li class="w190 goods-color-size">\
 										</li>\
-										<li class="w110 goods-price">\
-											<p>'+that.goodsDomensions[0].price+'</p>\
+										<li class="w110">'+goodsPrice+'\
 										</li>\
 										<li class="w118 goods-inventory">\
 										</li>\
-										<li class="w110"><p class="sale-status">'+status+'</p></li>\
+										<li class="w111"><p class="sale-status">'+status+'</p></li>\
 										<li class="w154 no-boder">\
 											<p>\
 											<a href="javascript:;" class="edit-ga">编辑</a>\
