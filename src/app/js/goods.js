@@ -548,14 +548,14 @@ define(function(require, exports, module){
 						goodsDomensions.push(json);
 					}
 				}
+				alert(goodsDomensions[0].images[0].imageURL)
 				var data = JSON.stringify({
 							  "goodsDomensions": goodsDomensions,
 							  "id": '',
 							  "introduction": sIntrodu,
 							  "name": sName,
 							  "sn": sSn,
-							  "status": sStatus,
-							  "userId": 1212
+							  "status": sStatus
 							});
                 // 添加商品
 				$.ajax({
@@ -805,11 +805,12 @@ define(function(require, exports, module){
 				},
 				success : function(json){
 					var data = json;
+					var idid = data.id;
 					var goodsDomensions = data.goodsDomensions;
 					var statusGoods = parseInt(data.status);
 					var idGoods = goodsDomensions[0].goodsId;
 					var htmlStr = '<div>\
-									<h1 class="title" data-id="'+idGoods+'">编辑商品</h1>\
+									<h1 class="title" data-id="'+idGoods+'" data-outid="'+idid+'">编辑商品</h1>\
 									<div class="close-x"></div>\
 								  </div>\
 								  <ul class="goods-detial">\
@@ -888,7 +889,8 @@ define(function(require, exports, module){
 						var color = goodsDomensions[i].color;
 						var colorCode = goodsDomensions[i].colorCode;
 						var size = goodsDomensions[i].size;
-						var img = /*goodsDomensions[i].images[0].imageURL || */'';
+						var img ='string'; // goodsDomensions[i].images[0].imageURL;
+						var imgId = 1; //goodsDomensions[i].images[0].domensionId;
 						var editeColor = '<ul class="goods-color">\
 											  <li>\
 												<input type="text" value="'+color+'">\
@@ -896,7 +898,7 @@ define(function(require, exports, module){
 											  <li>\
 												<input type="text" class="color-input" value="'+colorCode+'" style="border-right-color:#aaa">\
 												<span class="color" style="background:#'+colorCode+'"></span></li>\
-											  <li><img class="goods-image" src="'+img+'"></li>\
+											  <li><img class="goods-image" src="'+img+'" data-imgid="'+imgId+'"></li>\
 											  <li><a href="javascript:;">替换图片</a>\
 												<input type="file" class="file">\
 											  </li>\
@@ -995,7 +997,8 @@ define(function(require, exports, module){
 				inventory , //商品库存
 				iColor = $('.goods-color-add').length,//商品颜色个数
 				sStatus = $('#eidit-goods .detial1 option:selected').attr('date-s'),//商品状态
-				sMaterial
+				sMaterial,
+				idid = $('#eidit-goods .title').attr('data-outid'),//商品状态
 				goodsId = $('#eidit-goods .title').attr('data-id');    //物料编码
 	
 			var goodsDomensions = [];
@@ -1003,6 +1006,10 @@ define(function(require, exports, module){
 			for(var i = 0;i < aTrGoods.length;i++){
 				var dateColor = $(aTrGoods[i]).attr('date-color');
 				var oneFimTr = $('#addGoodsTable').find('tr[date-color='+dateColor+']');
+				var removeBtn = $('#editLeft .remove[date-del]='+dateColor+'');
+				var imgageGoods = $(removeBtn).parents('.goods-color').find('.goods-image');
+				var imageeDomensionId = $(imgageGoods).attr('data-imgid');
+				var imageSrc = $(imgageGoods).attr('src');
 				var json = {};
 				var delBtn = $('#editLeft .remove[date-del='+dateColor+']');
 				sColorText =  $(oneFimTr[0]).find('.goods-color-text').html();
@@ -1018,7 +1025,7 @@ define(function(require, exports, module){
 								'goodsId':goodsId,
 								'id':'',
 								'images':[{
-								  "domensionId": 0,
+								  "domensionId": imageeDomensionId,
 								  "imageURL": "string"
 								}],
 								'inventory':inventory,
@@ -1031,7 +1038,7 @@ define(function(require, exports, module){
 			}
 			var data = JSON.stringify({
 						  "goodsDomensions": goodsDomensions,
-						  "id": '',
+						  "id": idid,
 						  "introduction": sIntrodu,
 						  "name": sName,
 						  "sn": sSn,
