@@ -834,9 +834,8 @@ define(function(require, exports, module){
 					var idid = data.id;
 					var goodsDomensions = data.goodsDomensions;
 					var statusGoods = parseInt(data.status);
-					var idGoods = goodsDomensions[0].goodsId;
 					var htmlStr = '<div>\
-									<h1 class="title" data-id="'+idGoods+'" data-outid="'+idid+'">编辑商品</h1>\
+									<h1 class="title" data-outid="'+idid+'">编辑商品</h1>\
 									<div class="close-x"></div>\
 								  </div>\
 								  <ul class="goods-detial">\
@@ -920,7 +919,11 @@ define(function(require, exports, module){
 						var size = goodsDomensions[i].size;
 						var img = goodsDomensions[i].images[0].imageURL;
 						var imgId = goodsDomensions[i].images[0].domensionId;
-						var editeColor = '<ul class="goods-color">\
+
+						var idGoods = goodsDomensions[i].goodsId;
+						var goodsDomensionid = goodsDomensions[i].id;
+
+						var editeColor = '<ul class="goods-color" data-goodsid="'+idGoods+'" data-domensionid="'+goodsDomensionid+'">\
 											  <li>\
 												<input type="text" value="'+color+'">\
 											  </li>\
@@ -1033,8 +1036,7 @@ define(function(require, exports, module){
 				iColor = $('.goods-color-add').length,//商品颜色个数
 				sStatus = $('#eidit-goods .detial1 option:selected').attr('date-s'),//商品状态
 				sMaterial,
-				idid = $('#eidit-goods .title').attr('data-outid'),//商品状态
-				goodsId = $('#eidit-goods .title').attr('data-id');    //物料编码
+				idid = $('#eidit-goods .title').attr('data-outid');//商品状态
 	
 			var goodsDomensions = [];
 			var aTrGoods = $('#addGoodsTable').find('.tr');
@@ -1047,6 +1049,9 @@ define(function(require, exports, module){
 				var imageSrc = $(imgageGoods).attr('src');
 				var json = {};
 				var delBtn = $('#editLeft .remove[date-del='+dateColor+']');
+
+				var goodsId = $(removeBtn).parents('.goods-color').attr('data-goodsid');
+				var domensionId = $(removeBtn).parents('.goods-color').attr('data-domensionid');
 				sColorText =  $(oneFimTr[0]).find('.goods-color-text').html();
 				sColorEng = delBtn.parents('.goods-color').find('.color-input').val();
 				var imageArr = [{
@@ -1062,7 +1067,7 @@ define(function(require, exports, module){
 								'color':sColorText,
 								'colorCode':sColorEng,
 								'goodsId':goodsId,
-								'id':'',
+								'id':domensionId,
 								'images':imageArr,
 								'inventory':inventory,
 								'materialCode':sMaterial,
