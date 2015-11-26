@@ -531,15 +531,16 @@ define(function(require, exports, module){
 						sPrice = $(oneFimTr[j]).find('.goods-price').val();
 						inventory = $(oneFimTr[j]).find('.goods-number').val();
 						sMaterial = $(oneFimTr[j]).find('.material-code').val();
+						var arrImage = [{
+									  "domensionId": '',
+									  "imageURL": "string"
+									}];
 						json = {
 									'color':sColorText,
 									'colorCode':sColorEng,
 									'goodsId':'',
 									'id':'',
-									'images':[{
-									  "domensionId": 0,
-									  "imageURL": "string"
-									}],
+									'images':arrImage,
 									'inventory':inventory,
 									'materialCode':sMaterial,
 									'price':sPrice,
@@ -548,7 +549,6 @@ define(function(require, exports, module){
 						goodsDomensions.push(json);
 					}
 				}
-				alert(goodsDomensions[0].images[0].imageURL)
 				var data = JSON.stringify({
 							  "goodsDomensions": goodsDomensions,
 							  "id": '',
@@ -889,8 +889,8 @@ define(function(require, exports, module){
 						var color = goodsDomensions[i].color;
 						var colorCode = goodsDomensions[i].colorCode;
 						var size = goodsDomensions[i].size;
-						var img ='string'; // goodsDomensions[i].images[0].imageURL;
-						var imgId = 1; //goodsDomensions[i].images[0].domensionId;
+						var img = goodsDomensions[i].images[0].imageURL;
+						var imgId = goodsDomensions[i].images[0].domensionId;
 						var editeColor = '<ul class="goods-color">\
 											  <li>\
 												<input type="text" value="'+color+'">\
@@ -1011,9 +1011,14 @@ define(function(require, exports, module){
 				var imageeDomensionId = $(imgageGoods).attr('data-imgid');
 				var imageSrc = $(imgageGoods).attr('src');
 				var json = {};
+				alert(imageeDomensionId+'|'+imageSrc);
 				var delBtn = $('#editLeft .remove[date-del='+dateColor+']');
 				sColorText =  $(oneFimTr[0]).find('.goods-color-text').html();
 				sColorEng = delBtn.parents('.goods-color').find('.color-input').val();
+				var imageArr = [{
+								  "domensionId": imageeDomensionId,
+								  "imageURL": imageSrc
+								}];
 				for(var j = 0;j < oneFimTr.length;j++){
 					sSize = $(oneFimTr[j]).find('.size-gthis-val').html();
 					sPrice = $(oneFimTr[j]).find('.goods-price').val();
@@ -1024,10 +1029,7 @@ define(function(require, exports, module){
 								'colorCode':sColorEng,
 								'goodsId':goodsId,
 								'id':'',
-								'images':[{
-								  "domensionId": imageeDomensionId,
-								  "imageURL": "string"
-								}],
+								'images':imageArr,
 								'inventory':inventory,
 								'materialCode':sMaterial,
 								'price':sPrice,
@@ -1062,7 +1064,6 @@ define(function(require, exports, module){
 					}
 				},
 				success : function(json){
-					alert('0');
 					$('eidit-goods,.mask-bg').hide();
 					that.create();
 				}
