@@ -30,7 +30,7 @@ define(function(require, exports, module){
             }
 
             $.ajax({
-                url : 'http://8h-ops-dev.obaymax.com/staff/login',
+                url : eightUrl+'staff/login',
                 type : 'POST',
                 contentType: "application/json; charset=utf-8",
                 dataType : 'json',

@@ -4,6 +4,7 @@
 define(function(require, exports, module){
     require("jquery");
     require("jCookie");
+	require("ajaxfileupload");
     var goods = {};
     
     var oGoods = {};
@@ -477,7 +478,13 @@ define(function(require, exports, module){
 									<li><input type="text" class="goods-color-text" id="goodsColorText" /></li>\
 									<li><input type="text" class="color-input goods-color-input" id="goodsColorInput" /><span class="color"></span></li>\
 									<li><img width="0" height="0" class="goods-image" /></li>\
-									<li><a href="javascript:;">上传图片</a><input type="file" class="file" /></li>\
+									<li>\
+										<a href="javascript:;">上传图片</a>\
+										<form class="file" action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
+											<img id="photo_show">\
+											<input type="file" id="uploadPicture" name="file" accept="image/*" class="photo-upload-input input" data-type="1">\
+										</form>\
+									</li>\
 									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
 								</ul>\
 							</div>\
@@ -501,7 +508,7 @@ define(function(require, exports, module){
 			</p>');
 
             $('#add-goods,.mask-bg').show();
-
+			that.upload();
             // 添加商品
 			$('#add-goods .save').die();
             $('#add-goods .save').live('click', function(){
@@ -1062,6 +1069,51 @@ define(function(require, exports, module){
 			});
 		})
 		
+	};
+	/**
+	 * 图片上传
+	 */
+	oGoods.upload = function(){
+		$("#save-goods-color").die().live('click',function(){
+			var s = $('#editLeft').find("form");
+			var formData = new FormData(s[0]);
+			$.ajax({
+				url: eightUrl+'goods/uploadImage',
+				crossDomain: true,
+				type: "POST",
+				beforeSend: function (xhr) {
+					alert('1111111');
+					// json格式传输，后台应该用@RequestBody方式接受
+					//xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+					var token = $.cookie("token");
+					if (token) {
+						xhr.setRequestHeader("X-Access-Auth-Token", token);
+					}
+				},
+				xhrFields: {
+					withCredentials: true // 确保请求会携带上Cookie
+				},
+				data: formData,
+				contentType: false,
+				async: false,
+				cache: false,
+				processData: false,
+				success: function (result) {
+					alert(result);
+					if (result.code == "SUCCESS") {
+						var data = result.data;
+						$("#photo_show").attr("src", data.filePath);
+						$("#pictureId").val(data.id);
+					}
+				},
+				error: function (respResult){
+					if (respResult.status == 401) {
+						alert("超时，请重新登录");
+						window.location.href = "login.html";
+					}
+				}
+			});
+		})
 	};
 	/**
      * 商品上架下架

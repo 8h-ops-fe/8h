@@ -70,6 +70,8 @@ define(function(require, exports, module){
             $(".icon5").on("click", function(){
                 $(".wrap").load("common/admin.html",function(){
                     myRadio('state');
+                    var admin = require('../js/admin.js').admin;
+                    admin.init();
                 });
             });
         })();
