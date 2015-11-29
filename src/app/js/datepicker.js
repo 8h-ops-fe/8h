@@ -7,18 +7,18 @@ define(function(require, exports, module){
         $(".start-time").die().live("focus", function () {
             console.log($('.end-time').val());
             if( $('.end-time').val() ){
-                $(".start-time").datepicker({ dateFormat: "yy/mm/dd"});
+                $(".start-time").datepicker({ dateFormat: "yy-mm-dd"});
                 $(".start-time").datepicker('option', 'maxDate',  $('.end-time').val());
             }else{
-                $(".start-time").datepicker({ dateFormat: "yy/mm/dd"});
+                $(".start-time").datepicker({ dateFormat: "yy-mm-dd"});
             }
         });
         $(".end-time").die().live("focus", function () {
             if( $('.start-time').val() ){
-                $(".end-time").datepicker({ dateFormat: "yy/mm/dd"});
+                $(".end-time").datepicker({ dateFormat: "yy-mm-dd"});
                 $(".end-time").datepicker('option', 'minDate',  $('.start-time').val());
             }else{
-                $(".end-time").datepicker({ dateFormat: "yy/mm/dd"});
+                $(".end-time").datepicker({ dateFormat: "yy-mm-dd"});
             }
         });
     });

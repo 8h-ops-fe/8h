@@ -20,14 +20,13 @@
             </ul>
         </li>
     </ul>
-
     <div class="search-box"><a href="javascript:;" class="search">查询</a></div>
 </div>
 <!--查询管理员END-->
 
 <!--管理员列表-->
 <div class="list" id="admin-list">
-    <a href="javascript:;" class="btn">添加后台人员</a>
+    <a href="javascript:;" class="btn" id="add-admin-btn">添加后台人员</a>
     <dl class="cus-service">
         <!--<dt>-->
             <!--<ul class="line">-->
@@ -175,10 +174,8 @@
         <p>订单管理</p>
         <p class="margin-l-25">
             <span class="color-999">订单导出：</span>
-            <i class="selected"></i>
-            <span>开启</span>
-            <i class="not-selected"></i>
-            <span>关闭</span>
+            <input type="radio" name="orderOut" value="0" class="r order-radio"><span class="w">开启</span>
+            <input type="radio" name="orderOut" value="0" class="r order-radio"><span class="w">关闭</span>
         </p>
         <p>系统管理-后台人员管理</p>
         <p class="margin-l-25">
@@ -195,8 +192,6 @@
     </div>
 </div>
 <!-- 添加后台人员END-->
-
-
 
 <!-- 禁用用户-->
 <div class="small-pop">

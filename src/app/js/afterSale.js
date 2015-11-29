@@ -19,9 +19,9 @@ define(function(require, exports, module){
      * 售后列表
      */
     oAfter.list = function(pageNum,data){
-        var pageNum = pageNum || 1;
+        var pageNum = pageNum || 0;
         var json = JSON.stringify({
-            pageNum: pageNum,
+            page: pageNum,
             pageSize: 10
         });
         var data = data || json;
@@ -63,7 +63,7 @@ define(function(require, exports, module){
                     }
                     var pageHTML = '<ul class="clearfix" id="order-page">'+pageList+'</li>';
                     $('.list').append(pageHTML);
-                    $('#order-page li').eq(pageNum-1).addClass('active');
+                    $('#order-page li').eq(pageNum).addClass('active');
                 }
 
 
@@ -176,7 +176,7 @@ define(function(require, exports, module){
                 status : status,
                 type : type,
                 result : result,
-                pageNum: $(this).html(),
+                page: $(this).html()-1,
                 pageSize: 10
             });
             that.list($(this).html() ,data);
@@ -319,7 +319,7 @@ define(function(require, exports, module){
                                     <li>收货人地址：'+receiverAddress+'</li>\
                                 </ul>\
                                 <ul class="user-de">\
-                                    <li>审核结果：'+result+'</li>+refuseReasonText\
+                                    <li>审核结果：'+result+'</li>'+refuseReasonText+'\
                                 </ul>');
                 },
                 error : function(json){

@@ -4,15 +4,19 @@ define(function(require, exports, module){
 
     oAdmin.init = function(){
         this.list();    //管理员列表
+        this.page();    //分页
+        this.add();     //添加
+        this.close();   //关闭
     };
 
     /**
      * 管理员列表
      * @param data
      */
-    oAdmin.list = function(data){
+    oAdmin.list = function(pageNum, data){
+        pageNum = pageNum || 0;
         var json = JSON.stringify({
-            page : 0,
+            page : pageNum,
             pageSize : 10
         });
         var data = data || json;
@@ -36,7 +40,9 @@ define(function(require, exports, module){
             },
             success : function(json){
                 console.log(json);
-                var aContent = json.content;    //返回用户数据
+                var aContent = json.content,    //返回用户数据
+                    totalPages = json.totalPages; // 总页数
+                $('#order-page').remove();
                 var adminList = '\
                     <dt>\
                         <ul class="line">\
@@ -46,6 +52,23 @@ define(function(require, exports, module){
                             <li class="w240 no-boder">操作</li>\
                         </ul>\
                     </dt>';
+                // 如果没有数据
+                if( json.content == ''){
+                    $('.cus-service').html('<h1 class="no-data">暂无数据</h1>');
+                    return;
+                }
+                // 如果有数据则显示分页
+                if( totalPages > 1 ){
+                    //分页
+                    var pageList = '';
+                    for(var i=0 ; i<totalPages ; i++){
+                        pageList += '<li>'+(i+1)+'</li>';
+                    }
+                    var pageHTML = '<ul class="clearfix" id="order-page">'+pageList+'</li>';
+                    $('.list').append(pageHTML);
+                    $('#order-page li').eq(pageNum-1).addClass('active');
+                }
+                // 初始化列表
                 for(var i=0 ; i<aContent.length ; i++){
                     var adminName = aContent[i].username,    //用户名
                         time = aContent[i].updateTime,       //最近登陆时间
@@ -80,6 +103,36 @@ define(function(require, exports, module){
             }
         })
     };
+    /**
+     * 分页
+     */
+    oAdmin.page = function(){
+        var that = this;
+        $('#order-page li').die().live('click', function(){
+            $('#order-page li').removeClass('active');
+            $(this).addClass('active');
+            var username = $('.admin-username').val(),    //用户名
+                startTime = $('.start-time').val(),       //开始时间
+                endTime = $('.ent-time').val();           //结束时间
+            // 更新状态码
+            $('.order-radio').each(function(){
+                if( $(this).attr('checked') ){
+                    status = $(this).val();
+                }
+            });
+            var data = JSON.stringify({
+                realName : username,
+                maxTime : endTime,
+                minTime : startTime,
+                pageNum: $(this).html()-1,
+                pageSize: 10
+            });
+            that.list($(this).html()-1 ,data);
+        });
+    };
+    /**
+     * 查询
+     */
     oAdmin.query = function(){
         var username = $('.admin-username').val(),    //用户名
             startTime = $('.start-time').val(),       //开始时间
@@ -94,10 +147,27 @@ define(function(require, exports, module){
         var data = JSON.stringify({
             realName : username,
             maxTime : endTime,
-            minTime : startTime
+            minTime : startTime,
+            page : 0,
+            pageSize : 10
         });
-        this.list(data);
+        this.list(0, data);
     };
-
+    /**
+     * 添加管理员
+     */
+    oAdmin.add = function(){
+        $('#add-admin-btn').die().live('click', function(){
+            $('.add-admin,.mask-bg').show();
+        });
+    };
+    /**
+     * 关闭
+     */
+    oAdmin.close = function(){
+        $('.close,.cancel').die().live('click', function(){
+            $('.mask-bg,.add-admin,.admin-user,.small-pop').hide();
+        });
+    };
     exports.admin = oAdmin;
 });

@@ -684,6 +684,7 @@ define(function(require, exports, module){
                     }
                     // 选择城市
                     var prov = '';
+                    // 选择省
                     $.ajax({
                         url : eightUrl+'region/allProvince',
                         type : 'get',
@@ -699,8 +700,6 @@ define(function(require, exports, module){
                             }
                         },
                         success : function(json){
-                            that.city();
-                            that.prov(json[0].regionId);
                             for(var i=0 ; i<json.length ; i++){
                                 prov += '<option value="'+json[i].regionId+'">'+json[i].regionName+'</option>';
                             }
@@ -711,6 +710,8 @@ define(function(require, exports, module){
                                     </select>\
                                     <select class="dist" id="dist">\
                                     </select>';
+                            that.prov(provinceId,cityId,districtId);
+                            that.city();
 
                             var orderStatus = '\
                             <li>\
@@ -799,16 +800,7 @@ define(function(require, exports, module){
                                     $(this).attr('selected','true');
                                 }
                             });
-                            $('#city option').each(function(){
-                                if($(this).val() == cityId){
-                                    $(this).attr('selected','true');
-                                }
-                            });
-                            $('#dist option').each(function(){
-                                if ($(this).val() == districtId){
-                                    $(this).attr('selected','true');
-                                }
-                            });
+
                             // 选中默认颜色和大小
                             for(var i=0 ; i<goodsInfoList.length ; i++){
                                 $('.list-e').eq(i).find('.model .line2 a').eq(sizeIndex).addClass('active-size');
@@ -989,7 +981,7 @@ define(function(require, exports, module){
      * 省选择
      * @param id
      */
-    oOrder.prov = function(id){
+    oOrder.prov = function(id,cityId,districtId){
         $.ajax({
             url : eightUrl+'region/children/'+id,
             type : 'get',
@@ -1006,15 +998,18 @@ define(function(require, exports, module){
             },
             success : function(json){
                 $('#city,#dist').html('');
-                console.log($('#city').html());
                 var city = '';
                 for(var i=0 ; i<json.length ; i++){
                     city += '<option value="'+json[i].regionId+'">'+json[i].regionName+'</option>';
                 }
-
                 $('#city').html(city);
+                $('#city option').each(function(){
+                    if($(this).val() == cityId){
+                        $(this).attr('selected','true');
+                    }
+                });
                 $.ajax({
-                    url : eightUrl+'region/children/'+json[0].regionId,
+                    url : eightUrl+'region/children/'+cityId,
                     type : 'get',
                     xhrFields: {
                         withCredentials: true
@@ -1033,6 +1028,11 @@ define(function(require, exports, module){
                             dist += '<option value="'+json[i].regionId+'">'+json[i].regionName+'</option>';
                         }
                         $('#dist').html(dist);
+                        $('#dist option').each(function(){
+                            if ($(this).val() == districtId){
+                                $(this).attr('selected','true');
+                            }
+                        });
                     },
                     error : function(json){
                         var json = JSON.parse(json.responseText);
