@@ -7,12 +7,14 @@ define(function(require, exports, module){
     var loadHtml = $(function(){
         // 动态加载内容
         ;(function tpl(){
+            // 用户名
             var name = $.cookie('name');
             $('.username').html(name);
             $(".nav li").on('click', function(){
                 $(".nav li").removeClass("active");
                 $(this).addClass("active");
             });
+            // 登出
             $('.login-out').live('click', function(){
                 $.ajax({
                     url : eightUrl+'staff/logout',
@@ -25,10 +27,48 @@ define(function(require, exports, module){
                     }
                 });
             });
+            // 首页
             $(".wrap").load("common/order.html",function(){
                 myRadio('status');
                 var oOrder = require('order').oOrder;
                 oOrder.init();
+                // 未处理售后订单
+                var json = JSON.stringify({
+                    pageNum: 1,
+                    pageSize: 9999999
+                });
+                $.ajax({
+                    url : eightUrl+'afterSale/query',
+                    type : 'post',
+                    dataType : 'json',
+                    data : json,
+                    contentType: "application/json; charset=utf-8",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend : function(xhr) {
+                        // json格式传输，后台应该用@RequestBody方式接受
+                        xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                        var token = $.cookie("token");
+                        if (token) {
+                            xhr.setRequestHeader("X-Access-Auth-Token", token);
+                        }
+                    },
+                    success : function(json){
+                        var content = json.content,
+                            num = 0;
+                        for(var i=0 ; i<content.length ; i++){
+                            if( content[i].result == 0 ){
+                                num++;
+                            }
+                        }
+                        if(num >0)$('.after-num').html(' (<span class="red">'+num+'</span>)');
+                    },
+                    error : function(json){
+                        var json = JSON.parse(json.responseText);
+                        alert(json.message);
+                    }
+                });
             });
 
             // 订单管理

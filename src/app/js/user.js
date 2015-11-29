@@ -6,6 +6,7 @@ define(function(require, exports, module){
 
     user.init = function(){
         this.list();    //用户列表
+        this.page();    //分页
         this.query();   //用户查询
         this.edit();    //编辑用户
         this.btn();     //启用、禁用用户
@@ -14,9 +15,10 @@ define(function(require, exports, module){
     /**
      * 用户列表
      */
-    user.list = function(data){
+    user.list = function(pageNum, data){
+        var pageNum = pageNum || 0;
         var json = JSON.stringify({
-            page : 0,
+            page : pageNum,
             pageSize : 10
         });
         var data = data || json;
@@ -37,26 +39,81 @@ define(function(require, exports, module){
             },
             success : function(json){
                 console.log(json);
-                $('.user-list-box').html('');
+                var totalPages = json.totalPages;      //总页数
+                var json = json.content;
+                $('.user-list-box,.no-data-box').html('');
+                $('#order-page').remove();
+                if( json == '' ){
+                    $('.no-data-box').html('<h1 class="no-data">暂无数据</h1>');
+                    return;
+                }
+                // 如果有数据则显示分页
+                if( totalPages > 1 ){
+                    //分页
+                    var pageList = '';
+                    for(var i=0 ; i<totalPages ; i++){
+                        pageList += '<li>'+(i+1)+'</li>';
+                    }
+                    var pageHTML = '<ul class="clearfix" id="order-page">'+pageList+'</li>';
+                    $('.list').append(pageHTML);
+                    $('#order-page li').eq(pageNum-1).addClass('active');
+                }
                 for(var i=0 ; i<json.length ; i++){
 
-                    var phone = json[i].mobile,                 //用户电话
-                        createTime = json[i].createTime,        //注册时间
+                    var phone = json[i].mobile,                    //用户电话
+                        createTime = json[i].createTime,           //注册时间
+                        oDate = new Date(createTime);              //注册时间格式化
+                        oDateYear = oDate.getFullYear(),           //年
+                        oDateMonth = (oDate.getMonth()+ 1),        //月
+                        oDateDay = oDate.getDate(),                //日
+                        oHours = oDate.getHours(),                 //小时
+                        oMinutes  = oDate.getMinutes(),            //分钟
+                        oSen = oDate.getSeconds(),                 //秒
                         status = json[i].status==1 ? '已启用' : '已禁用',//用户状态
                         operation = status == '已启用' ? '禁用' : '启用',
                         id = json[i].id,
                         userState = operation == '启用' ? 'user-open' : 'user-close';
+                    var oTime = oDateYear+'-'+oDateMonth+'-'+oDateDay+' '+oHours+':'+oMinutes+":"+oSen;
                     $('.user-list-box').append('\
                         <dd class="user-list" data-id="'+id+'">\
                             <ul class="line">\
                                 <li class="w240 blue user-phone">'+phone+'</li>\
-                                <li class="w242">'+createTime+'</li>\
+                                <li class="w242">'+oTime+'</li>\
                                 <li class="w242">'+status+'</li>\
                                 <li class="w240 blue no-boder user-state '+userState+'">'+operation+'</li>\
                             </ul>\
                         </dd>');
                 }
             }
+        });
+    };
+    /**
+     * 分页
+     */
+    user.page = function(){
+        var that = this;
+        $('#order-page li').die().live('click', function(){
+            $('#order-page li').removeClass('active');
+            $(this).addClass('active');
+            var phone = $('.user-phone-input').val(),   //用户电话
+                startTime = $('.start-time').val(),     //开始时间
+                endTime = $('.end-time').val(),         //结束时间
+                status = 0;                             //状态码
+            // 更新状态码
+            $('.order-radio').each(function(){
+                if( $(this).attr('checked') ){
+                    status = $(this).val();
+                }
+            });
+            data = JSON.stringify({
+                maxTime : endTime,
+                minTime : startTime,
+                mobile : phone,
+                status : status,
+                pageNum: $(this).html()-1,
+                pageSize: 10
+            });
+            that.list($(this).html()-1, data);
         });
     };
     /**
@@ -67,13 +124,23 @@ define(function(require, exports, module){
         $('.user-search').live('click', function(){
             var phone = $('.user-phone-input').val(),   //用户电话
                 startTime = $('.start-time').val(),     //开始时间
-                endTime = $('.end-time').val();         //结束时间
+                endTime = $('.end-time').val(),         //结束时间
+                status = 0;                             //状态码
+                // 更新状态码
+                $('.order-radio').each(function(){
+                    if( $(this).attr('checked') ){
+                        status = $(this).val();
+                    }
+                });
             data = JSON.stringify({
                 maxTime : endTime,
                 minTime : startTime,
-                mobile : phone
+                mobile : phone,
+                status : status,
+                page : 0,
+                pageSize : 10
             });
-            that.list(data);
+            that.list(0, data);
         });
     };
     /**
@@ -181,7 +248,12 @@ define(function(require, exports, module){
                             },
                             success : function(json){
                                 $('.user-details,.mask-bg').hide();
-                                that.list();
+                                if($('#order-page li.active').html()){
+                                    that.list($('#order-page li.active').html());
+                                }else{
+                                    that.list(0);
+                                }
+
                             },
                             error : function(json){
                                 console.log(json);
@@ -199,7 +271,7 @@ define(function(require, exports, module){
     user.btn = function(){
         var that = this;
         // 启用用户
-        $('.user-open').live('click', function(){
+        $('.user-open').die().live('click', function(){
             var id = $(this).parents('.user-list').attr('data-id'),
                 status = 1;
             var data = JSON.stringify({
@@ -209,7 +281,7 @@ define(function(require, exports, module){
             that.operation(data);
         });
         //禁用用户
-        $('.user-close').live('click', function(){
+        $('.user-close').die().live('click', function(){
             var id = $(this).parents('.user-list').attr('data-id'),
                 status = 2;
             var data = JSON.stringify({
@@ -221,16 +293,16 @@ define(function(require, exports, module){
 
     };
     /**
-     *
+     * 更改状态
      */
     user.operation = function(data){
         var that = this;
-        if( data.status ==1 ){
+        if( JSON.parse(data).status == 1 ){
             $('#user_pop_open,.mask-bg').show();
-            $('#user_pop_open').css({top: ($(document).scrollTop+20)+'px'});
+            $('#user_pop_open').css({top: ($(document).scrollTop()+20)+'px'});
         }else{
             $('#user_pop_close,.mask-bg').show();
-            $('#user_pop_close').css({top: ($(document).scrollTop+20)+'px'});
+            $('#user_pop_close').css({top: ($(document).scrollTop()+20)+'px'});
 
         }
         $('#user_pop_open .deter,#user_pop_close .deter').click(function(){
@@ -251,7 +323,7 @@ define(function(require, exports, module){
                 },
                 success : function(json){
                     $('#user_pop_close,#user_pop_open,.mask-bg').hide();
-                    that.list();
+                    that.list($('#order-page li.active').html());
                 },
                 error : function(json){
                     alert(json);
