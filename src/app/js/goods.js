@@ -14,6 +14,7 @@ define(function (require, exports, module) {
         this.add();       //添加商品
         this.detail();    //获取商品详情
         this.close();     //关闭弹窗
+        this.replace();   //替换图片
         oGoods.edit();    //商品编辑
         oGoods.operate();   //商品操作
         oGoods.conditional(); //商品查询
@@ -162,7 +163,7 @@ define(function (require, exports, module) {
             $(this).addClass('active');
             var inventoryDown = parseInt($('#inventoryDown').val()); //商品库存范围下限值
             var inventoryUp = parseInt($('#inventoryUp').val());     //商品库存范围上限值
-            var name = $('#name').val()					             // 商品名称
+            var name = $('#name').val()					             //商品名称
             var priceDown = parseInt($('#priceDown').val());		 //商品单价范围下限值
             var priceUp = parseInt($('#priceUp').val());  		     //商品单价范围上限值
             var sn = $('#sn').val();					             //商品编码
@@ -200,13 +201,13 @@ define(function (require, exports, module) {
         });
 
         $('#goodsSearch').click(function () {
-            var inventoryDown = parseInt($('#inventoryDown').val()); //商品库存范围下限值 ,
-            var inventoryUp = parseInt($('#inventoryUp').val()); //商品库存范围上限值 ,
-            var name = $('#name').val()					// 商品名称 ,
-            var priceDown = parseInt($('#priceDown').val());		//商品单价范围下限值 ,
-            var priceUp = parseInt($('#priceUp').val());  		//商品单价范围上限值 ,
-            var sn = $('#sn').val();					//商品编码 ,
-            var status;									//商品状态
+            var inventoryDown = parseInt($('#inventoryDown').val()); //商品库存范围下限值
+            var inventoryUp = parseInt($('#inventoryUp').val());     //商品库存范围上限值
+            var name = $('#name').val()					             //商品名称
+            var priceDown = parseInt($('#priceDown').val());		 //商品单价范围下限值
+            var priceUp = parseInt($('#priceUp').val());  		     //商品单价范围上限值
+            var sn = $('#sn').val();					             //商品编码
+            var status;									             //商品状态
             for (var i = 0; i < $('#status input').length; i++) {
                 if ($($('#status input')[i]).attr('checked') == 'checked') {
                     status = parseInt($($('#status input')[i]).val());
@@ -240,7 +241,8 @@ define(function (require, exports, module) {
             $(this).css('borderRightColor', '#' + goodsColorInput);
             $(this).siblings('span.color').css('backgroundColor', '#' + goodsColorInput);
         });
-        $('.file').live('change', function (event) {
+        // 图片预览
+        $('.add-file').live('change', function (event) {
             var that = $(this);
             var file = $(this).get(0).files[0];
             var reader = new FileReader();
@@ -259,6 +261,7 @@ define(function (require, exports, module) {
                 }
             }
         });
+
         // 商品颜色添加一列
         var count = 1;
         $('#save-goods-color').live('click', function (){
@@ -288,9 +291,8 @@ define(function (require, exports, module) {
 									<li><img class="goods-image" src="' + goodsImgae + '" style="width: 24px; height: 24px; border: 1px solid rgb(204, 204, 204);" /></li>\
 									<li><a href="javascript:;">替换图片</a>\
 										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
-												<img id="photo_show">\
-												<input type="file" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
-											</form>\
+                                            <input type="file" name="image" accept="image/*" class="replace-img input file" data-type="1">\
+                                        </form>\
 									</li>\
 									<li><a href="javascript:;" class="remove" date-del="' + goodsSizeDate + '">删除</a></li>\
 								</ul>';
@@ -395,8 +397,7 @@ define(function (require, exports, module) {
 									<li>\
 										<a href="javascript:;">上传图片</a>\
 										<form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
-											<img id="photo_show">\
-											<input type="file" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+											<input type="file" name="image" accept="image/*" class="photo-upload-input input file add-file" data-type="1">\
 										</form>\
 									</li>\
 									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
@@ -568,8 +569,7 @@ define(function (require, exports, module) {
 									<li>\
 										<a href="javascript:;">上传图片</a>\
 										<form class="add-img-form" action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
-											<img id="photo_show">\
-											<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+											<input type="file" id="uploadPicture" name="image" accept="image/*" class="photo-upload-input input file add-file" data-type="1">\
 										</form>\
 									</li>\
 									<li><a href="javascript:;" id="save-goods-color">保存</a></li>\
@@ -601,53 +601,67 @@ define(function (require, exports, module) {
             $('#add-goods .save').live('click', function () {
                 var bFlag = false; // 判断是否有错误输入，默认是没有错误
                 // 添加商品判断
-                $('#add-goods').find('input').each(function(){
-                    // 不包含添加的哪一行
-                    if( $('#editLeft').children().length != 1){
-                        if( !$(this).hasClass('goods-color-text') && !$(this).hasClass('goods-color-input') ){
-                            if($(this).val() == ''){
-                                $(this).css({border: '1px solid red'});
-                                bFlag = true;
-                            }else{
-                                $(this).css({border: '1px solid #ccc'});
-                            }
-                        }
-						if($(this).hasClass('goods-number')){
-							var str = Number($(this).val());
-							var ex = /^\d+$/;
-							console.log(!ex.test(str));
-							console.log(str);
-							if (!ex.test(str)) {
-								$(this).css({border: '1px solid red'});
-								bFlag = true;
-							}else if($(this).val() == ''){
-								$(this).css({border: '1px solid red'});
-								bFlag = true;
-							}else{
-								$(this).css({border: '1px solid #ccc'});
-							}
-						}
-                    }else{
-                        if($(this).val() == ''){
-                            $(this).css({border: '1px solid red'});
-                            bFlag = true;
-                        }else{
-                            $(this).css({border: '1px solid #ccc'});
-                        }
-                    }
-
-                });
-				
                 $('#add-goods').find('textarea').each(function(){
                     if($(this).val() == ''){
                         $(this).css({border: '1px solid red'});
                         bFlag = true;
                     }else{
                         $(this).css({border: '1px solid #ccc'});
+                        bFlag = false;
                     }
                 });
-                if( !bFlag ){
-                    alert('请填写完全！');
+                $('#add-goods').find('input').each(function(){
+                    // 不包含添加的哪一行(颜色)
+                    if( $('#editLeft').children().length != 1 ){
+                        if( !$(this).hasClass('goods-color-text') && !$(this).hasClass('goods-color-input') ){
+                            if($(this).val() == ''){
+                                $(this).css({border: '1px solid red'});
+                                bFlag = true;
+                            }else{
+                                $(this).css({border: '1px solid #ccc'});
+                                bFlag = false;
+                            }
+                        }
+                        // 判断库存不能为小数不能为空
+                        if($(this).hasClass('goods-number')){
+                            var str = Number($(this).val());
+                            var ex = /^\d+$/;
+                            if (!ex.test(str)) {
+                                $(this).css({border: '1px solid red'});
+                                bFlag = true;
+                            }else if($(this).val() == ''){
+                                $(this).css({border: '1px solid red'});
+                                bFlag = true;
+                            }else{
+                                $(this).css({border: '1px solid #ccc'});                                bFlag = false;
+                                bFlag = false;
+                            }
+                        }
+                    }else{
+                        if($(this).val() == ''){
+                            $(this).css({border: '1px solid red'});
+                            bFlag = true;
+                        }else{
+                            $(this).css({border: '1px solid #ccc'});
+                            bFlag = false;
+                        }
+                    }
+                    // 是否添加图片
+                    if( !$('#editLeft .goods-image').val() ){
+                        bFlag = true;
+                    }
+                    // 商品规格
+                    if( $('#initGoodsSize .goods-size').children().length == 1 ){
+                        $('#initGoodsSize .goods-size .goods-size').css({border: '1px solid red'});
+                        bFlag = true;
+                    }else{
+                        $('#initGoodsSize .goods-size .goods-size').css({border: '1px solid #ccc'});
+                        bFlag = false;
+                    }
+                });
+                console.log(bFlag);
+                if( bFlag ){
+                    alert('保存失败，请填写所有字段');
                     return false;
                 }
                 var sSn = $('#goods-sn').val(),          //商品编号
@@ -678,7 +692,7 @@ define(function (require, exports, module) {
                         sMaterial = $(oneFimTr[j]).find('.material-code').val();
                         var arrImage = [{
                             "domensionId": '',
-                            "imageURL": $('.goods-image').eq(i+1).attr('src')
+                            "imageURL": $('.goods-image').eq(aTrGoods.length-i).attr('src')
                         }];
                         json = {
                             'color': sColorText,
@@ -1001,10 +1015,9 @@ define(function (require, exports, module) {
                                               <li>\
                                                 <input type="text" class="color-input goods-color-input" id="goodsColorInput">\
                                                 <span class="color"></span></li>\
-                                              <li><img width="0" height="0" class="goods-image" id="goodsImage"></li>\
+                                              <li><img width="24" height="24" class="goods-image" id="goodsImage"></li>\
                                               <li><a href="javascript:;">上传图片</a>\
                                                 <form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
-                                                    <img id="photo_show">\
                                                     <input type="file" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
                                                 </form>\
                                               </li>\
@@ -1015,7 +1028,7 @@ define(function (require, exports, module) {
                                         <li class="detial-color edit-right">\
                                           <p class="left">商品规格:</p>\
                                           <div class="right" id="initGoodsSize">\
-                                            <ul class="goods-size">\
+                                            <ul class="goods-size" id="goods-size">\
                                               <li>\
                                                 <input type="text" class="goods-size">\
                                                 <a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>\
@@ -1058,11 +1071,10 @@ define(function (require, exports, module) {
                                               <li>\
                                                 <input type="text" class="color-input" value="' + colorCode + '" style="border-right-color:#aaa">\
                                                 <span class="color" style="background:#' + colorCode + '"></span></li>\
-                                              <li><img class="goods-image" src="' + img + '" data-imgid="' + imgId + '" id="goodsImage"></li>\
+                                              <li><img style="width:24px;height:24px;border:1px solid #ccc;" class="goods-image" src="' + img + '" data-imgid="' + imgId + '" id="goodsImage"></li>\
                                               <li><a href="javascript:;">替换图片</a>\
                                                 <form action="" method="post" target="iframe-input-1" enctype="multipart/form-data">\
-                                                    <img id="photo_show">\
-                                                    <input type="file" name="image" accept="image/*" class="photo-upload-input input file" data-type="1">\
+                                                    <input type="file" name="image" accept="image/*" class="replace-img input file" data-type="1">\
                                                 </form>\
                                               </li>\
                                               <li><a href="javascript:;" class="remove" date-del="' + colorCode + '">删除</a></li>\
@@ -1241,6 +1253,9 @@ define(function (require, exports, module) {
             if( $('#uploadPicture').val() == ''){
                 return false;
             }
+            if($('#goodsColorInput').val().length != 3 && $('#goodsColorInput').val().length != 6 ){
+                return false;
+            }
             var _this = $(this);
             var s = $('#editLeft').find(".add-img-form");
             var formData = new FormData(s[0]);
@@ -1277,7 +1292,46 @@ define(function (require, exports, module) {
             });
         });
     };
-
+    /**
+     * 替换图片
+     */
+    oGoods.replace = function(){
+        $('.replace-img').die().live('change', function(){
+            var that = $(this);
+            var s = $(this).parents("form");
+            var formData = new FormData(s[0]);
+            $.ajax({
+                url: eightUrl + 'goods/uploadImage',
+                crossDomain: true,
+                type: "POST",
+                beforeSend: function (xhr) {
+                    // json格式传输，后台应该用@RequestBody方式接受
+                    //xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                    var token = $.cookie("token");
+                    if (token) {
+                        xhr.setRequestHeader("X-Access-Auth-Token", token);
+                    }
+                },
+                xhrFields: {
+                    withCredentials: true // 确保请求会携带上Cookie
+                },
+                data: formData,
+                contentType: false,
+                async: false,
+                cache: false,
+                processData: false,
+                success: function (result) {
+                    that.parents('.goods-color').find('.goods-image').attr({src : result});
+                },
+                error: function (respResult) {
+                    if (respResult.status == 401) {
+                        alert("超时，请重新登录");
+                        window.location.href = "login.html";
+                    }
+                }
+            });
+        });
+    };
     /**
      * 商品上架下架
      */
