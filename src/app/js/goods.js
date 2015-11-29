@@ -273,6 +273,10 @@ define(function (require, exports, module) {
                     return false;
                 }
             }
+			if($('#goodsColorInput').val().length != 3 && $('#goodsColorInput').val().length != 6 ){
+				alert('请填写正确的颜色编码');
+                return false;
+			}
             var date = new Date();
             var goodsSizeDate = date.getTime();
             var goodsColorText = $('#goodsColorText').val();
@@ -541,21 +545,21 @@ define(function (require, exports, module) {
 			</div>\
 			<ul class="goods-detial">\
 				<li class="detial1">\
-					<p class="left line1"><span class="c9">商品编号：</span><span class="c3" ><input type="text" id="goods-sn" /></span></p>\
-					<p class="right line1"><span class="c9">商品名称：</span><span class="c3"><input type="text" id="goods-name" /></span></p>\
+					<p class="left line1"><span class="c9"><span class="r">*</span>商品编号：</span><span class="c3" ><input type="text" id="goods-sn" /></span></p>\
+					<p class="right line1"><span class="c9"><span class="r">*</span>商品名称：</span><span class="c3"><input type="text" id="goods-name" /></span></p>\
 					<p class="right line1"><span class="c9"><span class="r">*</span>商品状态：</span><select id="goods-status" value="status">\
 								<option date-s="1">上架</option>\
 								<option date-s="2">下架</option>\
 							</select></p>\
 				</li>\
 				<li>\
-					<p class="left">商品介绍：</p>\
+					<p class="left"><span class="r">*</span>商品介绍：</p>\
 					<p class="right"><textarea class="goods-introdu" id="goods-introduction"></textarea></p>\
 				</li>\
 				<li class="margin-none">\
 					<ul>\
 						<li class="detial-color edit-left">\
-							<p class="left">商品颜色：</p>\
+							<p class="left"><span class="r">*</span>商品颜色：</p>\
 							<div class="right" id="editLeft">\
 								<ul class="goods-color">\
 									<li><input type="text" class="goods-color-text" id="goodsColorText" /></li>\
@@ -573,7 +577,7 @@ define(function (require, exports, module) {
 							</div>\
 						</li>\
 						<li class="detial-color edit-right">\
-							<p class="left">商品规格:</p>\
+							<p class="left"><span class="r">*</span>商品规格:</p>\
 							<div class="right" id="initGoodsSize">\
 								<ul class="goods-size">\
 									<li><input type="text" class="goods-size" /><a href="javascript:;" id="saveGoodsSize" data-goodssizedate="">保存</a></li>\
@@ -608,6 +612,21 @@ define(function (require, exports, module) {
                                 $(this).css({border: '1px solid #ccc'});
                             }
                         }
+						if($(this).hasClass('goods-number')){
+							var str = Number($(this).val());
+							var ex = /^\d+$/;
+							console.log(!ex.test(str));
+							console.log(str);
+							if (!ex.test(str)) {
+								$(this).css({border: '1px solid red'});
+								bFlag = true;
+							}else if($(this).val() == ''){
+								$(this).css({border: '1px solid red'});
+								bFlag = true;
+							}else{
+								$(this).css({border: '1px solid #ccc'});
+							}
+						}
                     }else{
                         if($(this).val() == ''){
                             $(this).css({border: '1px solid red'});
@@ -618,6 +637,7 @@ define(function (require, exports, module) {
                     }
 
                 });
+				
                 $('#add-goods').find('textarea').each(function(){
                     if($(this).val() == ''){
                         $(this).css({border: '1px solid red'});

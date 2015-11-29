@@ -42,9 +42,16 @@ header .userifon{width:980px;height:60px; line-height:60px;color:#cccccc;font-si
 .condition .normol li{float:left;  margin-right: 30px;}
 .condition .normol span,.condition .ditail span{font-size:16px;color:#333;}
 .condition .normol input{width:228px;height:22px;border:1px solid #ccc; }
-.condition .ditail li{float:left; margin-right:18px;}
+.condition .ditail li{float:left;}
+.condition .ditail li.mar173{margin-right:195px;}
+.condition .ditail li.mar143{margin-right:143px;}
+.condition .ditail li.mar56{margin-right:56px;}
 .condition .ditail input{width:178px;height:22px;border:1px solid #ccc; }
-.condition .state li{ float:left;font-size:16px;color:#333; margin-right: 50px;}
+.condition .state li{ float:left;font-size:16px;color:#333; }
+.condition .state li.mar135{margin-right: 135px;}
+.condition .state.mar54 li{margin-right:63px;}
+.condition .state.mar20 li{margin-right:20px}
+.condition .state li.nomar{margin:0;}
 .condition .state .r{display:inline-block;  margin-right: 5px; float:left;}
 .condition .state .w{display:inline-block;float:left;font-size:16px;color:#333;}
 .search-box{width:970px;border-bottom:1px solid #cccccc; padding-bottom:30px;}
@@ -53,9 +60,11 @@ header .userifon{width:980px;height:60px; line-height:60px;color:#cccccc;font-si
 /*第二页*/
 .condition .margin-t li{float:left;  margin-right: 16px;}
 .condition .ditail .radio li,.condition .state-t .radio li{float:left;font-size:16px;color:#333; margin-right:45px;}
+.condition .ditail .radio.mar20 li{margin:9px;}
+.condition .ditail .radio li.nomar, .condition .state-t .radio li.nomar{margin:0;}
 .condition .ditail .radio span.r,.condition .state-t .radio span.r{display:inline-block; width:16px; height:16px;  margin-right: 5px; float:left;}
 .condition .ditail .radio span.w,.condition .state-t .radio span.w{display:inline-block;float:left;font-size:16px;color:#333;}
-
+.condition .mar22 li{margin-right: 22px;}
 /*订单管理 条件end*/
 /*订单管理 列表star*/
 .list{width:970px;margin-left:30px; padding-top:30px;padding-bottom:30px;}
@@ -158,7 +167,7 @@ header .userifon{width:980px;height:60px; line-height:60px;color:#cccccc;font-si
 /*订单详情end*/
 /*商品详情star*/
 .goods-detial li{ margin-bottom:30px;font-size:14px;overflow:hidden;}
-.goods-detial li .left{width:71px;height:26px;line-height:26px;color:#999;float:left;}
+.goods-detial li .left{width:80px;height:26px;line-height:26px;color:#999;float:left;}
 .goods-detial li .right{width:765px;line-height:26px;color:#333;float:left; display:block;}
 .goods-detial .goods-color,.goods-detial .goods-size,.goods-size-c{overflow:hidden;}
 .goods-detial .goods-color li{float:left;margin-right:10px;}
@@ -230,8 +239,11 @@ header .userifon{width:980px;height:60px; line-height:60px;color:#cccccc;font-si
 /*售后END*/
 /*商品管理*/
 .condition .normol-t li{margin-right:0px}
+.condition .normol-t.mar13 li{margin-right: 13px;}
 .condition .normol-t li input{width:178px;height:22px;}
 .condition .normol-t li input.money{width:148px;}
+.condition .normol-t li.mar{margin-right:23px;}
+.condition .normol-t li.martop{margin-top: -8px;}
 .cus-adm{width:968px; border:1px solid #ccc;border-bottom:0;}
 .cus-adm dt{height:48px;background:#f5f5f5;border-bottom:1px solid #ccc;}
 .cus-adm dt li{height:48px;line-height:48px; text-align:center; float:left; border-right:1px solid #ccc; font-size:14px;color:#333;}
@@ -259,7 +271,7 @@ header .userifon{width:980px;height:60px; line-height:60px;color:#cccccc;font-si
 /*用户管理*/
 .condition .normol-t li input.w160{width: 160px;}
 .condition .normol-t li input.w118{width: 118px;}
-.condition .ditial-th li.margin-r-20{margin-right: 20px;}
+.condition .ditial-th li.margin-r-20{margin-right: 60px;}
 .condition .ditial-th li.margin-r-50{margin-right: 50px;}
 .after-type{ margin-top:4px;}
 .condition .normol .after-type .radio li{margin-right:20px;}
