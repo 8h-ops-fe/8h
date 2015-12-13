@@ -38,7 +38,6 @@ define(function(require, exports, module){
                 }
             },
             success : function(json){
-                console.log(json);
                 var totalPages = json.totalPages;      //总页数
                 var json = json.content;
                 $('.user-list-box,.no-data-box').html('');
@@ -56,26 +55,26 @@ define(function(require, exports, module){
                     }
                     var pageHTML = '<ul class="clearfix" id="order-page">'+pageList+'</li>';
                     $('.list').append(pageHTML);
-                    $('#order-page li').eq(pageNum-1).addClass('active');
+                    $('#order-page li').eq(pageNum).addClass('active');
                 }
                 for(var i=0 ; i<json.length ; i++){
 
                     var phone = json[i].mobile,                    //用户电话
                         createTime = json[i].createTime,           //注册时间
                         oDate = new Date(createTime);              //注册时间格式化
-                        oDateYear = oDate.getFullYear(),           //年
-                        oDateMonth = (oDate.getMonth()+ 1),        //月
-                        oDateDay = oDate.getDate(),                //日
-                        oHours = oDate.getHours(),                 //小时
-                        oMinutes  = oDate.getMinutes(),            //分钟
-                        oSen = oDate.getSeconds(),                 //秒
+                        oDateYear = toDable(oDate.getFullYear()),           //年
+                        oDateMonth = toDable((oDate.getMonth()+ 1)),        //月
+                        oDateDay = toDable(oDate.getDate()),                //日
+                        oHours = toDable(oDate.getHours()),                 //小时
+                        oMinutes  = toDable(oDate.getMinutes()),            //分钟
+                        oSen = toDable(oDate.getSeconds()),                 //秒
                         status = json[i].status==1 ? '已启用' : '已禁用',//用户状态
                         operation = status == '已启用' ? '禁用' : '启用',
                         id = json[i].id,
                         userState = operation == '启用' ? 'user-open' : 'user-close';
                     var oTime = oDateYear+'-'+oDateMonth+'-'+oDateDay+' '+oHours+':'+oMinutes+":"+oSen;
                     $('.user-list-box').append('\
-                        <dd class="user-list" data-id="'+id+'">\
+                        <dd class="user-list" data-id="'+id+'" data-status="'+json[i].status+'">\
                             <ul class="line">\
                                 <li class="w240 blue user-phone">'+phone+'</li>\
                                 <li class="w242">'+oTime+'</li>\
@@ -84,6 +83,10 @@ define(function(require, exports, module){
                             </ul>\
                         </dd>');
                 }
+            },
+            error : function(json){
+                var json = JSON.parse(json.responseText);
+                alert(json.message);
             }
         });
     };
@@ -110,7 +113,7 @@ define(function(require, exports, module){
                 minTime : startTime,
                 mobile : phone,
                 status : status,
-                pageNum: $(this).html()-1,
+                page: $(this).html()-1,
                 pageSize: 10
             });
             that.list($(this).html()-1, data);
@@ -121,7 +124,13 @@ define(function(require, exports, module){
      */
     user.query = function(){
         var that = this;
-        $('.user-search').live('click', function(){
+        $('.user-search').die().live('click', function(){
+            var startTime = $('.start-time').val(),
+                endTime = $('.end-time').val();
+            if( startTime > endTime && startTime && endTime){
+                alert('开始时间必须小于结束时间！');
+                return false;
+            }
             var phone = $('.user-phone-input').val(),   //用户电话
                 startTime = $('.start-time').val(),     //开始时间
                 endTime = $('.end-time').val(),         //结束时间
@@ -149,12 +158,14 @@ define(function(require, exports, module){
     user.edit = function(){
         var that = this;
         $('.user-phone').live('click', function(){
-            var userId = $(this).parents('.user-list').attr('data-id');
+            var userId = $(this).parents('.user-list').attr('data-id'),
+                status = $(this).parents('.user-list').attr('data-status');
             $.ajax({
-                url: eightUrl + '/user/changeStatus',
+                url: eightUrl + 'user/changeStatus',
                 type: 'post',
                 data: JSON.stringify({
-                    userId :userId
+                    userId :userId,
+                    status :status
                 }),
                 xhrFields: {
                     withCredentials: true
@@ -171,13 +182,22 @@ define(function(require, exports, module){
                     $('#user-details,.mask-bg').show();
                     $('#user-details').css({top: ($(document).scrollTop+20)+'px'});
 
-                    var createTime = json.createTime,               //创建时间
-                        id = json.id,                               //ID
+                    var id = json.id,                               //ID
                         mobile = json.mobile || '未填写',            //电话
                         email = json.email || '未填写',              //电子邮件
                         qq = json.qq || '未填写',                    //qq
                         wechat = json.wechat || '未填写',            //微信
-                        nickname = json.nickname || '未填写';        //昵称
+                        nickname = json.nickname || '未填写',        //昵称
+                        status = json.status,                       //用户状态
+                        oDate = new Date(json.createTime),              //注册时间格式化
+                        oDateYear = toDable(oDate.getFullYear()),           //年
+                        oDateMonth = toDable((oDate.getMonth()+ 1)),        //月
+                        oDateDay = toDable(oDate.getDate()),                //日
+                        oHours = toDable(oDate.getHours()),                 //小时
+                        oMinutes  = toDable(oDate.getMinutes()),            //分钟
+                        oSen = toDable(oDate.getSeconds());                 //秒
+                    var oTime = oDateYear+'-'+oDateMonth+'-'+oDateDay+' '+oHours+':'+oMinutes+":"+oSen;
+
                     $('.user-details').html('\
                     <div class="pop-title">\
                         <span>用户详情</span>\
@@ -201,14 +221,14 @@ define(function(require, exports, module){
                         <span class="pop-input-type">用户状态:</span>\
                         <select name="userstate" id="user_status">\
                             <option value="1">已启用</option>\
-                            <option value="2">禁用</option>\
+                            <option value="2">已禁用</option>\
                         </select>\
                     </div>\
                     </div>\
                     <div class="pop-content-right">\
                         <div>\
                             <span class="pop-input-type">注册时间:</span>\
-                            <input type="text" name="regtime" disabled="true" value="'+createTime+'"/>\
+                            <input type="text" name="regtime" disabled="true" value="'+oTime+'"/>\
                         </div>\
                     <div>\
                         <span class="pop-input-type">Email:</span>\
@@ -224,7 +244,11 @@ define(function(require, exports, module){
                             <input type="button" value="取消" class="cancel"/>\
                         </div>\
                     </div>').attr({"data-id" : id});
-
+                    $('#user_status option').each(function(){
+                        if( $(this).val() == status ){
+                            $(this).attr("selected", true);
+                        }
+                    });
                     //点击保存
                     $('.user-deter').click(function(){
                         var userId = $(this).parents('.user-details').attr('data-id'),
@@ -248,15 +272,15 @@ define(function(require, exports, module){
                             },
                             success : function(json){
                                 $('.user-details,.mask-bg').hide();
+                                $('.user-details').css({top: ($(document).scrollTop()+20)+'px'})
                                 if($('#order-page li.active').html()){
-                                    that.list($('#order-page li.active').html());
+                                    that.list($('#order-page li.active').html()-1);
                                 }else{
                                     that.list(0);
                                 }
 
                             },
                             error : function(json){
-                                console.log(json);
                             }
                         });
                     });
@@ -305,7 +329,7 @@ define(function(require, exports, module){
             $('#user_pop_close').css({top: ($(document).scrollTop()+20)+'px'});
 
         }
-        $('#user_pop_open .deter,#user_pop_close .deter').click(function(){
+        $('#user_pop_open .deter,#user_pop_close .deter').die().live('click',function(){
             $.ajax({
                 url : eightUrl + 'user/changeStatus',
                 type : 'post',
@@ -323,7 +347,11 @@ define(function(require, exports, module){
                 },
                 success : function(json){
                     $('#user_pop_close,#user_pop_open,.mask-bg').hide();
-                    that.list($('#order-page li.active').html());
+                    if($('#order-page li.active').html()){
+                        that.list($('#order-page li.active').html()-1);
+                    }else{
+                        that.list(0);
+                    }
                 },
                 error : function(json){
                     alert(json);

@@ -2,6 +2,8 @@
  * 订单管理
  */
 define(function(require, exports, module){
+    var operation = require('operation');   // 权限管理
+
     //创建对象
     var oOrder = {};
     /**
@@ -48,6 +50,8 @@ define(function(require, exports, module){
             success : function(json){
                 var arr = json.content,  // 订单信息
                     totalPages = json.totalPages; // 总页数
+                // 权限管理
+                operation.order();
                 $('.order-list-box').html('');
                 $('#order-page').remove();
                 if( json.content == ''){
@@ -81,10 +85,9 @@ define(function(require, exports, module){
                         receiverMobile = arr[i].receiverMobile || receiverPhone,  //收货人手机
                         statusDesc = arr[i].statusDesc,//订单状态描述
                         status = arr[i].status,    //订单状态码，1下单，2支付，3配货，4出库，5完成，6取消
-                        totalPrice = arr[i].totalPrice,//商品价钱
+                        totalPrice = arr[i].totalPrice/100,//商品价钱，元转分
                         orderPrice = '';               //商品总价
                     var oTime = oDateYear+'-'+oDateMonth+'-'+oDateDay+' '+oHours+':'+oMinutes;
-
 
                     // 商品信息
                     var goodsInfo = '';
@@ -95,7 +98,7 @@ define(function(require, exports, module){
                                 goodsName = arr[i].goodsInfoList[j].goodsName,    //商品名字
                                 goodsColor = arr[i].goodsInfoList[j].goodsColor,  //商品颜色
                                 goodsAmount = arr[i].goodsInfoList[j].goodsAmount,//商品个数
-                                singlePrice = arr[i].goodsInfoList[j].singlePrice,//商品单价
+                                singlePrice = arr[i].goodsInfoList[j].singlePrice/100,//商品单价，元转分
                                 expressInfo = arr[i].expressInfo,                 //快递信息
                                 expressInfoC = '',                                //快递公司
                                 expressInfoN = '';                                //快递号
@@ -121,6 +124,7 @@ define(function(require, exports, module){
                                                     <div class="order-express-box">\
                                                         <span class="order-express">物流状态</span>\
                                                         <div class="express-box">\
+                                                            <span id="triangle-up"></span>\
                                                             <p><span class="express-company">' + expressInfoC + '</span></p>\
                                                             <p><span class="express-num">' + expressInfoN + '</span></p>\
                                                         </div>\
@@ -129,12 +133,13 @@ define(function(require, exports, module){
                                             </ul>';
                                 //5完成
                             }else if( status ==5 ){
-                                orderDetails = '<ul class="three">\
+                                orderDetails = '<ul class="three order-operation-box">\
                                                 <li class="order-details-btn">订单详情</li>\
                                                 <li class="order-logist-btn">\
                                                     <div class="order-express-box">\
                                                         <span class="order-express">物流状态</span>\
                                                         <div class="express-box">\
+                                                            <span id="triangle-up"></span>\
                                                             <p><span class="express-company">' + expressInfoC + '</span></p>\
                                                             <p><span class="express-num">' + expressInfoN + '</span></p>\
                                                         </div>\
@@ -182,7 +187,7 @@ define(function(require, exports, module){
                             <div class="order-list" data-orderSn="' + arr[i].orderSn + '">\
                                 <ul class="detial-state">\
                                     <li><span class="detial-n">订单号：</span><span class="detial-w">' + orderSn + '</span></li>\
-                                    <li><span class="detial-n">下单时间：</span><span class="detial-w">' + oTime + '</span></li>\
+                                    <li><span class="detial-n">下单时间：</span><span class="detial-w">' + createTime + '</span></li>\
                                     <li><span class="detial-n">收货人：</span><span class="detial-w">' + receiverName + '</span></li>\
                                     <li><span class="detial-n">联系电话：</span><span class="detial-w">' + receiverMobile + '</span></li>\
                                     <li class="detial-z">' + statusDescT + '</li>\
@@ -380,13 +385,23 @@ define(function(require, exports, module){
     oOrder.query = function(){
         var that = this;
         $('.order-search').die().live('click', function(){
+            var startTime = $('.start-time').val(),
+                endTime = $('.end-time').val();
+            if( startTime > endTime && startTime && endTime){
+                alert('开始时间必须小于结束时间！');
+                return false;
+            }
+            if( Number($('.min-price').val()) > Number($('.max-price').val()) && $('.min-price').val() && $('.max-price').val() ){
+                alert('最小金额必须小于最大金额');
+                return false;
+            }
             var orderSn = $('.orderSn').val(),             //订单号
                 receiverName = $('.receiverName').val(),   //收件人
                 receiverPhone = $('.receiverPhone').val(), //联系电话
                 startTime = $('.start-time').val(),        //开始时间
                 endTime = $('.end-time').val(),            //结束时间
-                minAmount = $('.min-price').val(),         //最小价钱
-                maxAmount = $('.max-price').val(),         //最大价钱
+                minAmount = $('.min-price').val() ? $('.min-price').val()*100 : '',         //最小价钱
+                maxAmount = $('.max-price').val() ? $('.max-price').val()*100 : '',         //最大价钱
                 status = 0;                                //状态码
                 // 更新状态码
                 $('.order-radio').each(function(){
@@ -433,7 +448,6 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    console.log(json);
                     var order = json;
                     $('#order-details,.mask-bg').show();
                     $('#order-details').css({top: ($(document).scrollTop()+20)+'px'});
@@ -453,8 +467,8 @@ define(function(require, exports, module){
                             goodsName = order.orderGoodsInfo.goodsInfoList[i].goodsName,          //商品名字
                             goodsSize = order.orderGoodsInfo.goodsInfoList[i].goodsSize,          //商品大小
                             imageUrl = order.orderGoodsInfo.goodsInfoList[i].imageUrl;            //商品图片
-                            totalPrice = order.orderGoodsInfo.totalPrice,       //商品价格
-                            orderPrice = parseInt(goodsAmount)*parseInt(totalPrice);              //商品总价
+                            totalPrice = order.orderGoodsInfo.goodsInfoList[i].singlePrice/100,       //商品价格
+                            orderPrice = order.orderGoodsInfo.totalPrice/100;              //商品总价
 
                             goodsInfo += '<ul class="list-e">\
                                     <li class="image"><img class="goods-detial-img" src="'+imageUrl+'" /></li>\
@@ -496,7 +510,7 @@ define(function(require, exports, module){
                     var orderStatusContent = '\
                             <li class="active">\
                                 <i class="order"></i>\
-                                <span class="msg1">下单</span>\
+                                <span class="mes1">下单</span>\
                                 <span class="time">'+bayTime+'</span>\
                             </li>\
                             <li>\
@@ -587,13 +601,8 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    console.log(json);
                     $('#edit-order,.mask-bg').show();
-                    // 保存
-                    $('#edit-order .save').die().live('click', function(){
-                        var goodsFormat = json.orderGoodsInfoList[0].goodsDomensionListInSize;
-                        that.editEnter(goodsFormat);
-                    });
+
                     $('#edit-order').css({top: ($(document).scrollTop()+10)+'px'});
                     var orderSn = json.orderSn,      //订单号
                         statusDesc = json.statusDesc,//订单状态
@@ -608,9 +617,13 @@ define(function(require, exports, module){
                         provinceId = json.provinceId,                         //省编号
                         cityId = json.cityId,                                 //市编号
                         districtId = json.districtId,                         //区编号
-                        invoiceTitle = json.invoiceTitle,                     //发票抬头
+                        invoiceTitle = json.invoiceTitle || '未填写',          //发票抬头
                         invoiceType = json.invoiceType;                       //发票类别
-
+                    // 保存
+                    $('#edit-order .save').die().live('click', function(){
+                        var goodsFormat = json.orderGoodsInfoList[0].goodsDomensionListInSize;
+                        that.editEnter(goodsFormat,receiverPhone,json.receiverMobile);
+                    });
 
                     //商品列表
                     var GoodsList = '';
@@ -618,10 +631,10 @@ define(function(require, exports, module){
                         var goodsImg = goodsInfoList[i].imageUrl,     //商品图片
                             goodsName = goodsInfoList[i].name,        //商品名字
                             goodsAmount = goodsInfoList[i].amount,    //商品个数
-                            singlePrice = goodsInfoList[i].singlePrice,//单价
+                            singlePrice = goodsInfoList[i].singlePrice/100,//单价
                             sizeIndex = goodsInfoList[i].sizeIndex,   //当前选择尺寸index
                             colorIndex = goodsInfoList[i].colorIndex, //当前选择颜色index
-                            totalPrice = goodsInfoList[i].totalPrice, //总价
+                            totalPrice = goodsInfoList[i].totalPrice/100, //总价
                             goodsListInSize = goodsInfoList[i].goodsDomensionListInSize;//商品规格
 
                         var goodsSize = '',     //商品尺寸
@@ -805,7 +818,7 @@ define(function(require, exports, module){
                             for(var i=0 ; i<goodsInfoList.length ; i++){
                                 $('.list-e').eq(i).find('.model .line2 a').eq(sizeIndex).addClass('active-size');
                                 var oColor = $('.list-e').eq(i).find('.color .line2 a').eq(colorIndex);
-                                oColor.addClass('active-color').css({background: "#"+oColor.attr('data-color'),color:'#fff'});
+                                oColor.addClass('active-color').css({background: oColor.attr('data-color'),color:'#fff'});
                             }
                         },
                         error : function(json){
@@ -826,7 +839,7 @@ define(function(require, exports, module){
     /**
      * 确定修改订单
      */
-    oOrder.editEnter = function(goodsFormat){
+    oOrder.editEnter = function(goodsFormat,receiverPhone,receiverMobile){
         var that = this;
         var amount = $('.order-num').val(),       //订单数量
             provinceId = $('#prov').val(),        //收货人省编码
@@ -837,9 +850,21 @@ define(function(require, exports, module){
             receiverAddress = $('.receiverAddress').val() || '',//收货人地址
             receiverMobile = $('.receiverMobile').val() || '',  //收货人手机
             receiverName = $('.orderReceiverName').val() || '', //收货人
-            singlePrice = $('.singlePrice').val() || '',        //单价
+            singlePrice = $('.singlePrice').val()*100 || '',        //单价
             type = $('#edit-order').attr('data-type');          //类型
             goodsDomensionId = '';                              //GoodsDomensionId
+        if( !receiverName ){
+            alert('请填写收货人！');
+            return;
+        }
+        if( !receiverMobile ){
+            alert('请填写联系电话！');
+            return;
+        }
+        if( !receiverAddress ){
+            alert('请填写收货人地址！');
+            return;
+        }
         // 循环匹配选中的大小和颜色的goodsDomensionId
         for(var i=0 ; i<goodsFormat.length ; i++){
             $('.active-size').each(function(){
@@ -848,7 +873,6 @@ define(function(require, exports, module){
                         var goodsColor = goodsFormat[i].goodsDomensionListInColor[j].color,
                             id = goodsFormat[i].goodsDomensionListInColor[j].goodsDomensionId;
                         $('.active-color').each(function(){
-                            console.log($(this).html());
                             if( $(this).html() == goodsColor ){
                                 goodsDomensionId = id;
                             }
@@ -857,20 +881,39 @@ define(function(require, exports, module){
                 }
             })
         }
-        var data = JSON.stringify({
-            amount : amount,
-            provinceId : provinceId,
-            cityId : cityId,
-            districtId : districtId,
-            invoiceTitle : invoiceTitle,
-            orderSn : orderSn,
-            receiverAddress : receiverAddress,
-            receiverMobile : receiverMobile,
-            receiverName : receiverName,
-            singlePrice : singlePrice,
-            invoiceType : type,
-            goodsDomensionId : goodsDomensionId
-        });
+        if( receiverPhone ){
+            var data = JSON.stringify({
+                amount : amount,
+                provinceId : provinceId,
+                cityId : cityId,
+                districtId : districtId,
+                invoiceTitle : invoiceTitle,
+                orderSn : orderSn,
+                receiverAddress : receiverAddress,
+                receiverLandline : receiverMobile,
+                receiverMobile : '',
+                receiverName : receiverName,
+                singlePrice : singlePrice,
+                invoiceType : type,
+                goodsDomensionId : goodsDomensionId
+            });
+        }else{
+            var data = JSON.stringify({
+                amount : amount,
+                provinceId : provinceId,
+                cityId : cityId,
+                districtId : districtId,
+                invoiceTitle : invoiceTitle,
+                orderSn : orderSn,
+                receiverAddress : receiverAddress,
+                receiverLandline : '',
+                receiverMobile : receiverMobile,
+                receiverName : receiverName,
+                singlePrice : singlePrice,
+                invoiceType : type,
+                goodsDomensionId : goodsDomensionId
+            });
+        }
         $.ajax({
             url : eightUrl+'order/orderEdit',
             type : 'post',
@@ -920,8 +963,8 @@ define(function(require, exports, module){
         //选择颜色
         $('.order-color-btn').die().live('click', function(){
             var color = $(this).attr('data-color');
-            $('.order-color-btn').removeClass('active-color').css({background: '#'+color ,color: '#000'});
-            $(this).addClass('active-color').css({background: "#"+$(this).attr('data-color'),color: '#fff'});
+            $('.order-color-btn').removeClass('active-color').css({background: '#fff' ,color: '#000'});
+            $(this).addClass('active-color').css({background: $(this).attr('data-color'),color: '#fff'});
         });
         //选择大小
         $('.order-size-btn').live('click', function(){
@@ -1053,11 +1096,11 @@ define(function(require, exports, module){
         $('#export').die().live('click', function(){
             var orderSn = $('.orderSn').val(),             //订单号
                 receiverName = $('.receiverName').val(),   //收件人
-                receiverPhone = $('.receiverPhone').val(), //联系电话
-                startTime = $('.start-time').val(),        //开始时间
-                endTime = $('.end-time').val(),            //结束时间
-                minAmount = $('.min-price').val(),         //最小价钱
-                maxAmount = $('.max-price').val(),         //最大价钱
+                phone = $('.receiverPhone').val(),         //联系电话
+                minTime = $('.start-time').val(),          //开始时间
+                maxTime = $('.end-time').val(),            //结束时间
+                minAmount = $('.min-price').val()*100,         //最小价钱
+                maxAmount = $('.max-price').val()*100,         //最大价钱
                 status = 0;                                //状态码
             // 更新状态码
             $('.order-radio').each(function(){
@@ -1065,38 +1108,10 @@ define(function(require, exports, module){
                     status = $(this).val();
                 }
             });
-            var data = JSON.stringify({
-                maxAmount : maxAmount,
-                minAmount : minAmount,
-                maxTime : endTime,
-                minTime : startTime,
-                orderSn : orderSn,
-                phone : receiverPhone,
-                receiverName : receiverName,
-                status : status
-            });
-            $.ajax({
-                url : eightUrl+'orderExport/exportUserOrder',
-                type : 'post',
-                data : data,
-                xhrFields: {
-                    withCredentials: true
-                },
-                dataType : 'json',
-                contentType: "application/json; charset=utf-8",
-                beforeSend: function (xhr) {
-                    // json格式传输，后台应该用@RequestBody方式接受
-                    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
-                    var token = $.cookie("token");
-                    if (token) {
-                        xhr.setRequestHeader("X-Access-Auth-Token", token);
-                    }
-                },
-                success : function(json){
-                    console.log(json);
-                }
-            })
-        })
+
+            var str = 'maxAmount='+maxAmount+'&minAmount='+minAmount+'&maxTime='+maxTime+'&minTime='+minTime+'&orderSn='+orderSn+'&phone='+phone+'&receiverName='+receiverName+'&status='+status;
+            window.location.href = eightUrl+'orderExport/exportUserOrder?'+str;
+        });
     };
     /**
      * 关闭

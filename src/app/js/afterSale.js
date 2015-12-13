@@ -43,7 +43,6 @@ define(function(require, exports, module){
                 }
             },
             success : function(json){
-                console.log(json);
                 var totalPages = json.totalPages;    //总页数
                 var json = json.content;
                 var afterList = '';
@@ -85,18 +84,17 @@ define(function(require, exports, module){
                     var sHandle = '',                                        //处理状态
                         sResult = '';                                        //处理结果
                     // 申请时间
-                    var oDate = new Date(createDate),              //注册时间格式化
+                    var oDate = new Date(createDate),              //申请时间格式化
                         oDateYear = oDate.getFullYear(),           //年
                         oDateMonth = (oDate.getMonth()+ 1),        //月
                         oDateDay = oDate.getDate(),                //日
-                        oCreateDate = oDateYear+'-'+oDateMonth+'-'+oDateDay;
+                        oCreateDate = toDable(oDateYear)+'-'+toDable(oDateMonth)+'-'+toDable(oDateDay);
                     // 收货时间
-                    var oDate = new Date(receiveDate),             //注册时间格式化
+                    var oDate = new Date(receiveDate),             //收货时间格式化
                         oDateYear = oDate.getFullYear(),           //年
                         oDateMonth = (oDate.getMonth()+ 1),        //月
                         oDateDay = oDate.getDate(),                //日
-                        oReceiveDate = oDateYear+'-'+oDateMonth+'-'+oDateDay;
-
+                        oReceiveDate = toDable(oDateYear)+'-'+toDable(oDateMonth)+'-'+toDable(oDateDay);
                     if( result == 0 ){
                             sHandle = '<li class="w68 orange">待处理</li>';
                             sResult = '<li class="w94 no-boder">\
@@ -121,8 +119,8 @@ define(function(require, exports, module){
                                     <li class="w60">'+type+'</li>\
                                     <li class="w60">'+receiverName+'</li>\
                                     <li class="w110">'+receiver_mobile+'</li>\
-                                    <li class="w116">'+oCreateDate+'</li>\
-                                    <li class="w94">'+oReceiveDate+'</li>\
+                                    <li class="w116">'+oReceiveDate+'</li>\
+                                    <li class="w94">'+oCreateDate+'</li>\
                                     <li class="w77">'+reason+'</li>'+sHandle+'\
                                     '+sResult+'\
                                 </ul>\
@@ -131,7 +129,8 @@ define(function(require, exports, module){
                 $('.after-list').html(afterList);
             },
             error : function(json){
-                console.log(json);
+                var json = JSON.parse(json.responseText);
+                alert(json.message);
             }
         })
     };
@@ -179,7 +178,7 @@ define(function(require, exports, module){
                 page: $(this).html()-1,
                 pageSize: 10
             });
-            that.list($(this).html() ,data);
+            that.list($(this).html()-1 ,data);
         });
     };
     /**
@@ -188,6 +187,12 @@ define(function(require, exports, module){
     oAfter.query = function(){
         var that = this;
         $('.after-search').die().live('click', function(){
+            var startTime = $('.start-time').val(),
+                endTime = $('.end-time').val();
+            if( startTime > endTime && startTime && endTime){
+                alert('开始时间必须小于结束时间！');
+                return false;
+            }
             var afterSn = $('.after-sn').val(),     //售后单号
                 orderId = $('.after-orderId').val(),//订单号
                 description = $('.after-description').val(),//问题描述
@@ -220,9 +225,11 @@ define(function(require, exports, module){
                 applyDateUp : endTime,
                 status : status,
                 type : type,
-                result : result
+                result : result,
+                page: 0,
+                pageSize: 10
             });
-            that.list(1,data);
+            that.list(0,data);
         });
     };
     /**
@@ -247,7 +254,6 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    console.log(json);
                     var order = json;
                     $('#after-result,.mask-bg').show();
                     $('#after-result').css({top: ($(document).scrollTop()+20)+'px'});
@@ -261,9 +267,10 @@ define(function(require, exports, module){
                         goodsId = orderGoodsInfo.goodsId,          //goodsId
                         goodsName = orderGoodsInfo.goodsName,      //商品名称
                         orderSn = orderGoodsInfo.orderSn,          //订单号
-                        singlePrice = orderGoodsInfo.singlePrice,  //单价
-                        size = orderGoodsInfo.size,                //尺寸
-                        totalPrice = orderGoodsInfo.totalPrice,    //总价
+                        singlePrice = orderGoodsInfo.singlePrice/100,  //单价
+                        size = orderGoodsInfo.size,                    //尺寸
+                        totalPrice = orderGoodsInfo.totalPrice/100,    //总价
+                        imgSrc = orderGoodsInfo.imageUrl,              //图片
                         reason = order.reason,            //退货原因
                         createDate  = order.createTime,   //申请时间
                         receiverName = order.receiverName,//收件人
@@ -272,14 +279,13 @@ define(function(require, exports, module){
                         receiverAddress = order.receiverAddress,  //收货人地址
                         result = order.result,                    //审核结果
                         refuseReason = order.refuseReason || '';  //审核拒绝原因
-                    console.log(receiverLandline);
                     var oDate = new Date(createDate);              //注册时间格式化
-                        oDateYear = oDate.getFullYear(),           //年
-                        oDateMonth = (oDate.getMonth()+ 1),        //月
-                        oDateDay = oDate.getDate(),                //日
-                        oHours = oDate.getHours(),                 //小时
-                        oMinutes  = oDate.getMinutes(),            //分钟
-                        oSen = oDate.getSeconds();                 //秒
+                        oDateYear = toDable(oDate.getFullYear()),           //年
+                        oDateMonth = toDable((oDate.getMonth()+ 1)),        //月
+                        oDateDay = toDable(oDate.getDate()),                //日
+                        oHours = toDable(oDate.getHours()),                 //小时
+                        oMinutes  = toDable(oDate.getMinutes()),            //分钟
+                        oSen = toDable(oDate.getSeconds());                 //秒
                     var oTime = oDateYear+'-'+oDateMonth+'-'+oDateDay+' '+oHours+':'+oMinutes+":"+oSen;
                     var refuseReasonText = '';
                     if(result == 0){
@@ -291,7 +297,7 @@ define(function(require, exports, module){
                         refuseReasonText = '<li>不通过原因：'+refuseReason+'</li>';
                     }
                     goodsInfo += '<ul class="list-e">\
-                                    <li class="image"><img width="98" height="98" src="../images/order_e.jpg" /></li>\
+                                    <li class="image"><img width="98" height="98" src="'+imgSrc+'" /></li>\
                                     <li>'+goodsName+' × '+amount+'</li>\
                                     <li>'+size+'</li>\
                                     <li>'+color+'</li>\
@@ -373,8 +379,8 @@ define(function(require, exports, module){
                             goodsName = order.orderGoodsInfo.goodsInfoList[i].goodsName,          //商品名字
                             goodsSize = order.orderGoodsInfo.goodsInfoList[i].goodsSize,          //商品大小
                             imageUrl = order.orderGoodsInfo.goodsInfoList[i].imageUrl;            //商品图片
-                        totalPrice = order.orderGoodsInfo.totalPrice,       //商品价格
-                            orderPrice = parseInt(goodsAmount)*parseInt(totalPrice);              //商品总价
+                            totalPrice = order.orderGoodsInfo.goodsInfoList[0].singlePrice/100,//商品价格
+                            orderPrice = order.orderGoodsInfo.totalPrice/100;          //商品总价
 
                         goodsInfo += '<ul class="list-e">\
                                     <li class="image"><img class="goods-detial-img" src="'+imageUrl+'" /></li>\
@@ -416,7 +422,7 @@ define(function(require, exports, module){
                     var orderStatusContent = '\
                             <li class="active">\
                                 <i class="order"></i>\
-                                <span class="msg1">下单</span>\
+                                <span class="mes1">下单</span>\
                                 <span class="time">'+bayTime+'</span>\
                             </li>\
                             <li>\
@@ -503,11 +509,10 @@ define(function(require, exports, module){
                     success : function(json){
                         $('#audit-through,.mask-bg').hide();
                         that.list($('#order-page li.active').html());
-                        console.log(json);
                     },
                     error : function(json){
                         var json = JSON.parse(json.responseText);
-                        console.log(json.message);
+                        $('#not-through,.mask-bg').hide();
                     }
                 });
             });
@@ -546,7 +551,7 @@ define(function(require, exports, module){
                     },
                     error : function(json){
                         var json = JSON.parse(json.responseText);
-                        console.log(json.message);
+                        $('#not-through,.mask-bg').hide();
                     }
                 });
             });

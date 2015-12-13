@@ -3,6 +3,25 @@
  */
 define(function(require, exports, module){
     require('jCookie');
+    require("../../plugin/jqueryui/jquery-ui-datepicker");
+    var operation = require('operation');   // 权限管理
+    //将datepicker绑定到开始时间和结束时间上
+    $(".start-time").live("focus", function () {
+        if( $('.end-time').val() ){
+            $(".start-time").datepicker({ dateFormat: "yy-mm-dd"});
+            //$(".start-time").datepicker('option', 'maxDate',  $('.end-time').val());
+        }else{
+            $(".start-time").datepicker({ dateFormat: "yy-mm-dd"});
+        }
+    });
+    $(".end-time").live("focus", function () {
+        if( $('.start-time').val() ){
+            $(".end-time").datepicker({ dateFormat: "yy-mm-dd"});
+            //$(".end-time").datepicker('option', 'minDate',  $('.start-time').val());
+        }else{
+            $(".end-time").datepicker({ dateFormat: "yy-mm-dd"});
+        }
+    });
 
     var loadHtml = $(function(){
         // 动态加载内容
@@ -27,26 +46,24 @@ define(function(require, exports, module){
                     }
                 });
             });
+
             // 首页
             $(".wrap").load("common/order.html",function(){
                 myRadio('status');
                 var oOrder = require('order').oOrder;
+                // 商品初始化
                 oOrder.init();
-                // 未处理售后订单
-                var json = JSON.stringify({
-                    pageNum: 1,
-                    pageSize: 9999999
-                });
+                // 权限初始化
+                operation.init();
+                // 获取权限
+                var roleId = $.cookie('roleId');
                 $.ajax({
-                    url : eightUrl+'afterSale/query',
-                    type : 'post',
-                    dataType : 'json',
-                    data : json,
-                    contentType: "application/json; charset=utf-8",
+                    url : eightUrl+'acs/operations/'+roleId,
+                    type : 'get',
                     xhrFields: {
                         withCredentials: true
                     },
-                    beforeSend : function(xhr) {
+                    beforeSend: function (xhr) {
                         // json格式传输，后台应该用@RequestBody方式接受
                         xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
                         var token = $.cookie("token");
@@ -55,18 +72,47 @@ define(function(require, exports, module){
                         }
                     },
                     success : function(json){
-                        var content = json.content,
-                            num = 0;
-                        for(var i=0 ; i<content.length ; i++){
-                            if( content[i].result == 0 ){
-                                num++;
+                        for(var name in json){
+                            if( json[name].module == '售后管理模块' ){
+                                // 未处理售后订单
+                                var json = JSON.stringify({
+                                    pageNum: 1,
+                                    pageSize: 9999999
+                                });
+                                $.ajax({
+                                    url : eightUrl+'afterSale/query',
+                                    type : 'post',
+                                    dataType : 'json',
+                                    data : json,
+                                    contentType: "application/json; charset=utf-8",
+                                    xhrFields: {
+                                        withCredentials: true
+                                    },
+                                    beforeSend : function(xhr) {
+                                        // json格式传输，后台应该用@RequestBody方式接受
+                                        xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                                        var token = $.cookie("token");
+                                        if (token) {
+                                            xhr.setRequestHeader("X-Access-Auth-Token", token);
+                                        }
+                                    },
+                                    success : function(json){
+                                        var content = json.content,
+                                            num = 0;
+                                        for(var i=0 ; i<content.length ; i++){
+                                            if( content[i].result == 0 ){
+                                                num++;
+                                            }
+                                        }
+                                        if(num >0)$('.after-num').html(' (<span class="red">'+num+'</span>)');
+                                    },
+                                    error : function(json){
+                                        var json = JSON.parse(json.responseText);
+                                        alert(json.message);
+                                    }
+                                });
                             }
                         }
-                        if(num >0)$('.after-num').html(' (<span class="red">'+num+'</span>)');
-                    },
-                    error : function(json){
-                        var json = JSON.parse(json.responseText);
-                        alert(json.message);
                     }
                 });
             });
@@ -118,3 +164,11 @@ define(function(require, exports, module){
     });
     exports.loadHtml = loadHtml;
 });
+function toDable(num){
+    if(num<10){
+        num = '0'+num;
+    }else{
+        num = ''+num;
+    }
+    return num;
+}

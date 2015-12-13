@@ -19,7 +19,7 @@
     </ul>
     <ul class="ditail ditial-th">
         <li class="mar173">
-            <span>库存：</span>
+            <span>库&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;：&nbsp;</span>
             <input type="text" id="inventoryDown" />
             <span class="margin-10">-</span>
             <input type="text" id="inventoryUp" />
@@ -53,63 +53,9 @@
                     <li class="w154 no-boder">操作</li>
                 </ul>
             </dt>
-            <!--<dd class="goods-details">-->
-                <!--<ul class="line-term">-->
-                    <!--<li class="w124"><p><a href="javascript:;">CD001</a></p></li>-->
-                    <!--<li class="w156"><p>Q1床垫</p></li>-->
-                    <!--<li class="w190">-->
-                        <!--<p>咖啡金 / 1.5m × 2.0m</p>-->
-                        <!--<p>素蓝灰 / 1.5m × 2.0m</p>-->
-                        <!--<p>咖啡金 / 1.5m × 2.0m</p>-->
-                        <!--<p class="no-boder">素蓝灰 / 1.5m × 2.0m</p>-->
-                    <!--</li>-->
-                    <!--<li class="w110">-->
-                        <!--<p>2799</p>-->
-                        <!--<p>2799</p>-->
-                        <!--<p>2799</p>-->
-                        <!--<p class="no-boder">2799</p>-->
-                    <!--</li>-->
-                    <!--<li class="w118">-->
-                        <!--<p>2799</p>-->
-                        <!--<p class="red">1</p>-->
-                        <!--<p>编辑库存</p>-->
-                        <!--<p class="no-boder">编辑库存</p>-->
-                    <!--</li>-->
-                    <!--<li class="w110"><p>已上架</p></li>-->
-                    <!--<li class="w154 no-boder">-->
-                        <!--<p>-->
-                            <!--<a href="javascript:;">编辑</a>-->
-                            <!--<a href="javascript:;">下架</a>-->
-                        <!--</p>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</dd>-->
-            <!--<dd>-->
-                <!--<ul class="line-term">-->
-                    <!--<li class="w124"><p><a href="javascript:;">CD001</a></p></li>-->
-                    <!--<li class="w156"><p>Q1床垫</p></li>-->
-                    <!--<li class="w190">-->
-                        <!--<p>咖啡金 / 1.5m × 2.0m</p>-->
-                        <!--<p class="no-boder">素蓝灰 / 1.5m × 2.0m</p>-->
-                    <!--</li>-->
-                    <!--<li class="w110">-->
-                        <!--<p>2799</p>-->
-                        <!--<p class="no-boder">2799</p>-->
-                    <!--</li>-->
-                    <!--<li class="w118">-->
-                        <!--<p>2799</p>-->
-                        <!--<p class="no-boder">编辑库存</p>-->
-                    <!--</li>-->
-                    <!--<li class="w110"><p>已上架</p></li>-->
-                    <!--<li class="w154 no-boder">-->
-                        <!--<p>-->
-                            <!--<a href="javascript:;">编辑</a>-->
-                            <!--<a href="javascript:;">下架</a>-->
-                        <!--</p>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</dd>-->
+            <div class="goods-list-box"></div>
         </dl>
+        <div class="no-data-box"></div>
     </div>
 </div>
 <script>
@@ -152,14 +98,7 @@
                             <li></li>
                             <li><a href="javascript:;">上传图片</a></li>
                             <li><a href="javascript:;">保存</a></li>
-                        </ul><!--
-                        <ul class="goods-color">
-                            <li><input type="text" /></li>
-                            <li><input type="text" class="color-input" /><span class="color"></span></li>
-                            <li><img width="24" height="24" /></li>
-                            <li><a href="javascript:;">替换图片</a></li>
-                            <li><a href="javascript:;">删除</a></li>
-                        </ul>-->
+                        </ul>
                     </div>
                 </li>
                 <li class="detial-color edit-right">
@@ -167,61 +106,12 @@
                     <div class="right">
                         <ul class="goods-size">
                             <li><input type="text" class="goods-size" /><a href="javascript:;">保存</a></li>
-                            <!--<li><input type="text" /><a href="javascript:;">删除</a></li>
-                            <li><input type="text" /><a href="javascript:;">删除</a></li>-->
                         </ul>
                     </div>
                 </li>
             </ul>
         </li>
     </ul>
-    <!--<table width="870" cellspacing="0" cellspacing="0" border="0" class="detial-table" id="addGoodsTable">
-    	<tr class="title">
-        	<td width="150">商品颜色</td>
-        	<td width="190">商品规格</td>
-        	<td width="242">价格</td>
-        	<td width="242">库存</td>
-        	<td width="242">物料编号</td>
-        </tr>
-    	<tr>
-        	<td rowspan="3" class="border">咖啡金</td>
-        	<td>1.2m × 2.0m</td>
-        	<td><input type="text" class="goods-price" /></td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        </tr>
-    	<tr>
-        	<td>1.5m × 2.0m</td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        </tr>
-    	<tr>
-        	<td class="border"> 1.8m × 2.0m</td>
-        	<td class="border"><input type="text" /></td>
-        	<td class="border"><input type="text" /></td>
-        	<td class="border"><input type="text" /></td>
-        </tr>
-    	<tr>
-        	<td rowspan="3" class="border">咖啡金</td>
-        	<td>1.2m × 2.0m</td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        </tr>
-    	<tr>
-        	<td>1.5m × 2.0m</td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        </tr>
-    	<tr>
-        	<td> 1.8m × 2.0m</td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        	<td><input type="text" /></td>
-        </tr>
-    </table>-->
     <p class="btn-e">
         <a href="javascript:;" class="save">保存</a>
         <a href="javascript:;" class="canle">取消</a>
@@ -336,11 +226,11 @@
 <!--商品详情END-->
 
 <!-- 下架商品-->
-<div class="small-pop">
+<div class="small-pop goods-close" id="goods-pop">
     <p class="small-pop-text">确定下架商品么？</p>
     <div class="small-pop-btn">
         <input type="button" value="确定" class="deter"/>
-        <input type="button" value="取消" class="cancel"/>
+        <input type="button" value="取消" class="cancel canle"/>
     </div>
 </div>
 <!-- 下架商品END-->

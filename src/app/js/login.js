@@ -50,7 +50,13 @@ define(function(require, exports, module){
                     }
                 },
                 success : function(json){
-                    $.cookie('name', username);
+                    console.log(json);
+                    // 用户名
+                    $.cookie('name', json.username);
+                    // 用户ID
+                    $.cookie('id', json.id);
+                    // 角色ID
+                    $.cookie('roleId', json.roleId);
                     if( json.accessToken ){
                         $.cookie('token', json.accessToken);
                         window.location.href = 'index.html';

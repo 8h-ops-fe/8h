@@ -20,7 +20,7 @@
             </ul>
         </li>
     </ul>
-    <div class="search-box"><a href="javascript:;" class="search">查询</a></div>
+    <div class="search-box"><a href="javascript:;" class="admin-search search">查询</a></div>
 </div>
 <!--查询管理员END-->
 
@@ -28,127 +28,23 @@
 <div class="list" id="admin-list">
     <a href="javascript:;" class="btn" id="add-admin-btn">添加后台人员</a>
     <dl class="cus-service">
-        <!--<dt>-->
-            <!--<ul class="line">-->
-                <!--<li class="w240">用户名</li>-->
-                <!--<li class="w242">最近登录时间</li>-->
-                <!--<li class="w242">用户状态</li>-->
-                <!--<li class="w240 no-boder">操作</li>-->
-            <!--</ul>-->
-        <!--</dt>-->
-        <!--<dd>-->
-            <!--<ul class="line">-->
-                <!--<li class="w240 blue">13245345673</li>-->
-                <!--<li class="w242">-->
-                    <!--<span class="margin-r-10">2015-10-30</span>-->
-                    <!--<span>14:20</span>-->
-                <!--</li>-->
-                <!--<li class="w242">已启用</li>-->
-                <!--<li class="w240 blue  no-boder">-->
-                    <!--<span class="margin-r-30">编辑</span>-->
-                    <!--<span>禁用</span>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</dd>-->
-        <!--<dd>-->
-            <!--<ul class="line">-->
-                <!--<li class="w240 blue">13245345673</li>-->
-                <!--<li class="w242">-->
-                    <!--<span class="margin-r-10">2015-10-30</span>-->
-                    <!--<span>14:20</span>-->
-                <!--</li>-->
-                <!--<li class="w242">已启用</li>-->
-                <!--<li class="w240 blue  no-boder">-->
-                    <!--<span class="margin-r-30">编辑</span>-->
-                    <!--<span>禁用</span>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</dd>-->
-        <!--<dd>-->
-            <!--<ul class="line">-->
-                <!--<li class="w240 blue">13245345673</li>-->
-                <!--<li class="w242">-->
-                    <!--<span class="margin-r-10">2015-10-30</span>-->
-                    <!--<span>14:20</span>-->
-                <!--</li>-->
-                <!--<li class="w242">已启用</li>-->
-                <!--<li class="w240 blue no-boder">-->
-                    <!--<span class="margin-r-30">编辑</span>-->
-                    <!--<span>禁用</span>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</dd>-->
+        <dt>
+            <ul class="line">
+                <li class="w240">用户名</li>
+                <li class="w242">最近登录时间</li>
+                <li class="w242">用户状态</li>
+                <li class="w240 no-boder">操作</li>
+            </ul>
+        </dt>
+        <div class="admin-list-box"></div>
     </dl>
+    <div class="no-data-box"></div>
 </div>
 <!--管理员列表END-->
 
 
-
 <!-- 后台人员详情-->
-<div class="admin-user">
-    <div class="pop-title">
-        <span>后台人员详情</span>
-        <i class="close"></i>
-    </div>
-    <div class="admin-top">
-        <p class="basic-inf">基本信息</p>
-        <div class="admin-top-left float-l">
-            <p>
-                <span class="color-999">用户名：</span>
-                <span>张依依</span>
-            </p>
-            <p>
-                <span class="color-999">添加时间：</span>
-                <span>
-                    <em>2015-10-30</em>
-                    <em>10：30</em>
-                </span>
-            </p>
-            <p>
-                <span class="color-999">用户状态：</span>
-                <select name="" id="admin-state">
-                    <option value="已启用">已启用</option>
-                    <option value="已禁用">已禁用</option>
-                </select>
-            </p>
-        </div>
-        <div class="admin-top-right float-l">
-            <p>
-                <span class="color-999">密码：</span>
-                <span>********</span>
-            </p>
-            <p>
-                <span class="color-999">最近登录时间：</span>
-                <span>
-                    <em>2015-10-30</em>
-                    <em>10：30</em>
-                </span>
-            </p>
-        </div>
-    </div>
-    <div class="admin-bottom">
-        <p class="margin-t-23">权限设置</p>
-        <p>订单管理</p>
-        <p class="margin-l-25">
-            <span class="color-999">订单导出：</span>
-            <i class="selected"></i>
-            <span>开启</span>
-            <i class="not-selected"></i>
-            <span>关闭</span>
-        </p>
-        <p>系统管理-后台人员管理</p>
-        <p class="margin-l-25">
-            <span class="color-999">添加后台用户：</span>
-            <i class="selected"></i>
-            <span>开启</span>
-            <i class="not-selected"></i>
-            <span>关闭</span>
-        </p>
-        <div class="admin-user-btn">
-            <input type="button" value="保存" class="keep"/>
-            <input type="button" value="取消" class="cancel"/>
-        </div>
-    </div>
+<div class="admin-user" id="admin-details">
 </div>
 <!-- 后台人员详情END-->
 
@@ -158,47 +54,50 @@
         <span>添加后台人员</span>
         <i class="close"></i>
     </div>
-    <div class="add-admin-top">
+    <div class="add-admin-top clearfix">
         <p class="basic-inf">基本信息</p>
-        <div class="admin-top-left float-l">
-            <span class="color-999">用户名：</span>
-            <input type="text"/>
+        <div class="add-admin-box clearfix">
+            <div class="admin-top-left float-l">
+                <span class="color-999 w70"><span class="red">*</span>用户名：</span>
+                <input type="text" class="add-admin-username"/>
+            </div>
+            <div class="admin-top-right float-l">
+                <span class="color-999 w70"><span class="red">*</span>密码：</span>
+                <input type="password" class="add-admin-password"/>
+            </div>
         </div>
-        <div class="admin-top-right float-l">
-            <span class="color-999">密码：</span>
-            <input type="password"/>
-        </div>
-    </div>
-    <div class="admin-bottom">
-        <p class="margin-t-23">权限设置</p>
-        <p>订单管理</p>
-        <p class="margin-l-25">
-            <span class="color-999">订单导出：</span>
-            <input type="radio" name="orderOut" value="0" class="r order-radio"><span class="w">开启</span>
-            <input type="radio" name="orderOut" value="0" class="r order-radio"><span class="w">关闭</span>
-        </p>
-        <p>系统管理-后台人员管理</p>
-        <p class="margin-l-25">
-            <span class="color-999">添加后台用户：</span>
-            <i class="selected"></i>
-            <span>开启</span>
-            <i class="not-selected"></i>
-            <span>关闭</span>
-        </p>
-        <div class="admin-user-btn">
-            <input type="button" value="保存" class="keep"/>
-            <input type="button" value="取消" class="cancel"/>
+        <div class="add-admin-box clearfix">
+            <div>
+                <span class="color-999 w70">用户角色：</span>
+                <select name="" id="role" class="role"></select>
+            </div>
+
+            <div class="admin-user-btn">
+                <input type="button" value="保存" class="keep"/>
+                <input type="button" value="取消" class="cancel"/>
+            </div>
         </div>
     </div>
 </div>
 <!-- 添加后台人员END-->
 
 <!-- 禁用用户-->
-<div class="small-pop">
-    <p class="small-pop-text">确定禁用该用户么？</p>
+<div class="small-pop" id="admin-pop">
+    <p class="small-pop-text admin-pop-text">确定禁用该用户么？</p>
     <div class="small-pop-btn">
         <input type="button" value="确定" class="deter"/>
         <input type="button" value="取消" class="cancel"/>
+    </div>
+</div>
+<!-- 禁用用户END-->
+
+<!-- 禁用用户-->
+<div class="small-pop" id="edit-password">
+    <div class="pop-title">
+        <span>修改密码</span>
+        <i class="close"></i>
+    </div>
+    <div class="add-admin-box clearfix">
     </div>
 </div>
 <!-- 禁用用户END-->

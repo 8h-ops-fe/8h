@@ -50,9 +50,9 @@ module.exports = function (grunt) {
                 src: 'js/**',
                 dest: 'build/',
                 options: {
-                    process: function(content, srcpath) {
-                        return content.replace(/..\/html/g, '.').replace(/\.\.\/\.\./g, '.');
-                    },
+                    //process: function(content, srcpath) {
+                    //    return content.replace(/..\/html/g, '.').replace(/\.\.\/\.\./g, '.');
+                    //},
                 },
             },
         },
@@ -118,5 +118,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-zip');
-    grunt.registerTask('default', ['clean', 'copy', 'uglify', 'htmlmin', 'zip']);
+    grunt.registerTask('default', ['clean', 'copy',  'htmlmin', 'zip']);
 };
