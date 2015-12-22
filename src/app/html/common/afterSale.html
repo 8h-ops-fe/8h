@@ -64,13 +64,26 @@
                 <li class="w110">联系电话</li>
                 <li class="w116">实际收货时间</li>
                 <li class="w94">申请时间</li>
-                <li class="w77">退货原因</li>
+                <li class="w77">退换货原因</li>
                 <li class="w68">处理状态</li>
                 <li class="w94 no-boder">审核结果</li>
             </ul>
         </dt>
-        <div class="after-list">
-
+        <div class="after-list" ng-repeat="list in data.content">
+            <dd data-orderSn="{{list.orderSn}}" data-id="{{list.id}}" class="after-list-box">
+                <ul class="line" >
+                    <li class="w124 blue cursor after-details-btn">{{list.sn}}</li>
+                    <li class="w156 blue cursor after-order-btn">{{list.orderSn}}</li>
+                    <li class="w60">{{list.type}}</li>
+                    <li class="w60">{{list.receiverName}}</li>
+                    <li class="w110">{{list.receiverMobile}}</li>
+                    <li class="w116">{{list.createTime|date:'yyyy-MM-dd'}}</li>
+                    <li class="w94">{{list.receiveDate|date:'yyyy-MM-dd'}}</li>
+                    <li class="w77">{{list.reason}}</li>
+                    <li class="w68">未知</li>
+                    <li class="w94 no-boder">未知</li>
+                </ul>
+            </dd>
         </div>
     </dl>
     <div class="no-data-box"></div>

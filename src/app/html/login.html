@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="login">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>8H-管理后台首页</title>
@@ -18,19 +18,22 @@
 
 <body>
     <!--登录输入框-->
-    <div class="login-box">
+    <div class="login-box" ng-controller="login">
         <div class="login-title">
             8H 运营管理系统
         </div>
-        <div class="login-error"></div>
+        <div class="login-error" ng-show="bBlock">{{error}}</div>
         <div class="form-user">
-            <input type="text" placeholder="用户名" class="login-username" />
-            <input type="password" placeholder="密码" class="login-password" />
-            <input type="button" value="登录" class="login-btn" />
+            <input type="text" placeholder="用户名" class="login-username" ng-model="username" />
+            <input type="password" placeholder="密码" class="login-password" ng-model="password" />
+            <input type="button" value="登录" class="login-btn" ng-click="login()" />
         </div>
     </div>
     <!--登录输入框END-->
-
-    <script data-main="../js/login" src="../../plugin/requirejs/require.js"></script>
+    <!--<script data-main="../js/login" src="../../plugin/requirejs/require.js"></script>-->
+    <script src="../js/api.js"></script>
+    <script src="../js/cookie.js"></script>
+    <script src="../js/angular.js"></script>
+    <script src="../js/a_login.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app" ng-cloak>
 <head> 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>管理后台首页</title>
@@ -21,37 +21,46 @@
     <!-- 遮罩层-->
     <div class="mask-bg"></div>
     <!-- 头部-->
-    <header class="clearfix">
+    <header class="clearfix" ng-controller="getname">
         <h1 class="userifon">
-            Hello,<span class="username"></span>
+            Hello,<span class="username" ng-bind="username"></span>
             <span class="login-out">[退出]</span>
         </h1>
     </header>
     <!-- 内容-->
     <div class="order-box">
-        <a href="index.html" class="logo"></a>
-
+        <a href="#/order.html" class="logo"></a>
         <!-- 列表-->
         <div class="nav">
-            <ul>
-                <li class="active order-icon"><a href="javascript:;" class="order icon1">订单管理</a></li>
-                <li class="after-icon"><a href="javascript:;" class="after icon2">售后管理<span class="after-num"></span></a></li>
-                <li class="goods-icon"><a href="javascript:;" class="goods icon3">商品管理</a></li>
-                <li class="user-icon"><a href="javascript:;" class="user icon4">用户管理</a></li>
-                <li class="admin-icon"><a href="javascript:;" class="admin icon5">系统管理</a></li>
+            <ul ng-controller="nav">
+                <li ng-repeat="list in nav" class="{{list.class}}" ng-class="{active:list.path==path}">
+                    <a href="{{list.href}}" class="{{list.aClass}}">
+                        <span class="{{list.numClass}}"></span>
+                        <span ng-bind="list.name"></span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- 右侧内容部分-->
-        <div class="wrap clearfix">
+        <div class="wrap clearfix" ng-view>
+            <div order-html></div>
         </div>
         <div class="clearfix">
             <div class="pagination"></div>
             <input type="hidden" value="1">
         </div>
     </div>
-    <!--订单管理END-->
     <!-- 脚本引入 -->
-    <script src="../../plugin/jquery/1.7.2/jquery.js"></script>
-    <script data-main="../js/main" src="../../plugin/requirejs/require.js"></script>
+    <script src="../js/cookie.js"></script>
+    <script src="../js/radio.js"></script>
+    <script src="../js/angular.js"></script>
+    <script src="../js/angular-route.js"></script>
+    <script src="../js/a_load.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/a_order.js"></script>
+    <script src="../js/a_after.js"></script>
+    <script src="../js/a_goods.js"></script>
+    <script src="../js/a_user.js"></script>
+    <script src="../js/a_admin.js"></script>
 </body>
 </html>

@@ -37,7 +37,16 @@
             <li class="w240 no-boder">操作</li>
         </ul>
         </dt>
-        <div class="user-list-box"></div>
+        <div class="user-list-box">
+            <dd class="user-list" ng-repeat="list in data.content" data-id="{{list.id}}" data-status="{{list.status}}">
+                <ul class="line">
+                    <li class="w240 blue user-phone">{{list.mobile}}</li>
+                    <li class="w242">{{list.createTime|date:'yyyy-MM-dd'}}</li>
+                    <li class="w242">{{list.status==1?'启用':'禁用'}}</li>
+                    <li class="w240 blue no-boder user-state{{list.status}}">{{list.status==1?'禁用':'启用'}}</li>
+                </ul>
+            </dd>
+        </div>
     </dl>
     <div class="no-data-box"></div>
 </div>

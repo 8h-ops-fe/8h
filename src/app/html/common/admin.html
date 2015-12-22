@@ -36,7 +36,22 @@
                 <li class="w240 no-boder">操作</li>
             </ul>
         </dt>
-        <div class="admin-list-box"></div>
+        <div class="admin-list-box">
+            <dd ng-repeat="list in data.content" data-id="{{list.id}}" class="admin-list-box">
+                <ul class="line">
+                    <li class="w240 blue see-details cursor">{{list.username}}</li>
+                    <li class="w242">
+                        <span class="margin-r-10">{{list.lastLoginTime ? (list.lastLoginTime|date:'yyyy-MM-dd HH:mm:ss') : '----'}}</span>
+                    </li>
+                    <li class="w242">{{list.status == 1 ? '启用' : '禁用'}}</li>
+                    <li class="w240 blue  no-boder admin-operation-box">
+                        <span class="admin-edit cursor">编辑</span>
+                        <span class="admin-operation">{{list.status != 1 ? '启用' : '禁用'}}</span>
+                        <span class="edit-password-text">修改密码</span>
+                    </li>
+                </ul>
+            </dd>
+        </div>
     </dl>
     <div class="no-data-box"></div>
 </div>
