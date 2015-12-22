@@ -15,9 +15,4 @@ user.controller('user', ['$scope', 'ajax', function($scope, ajax) {
 
 
 
-
-
-
-
-
 }]);
